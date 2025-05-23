@@ -1,13 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { envs } from './common/config';
+
+import { AppModule } from './app.module';
+import { CORS_CONFIG, envs } from './common';
 
 async function bootstrap() {
   const logger = new Logger('Clientgateway - Main');
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors(CORS_CONFIG);
+
   app.setGlobalPrefix('api');
+
+  app.enableVersioning();
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -19,8 +24,6 @@ async function bootstrap() {
       },
     }),
   );
-
-  app.useGlobalFilters();
 
   await app.listen(envs.PORT_APP);
   logger.log(`Gateway running on port ${envs.PORT_APP}`);
