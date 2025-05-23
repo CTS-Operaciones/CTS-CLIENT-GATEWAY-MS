@@ -13,15 +13,16 @@ export class RpcCustomExeptionFilter implements ExceptionFilter {
       'code' in rpcError &&
       'message' in rpcError
     ) {
-      if (rpcError.message.toString().includes('Empty response')) {
+      const { code, message } = rpcError as { code: number; message: string };
+      if (message.toString().includes('Empty response')) {
         return response.status(500).json({
           statusCode: 500,
-          message: rpcError.message
+          message: message
             .toString()
-            .substring(0, rpcError.message.toString().indexOf('(') - 1),
+            .substring(0, message.toString().indexOf('(') - 1),
         });
       }
-      const status = isNaN(+rpcError.code) ? 400 : +rpcError.code;
+      const status = isNaN(+code) ? 400 : +code;
       return response.status(status).json(rpcError);
     }
 

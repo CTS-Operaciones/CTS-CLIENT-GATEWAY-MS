@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { RhEmployeeModule } from './rh-employee/rh-employee.module';
+
 import { NatsModule } from './transports/nats.module';
+import { RhDeparmentModule } from './rh/rh-deparment/rh-deparment.module';
+import { RhPositionModule } from './rh/rh-position/rh-position.module';
 
 @Module({
-  imports: [RhEmployeeModule, NatsModule],
+  imports: [RhDeparmentModule, NatsModule, RhPositionModule],
   controllers: [],
   providers: [],
 })

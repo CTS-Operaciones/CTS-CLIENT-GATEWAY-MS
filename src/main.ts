@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as morgan from 'morgan';
 
 import { AppModule } from './app.module';
-import { CORS_CONFIG, envs } from './common';
+import { CORS_CONFIG, envs, RpcCustomExeptionFilter } from './common';
 
 async function bootstrap() {
   const logger = new Logger('Clientgateway - Main');
   const app = await NestFactory.create(AppModule);
+
+  app.use(morgan('dev'));
 
   app.enableCors(CORS_CONFIG);
 
@@ -24,6 +28,20 @@ async function bootstrap() {
       },
     }),
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('Client Gateway')
+    .setDescription('The Client Gateway API')
+    .setVersion('1.0')
+    .addTag('Deparments')
+    .addTag('Positions')
+    .addTag('Employees')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
+
+  app.useGlobalFilters(new RpcCustomExeptionFilter());
 
   await app.listen(envs.PORT_APP);
   logger.log(`Gateway running on port ${envs.PORT_APP}`);
