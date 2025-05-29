@@ -11,26 +11,57 @@ import { ApiProperty } from '@nestjs/swagger';
 import { STATUS, STATUS_EMPLOYEE } from '../constants';
 
 export class PaginationDto implements IPagination {
+  @ApiProperty({
+    required: false,
+    default: 1,
+    type: Number,
+    description: 'Page number',
+  })
   @IsNumber()
   @IsPositive()
   @IsOptional()
   @Type(() => Number)
   page?: number = 1;
 
+  @ApiProperty({
+    required: false,
+    default: 10,
+    type: Number,
+    description: 'Limit for each page',
+  })
   @IsNumber()
   @IsPositive()
   @IsOptional()
   @Type(() => Number)
   limit?: number = 10;
 
+  @ApiProperty({
+    required: false,
+    default: false,
+    type: Boolean,
+    description: 'Get all data',
+  })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
   all?: boolean = false;
 }
 
+export class PaginationRelationsDto extends PaginationDto {
+  @ApiProperty({
+    required: false,
+    default: false,
+    type: Boolean,
+    description: 'Get data with relations',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  relations?: boolean;
+}
+
 export class PaginationFilterStatusDto<T>
-  extends PaginationDto
+  extends PaginationRelationsDto
   implements IPaginateFilter<T>
 {
   @ApiProperty({

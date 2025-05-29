@@ -15,9 +15,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 import {
   FindOneRelationsDto,
-  FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
-  PaginationDto,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { CreatePositionDto, UpdatePositionDto } from './dto';
@@ -37,7 +36,7 @@ export class RhPositionController {
   }
 
   @Get()
-  async getAllPositions(@Query() pagination: PaginationDto) {
+  async getAllPositions(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-all-positions',

@@ -15,9 +15,9 @@ import { ClientProxy } from '@nestjs/microservices';
 
 import {
   NATS_SERVICE,
-  PaginationDto,
   sendAndHandleRpcExceptionPromise,
   FindOneRelationsDto,
+  PaginationRelationsDto,
 } from '../../common';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
 
@@ -36,7 +36,7 @@ export class RhDepartmentController {
   }
 
   @Get()
-  async findAllEmployees(@Query() pagination: PaginationDto) {
+  async findAllEmployees(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-all-department',

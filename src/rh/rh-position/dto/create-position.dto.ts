@@ -6,9 +6,29 @@ import {
   IsString,
   MaxLength,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
-import { ICreatePosition } from '../../../common';
+import { ICreatePosition, ISalary } from '../../../common';
+
+export class CreateSalaryDto implements ISalary {
+  @ApiProperty({ type: Number, description: 'Amount of the position' })
+  @IsNotEmpty()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsPositive()
+  @Min(0)
+  amount: number;
+
+  @ApiProperty({
+    type: String,
+    description: 'Amount in words of the position',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  salary_in_words: string;
+}
 
 export class CreatePositionDto implements ICreatePosition {
   @ApiProperty({ type: String, description: 'Name of the position' })
@@ -17,21 +37,11 @@ export class CreatePositionDto implements ICreatePosition {
   @MaxLength(100)
   name: string;
 
-  @ApiProperty({ type: Number, description: 'Salary of the position' })
+  @ApiProperty({ type: () => CreateSalaryDto, description: 'Salary details' })
+  @ValidateNested()
+  @Type(() => CreateSalaryDto)
   @IsNotEmpty()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @IsPositive()
-  @Min(0)
-  salary: number;
-
-  @ApiProperty({
-    type: String,
-    description: 'Salary in words of the position',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(100)
-  salary_in_words: string;
+  salary: CreateSalaryDto;
 
   @ApiProperty({
     type: Number,

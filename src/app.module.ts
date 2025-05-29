@@ -6,6 +6,7 @@ import { RhPositionModule } from './rh/rh-position/rh-position.module';
 import { RhEmployeeModule } from './rh/rh-employee/rh-employee.module';
 import { AuthModule } from './auth/auth/auth.module';
 import { RoleModule } from './auth/role/role.module';
+import { RhBondModule } from './rh/rh-bond/rh-bond.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { RoleModule } from './auth/role/role.module';
     RhEmployeeModule,
     AuthModule,
     RoleModule,
+    RhBondModule,
   ],
   controllers: [],
   providers: [],
