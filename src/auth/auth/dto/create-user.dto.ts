@@ -6,7 +6,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { ICreateUser } from '../../common';
+import { ICreateUser } from '../../../common';
 
 export class CreateUserDto implements ICreateUser {
   @IsString()
