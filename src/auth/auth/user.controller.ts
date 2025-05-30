@@ -17,7 +17,7 @@ import { CreateUserDto, UpdateUserDto } from './dto';
 import {
   FindOneRelationsDto,
   NATS_SERVICE,
-  PaginationDto,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
@@ -36,7 +36,7 @@ export class UserController {
   }
 
   @Get()
-  async findAll(@Query() pagination: PaginationDto) {
+  async findAll(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,
       'findAllUser',

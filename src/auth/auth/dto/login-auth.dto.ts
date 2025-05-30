@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { ILogin } from '../../../common';
+import { IChangePassword, ILogin } from '../../../common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginDto implements ILogin {
@@ -9,6 +9,18 @@ export class LoginDto implements ILogin {
   @IsEmail()
   username: string;
 
+  @ApiProperty({
+    type: String,
+    description: 'Password of the user',
+    minLength: 6,
+  })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(6)
+  password: string;
+}
+
+export class ChangePasswordDto implements IChangePassword {
   @ApiProperty({
     type: String,
     description: 'Password of the user',
