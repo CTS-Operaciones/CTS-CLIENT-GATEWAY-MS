@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { CreateDocumentDto, UpdateDocumentDto } from './dto';
+import { CreateDocumentDto, UpdateDocumentDto } from './dto copy';
 
 import {
   FindOneRelationsDto,
@@ -55,7 +55,7 @@ export class RhDocumentController {
     return await sendAndHandleRpcExceptionPromise(
       this.documentClient,
       'findOneDocument',
-      { id, ...relations },
+      { term: id, ...relations },
     );
   }
 

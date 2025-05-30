@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateTypeDocumentDto, UpdateTypeDocumentDto } from './dto';
+import { CreateTypeDocumentDto, UpdateTypeDocumentDto } from './dto copy';
 import {
   FindOneDto,
   NATS_SERVICE,
