@@ -36,6 +36,7 @@ async function bootstrap() {
     .addTag('Deparments')
     .addTag('Positions')
     .addTag('Employees')
+    .addTag('Documents')
     .addTag('Roles')
     .addTag('Users')
     .build();

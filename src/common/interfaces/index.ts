@@ -1,5 +1,6 @@
 export * from './auth.interface';
 export * from './department.interface';
+export * from './document.interface';
 export * from './employee.interface';
 export * from './find.interface';
 export * from './pagination.interface';

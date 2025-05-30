@@ -8,6 +8,7 @@ export * from './exception/rpc-custom.exception';
 export * from './helpers/rcp-hemper';
 export * from './interfaces/auth.interface';
 export * from './interfaces/department.interface';
+export * from './interfaces/document.interface';
 export * from './interfaces/employee.interface';
 export * from './interfaces/find.interface';
 export * from './interfaces/pagination.interface';
