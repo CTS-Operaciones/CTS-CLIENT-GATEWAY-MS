@@ -16,6 +16,7 @@ import { CreateDocumentDto, UpdateDocumentDto } from './dto copy';
 
 import {
   FindOneRelationsDto,
+  FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
@@ -47,15 +48,20 @@ export class RhDocumentController {
     );
   }
 
-  @Get(':id')
+  @Get(':term')
   async findOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() relations: FindOneRelationsDto,
+    @Param('term', ParseIntPipe) id: number,
+    @Query() relations: FindOneWhitTermAndRelationDto,
   ) {
+    const findOneWhitTermAndRelationDto = {
+      ...relations,
+      term: id,
+    };
+
     return await sendAndHandleRpcExceptionPromise(
       this.documentClient,
       'findOneDocument',
-      { term: id, ...relations },
+      findOneWhitTermAndRelationDto,
     );
   }
 
