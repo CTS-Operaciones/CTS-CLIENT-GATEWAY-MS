@@ -8,7 +8,7 @@ import {
 import { Type } from 'class-transformer';
 import { IPaginateFilter, IPagination } from '../interfaces';
 import { ApiProperty } from '@nestjs/swagger';
-import { STATUS, STATUS_EMPLOYEE } from '../constants';
+import { STATUS, STATUS_EMPLOYEE, STATUS_PROJECT } from '../constants';
 
 export class PaginationDto implements IPagination {
   @ApiProperty({
@@ -69,6 +69,19 @@ export class PaginationFilterStatusDto<T>
     enum: [...Object.values(STATUS), ...Object.values(STATUS_EMPLOYEE)],
   })
   @IsEnum([...Object.values(STATUS), ...Object.values(STATUS_EMPLOYEE)])
+  @IsOptional()
+  status?: T extends { status: infer U } ? U : never;
+}
+
+export class PaginationFilterProjectStatusDto<T>
+  extends PaginationRelationsDto
+  implements IPaginateFilter<T>
+{
+  @ApiProperty({
+    required: false,
+    enum: [...Object.values(STATUS_PROJECT)],
+  })
+  @IsEnum([...Object.values(STATUS_PROJECT)])
   @IsOptional()
   status?: T extends { status: infer U } ? U : never;
 }

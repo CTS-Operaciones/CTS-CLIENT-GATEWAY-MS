@@ -23,7 +23,7 @@ import {
 } from '../../common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Documents')
+@ApiTags('Documents ❎')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
   constructor(

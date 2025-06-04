@@ -22,7 +22,7 @@ import {
 } from '../../common';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
 
-@ApiTags('Employees')
+@ApiTags('Employees ✅')
 @Controller({ path: 'employee', version: '1' })
 export class RhEmployeeController {
   constructor(

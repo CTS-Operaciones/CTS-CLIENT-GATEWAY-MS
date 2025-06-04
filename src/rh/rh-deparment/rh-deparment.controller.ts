@@ -21,7 +21,7 @@ import {
 } from '../../common';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
 
-@ApiTags('Deparments')
+@ApiTags('Departments ✅')
 @Controller({ path: 'department', version: '1' })
 export class RhDepartmentController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}

@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth/auth.module';
 import { RoleModule } from './auth/role/role.module';
 import { RhBondModule } from './rh/rh-bond/rh-bond.module';
 import { RhDocumentModule } from './rh/rh-document/rh-document.module';
+import { ExtensionsModule } from './op/extensions/extensions.module';
+import { ProjectsModule } from './op/projects/projects.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { RhDocumentModule } from './rh/rh-document/rh-document.module';
     RoleModule,
     RhBondModule,
     RhDocumentModule,
+    ExtensionsModule,
+    ProjectsModule,
   ],
   controllers: [],
   providers: [],

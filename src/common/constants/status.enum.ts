@@ -4,6 +4,15 @@ export enum Status {
   CANCELLED = 'CANCELLED',
 }
 
+export enum STATUS_PROJECT {
+  EVALUATION = 'EVALUATION',
+  NO_ACCEPT = 'NO_ACCEPT',
+  ACCEPT = 'ACCEPT',
+  ACTIVE = 'ACTIVE',
+  FINALIZED = 'FINALIZED',
+}
+
+
 export enum STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
