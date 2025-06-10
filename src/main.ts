@@ -1,3 +1,4 @@
+import { json } from 'express';
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -13,6 +14,8 @@ async function bootstrap() {
   app.use(morgan('dev'));
 
   app.enableCors(CORS_CONFIG);
+
+  app.use(json({ limit: '250mb' }));
 
   app.setGlobalPrefix('api');
 
@@ -36,9 +39,10 @@ async function bootstrap() {
     .addTag('Departments ✅')
     .addTag('Positions ✅')
     .addTag('Employees ✅')
-    .addTag('Documents ❎')
-    .addTag('Projects ❎')
+    .addTag('Documents ❌')
+    .addTag('Projects ✅')
     .addTag('Extensions ✅')
+    .addTag('Headquarters ⚠️')
     .addTag('Roles')
     .addTag('Users')
     .build();
