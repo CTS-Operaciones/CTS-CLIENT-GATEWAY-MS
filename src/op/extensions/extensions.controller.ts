@@ -76,4 +76,13 @@ export class ExtensionsController {
       { id },
     );
   }
+
+  @Delete('restore/:id')
+  async restore(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientExtensions,
+      'restoreExtension',
+      { id },
+    );
+  }
 }

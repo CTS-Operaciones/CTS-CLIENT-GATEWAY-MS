@@ -9,21 +9,28 @@ import {
   Query,
   ParseIntPipe,
   Inject,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
-import { CreateDocumentDto, UpdateDocumentDto } from './dto copy';
+import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 
 import {
-  FindOneRelationsDto,
+  ErrorManager,
   FindOneWhitTermAndRelationDto,
+  IFileSend,
+  ISendDocument,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Documents ❎')
+import { fileFilter, storage } from './helpers';
+
+@ApiTags('Documents ❌')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
   constructor(
@@ -31,12 +38,35 @@ export class RhDocumentController {
   ) {}
 
   @Post()
-  async create(@Body() createRhDocumentDto: CreateDocumentDto) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.documentClient,
-      'createDocument',
-      createRhDocumentDto,
-    );
+  @UseInterceptors(AnyFilesInterceptor({ fileFilter, storage }))
+  async create(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() body: ISendDocument,
+  ) {
+    try {
+      if (body.data === undefined) {
+        body.data = JSON.stringify([{}]);
+      }
+
+      const fileData: IFileSend[] = JSON.parse(body.data);
+
+      files.forEach((file) => {
+        const newFile = fileData.filter((el) => {
+          el.file === file.filename;
+        });
+      });
+
+      //TODO: Modificar el file por el nombre original del archivo subido
+
+      return { files, fileData };
+      return await sendAndHandleRpcExceptionPromise(
+        this.documentClient,
+        'createDocument',
+        { fileData },
+      );
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error);
+    }
   }
 
   @Get()
