@@ -1,44 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
   IsString,
   IsUrl,
+  ValidateNested,
 } from 'class-validator';
 
-import { ICreateDocument } from '../../../common';
+import { ISendDocument, IFileSend } from '../../../common';
+import { Type } from 'class-transformer';
 
-export class CreateDocumentDto implements ICreateDocument {
-  @ApiProperty({ type: String, description: 'Url of the file' })
-  @IsString()
-  @IsUrl()
-  @IsNotEmpty()
-  url_file: string;
-
+export class CreateDocumentDto implements ISendDocument {
   @ApiProperty({
-    type: Number,
-    description: 'Size of the file',
-    required: false,
+    type: String,
+    description: 'Objetive of the document with number type',
   })
-  @IsNumber()
-  @IsOptional()
-  size?: number;
-
-  @ApiProperty({ type: String, description: 'Name of the file' })
-  @IsString()
   @IsNotEmpty()
-  name: string;
-
-  @ApiProperty({
-    type: Number,
-    description: 'Type of the document',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  @IsPositive()
-  type: number;
+  @ValidateNested({ each: true })
+  @Type(() => FileSendDto)
+  data: FileSendDto[];
 
   @ApiProperty({
     type: Number,
@@ -48,4 +31,15 @@ export class CreateDocumentDto implements ICreateDocument {
   @IsNotEmpty()
   @IsPositive()
   employee: number;
+}
+
+export class FileSendDto implements IFileSend {
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  type: number;
+
+  @IsString()
+  @IsNotEmpty()
+  file: string;
 }

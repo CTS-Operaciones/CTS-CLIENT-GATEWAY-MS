@@ -18,7 +18,8 @@ export interface ICreateDocument extends Omit<IDocument, 'employee' | 'type'> {
 }
 
 export interface ISendDocument {
-  data: string;
+  employee: number;
+  data: IFileSend[];
 }
 
 export interface IFileSend {

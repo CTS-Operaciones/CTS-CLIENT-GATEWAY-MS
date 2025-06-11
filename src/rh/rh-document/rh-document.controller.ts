@@ -21,14 +21,16 @@ import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 import {
   ErrorManager,
   FindOneWhitTermAndRelationDto,
+  ICreateDocument,
   IFileSend,
-  ISendDocument,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
 import { fileFilter, storage } from './helpers';
+import { ParseAndValidatePipe } from './pipes';
+import { CleanupFilesInterceptor } from './interceptor';
 
 @ApiTags('Documents ❌')
 @Controller({ path: 'document', version: '1' })
@@ -38,31 +40,39 @@ export class RhDocumentController {
   ) {}
 
   @Post()
-  @UseInterceptors(AnyFilesInterceptor({ fileFilter, storage }))
+  @UseInterceptors(
+    AnyFilesInterceptor({ fileFilter, storage }),
+    CleanupFilesInterceptor,
+  )
   async create(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() body: ISendDocument,
+    @Body(new ParseAndValidatePipe(CreateDocumentDto)) body: any,
   ) {
     try {
-      if (body.data === undefined) {
-        body.data = JSON.stringify([{}]);
-      }
+      const { data, employee } = body;
 
-      const fileData: IFileSend[] = JSON.parse(body.data);
+      const fileData: ICreateDocument[] = [];
 
       files.forEach((file) => {
-        const newFile = fileData.filter((el) => {
-          el.file === file.filename;
-        });
+        const index = data.findIndex(
+          (el: IFileSend) => el.file == file.fieldname,
+        );
+
+        index > -1 &&
+          fileData.push({
+            ...data[index],
+            employee,
+            type: data[index].type,
+            name: file.filename,
+            url_file: file.path,
+            size: file.size,
+          });
       });
 
-      //TODO: Modificar el file por el nombre original del archivo subido
-
-      return { files, fileData };
       return await sendAndHandleRpcExceptionPromise(
         this.documentClient,
         'createDocument',
-        { fileData },
+        { files: fileData },
       );
     } catch (error) {
       throw ErrorManager.createSignatureError(error);
