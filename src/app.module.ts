@@ -10,6 +10,7 @@ import { RhBondModule } from './rh/rh-bond/rh-bond.module';
 import { RhDocumentModule } from './rh/rh-document/rh-document.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
+import { ResourceModule } from './saga/resources/resource.module';
 import { HeadquartersModule } from './op/headquarters/headquarters.module';
 
 @Module({
@@ -24,6 +25,7 @@ import { HeadquartersModule } from './op/headquarters/headquarters.module';
     RhDocumentModule,
     ExtensionsModule,
     ProjectsModule,
+    ResourceModule,
     HeadquartersModule,
   ],
   controllers: [],
