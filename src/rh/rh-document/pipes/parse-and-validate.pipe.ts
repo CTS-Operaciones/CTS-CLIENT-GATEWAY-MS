@@ -13,12 +13,24 @@ export class ParseAndValidatePipe implements PipeTransform {
 
   async transform(value: any, metadata: ArgumentMetadata) {
     try {
-      if (typeof value.data === 'string') {
-        value.data = JSON.parse(value.data);
-      }
-
-      if (typeof value.employee === 'string') {
-        value.employee = parseInt(value.employee, 10);
+      for (const key of Object.keys(value)) {
+        const val = value[key];
+        if (typeof val === 'string') {
+          if (
+            (val.startsWith('[') && val.endsWith(']')) ||
+            (val.startsWith('{') && val.endsWith('}'))
+          ) {
+            try {
+              value[key] = JSON.parse(val);
+            } catch (error) {
+              throw new BadRequestException(
+                `Error parsing JSON payload: ${error}`,
+              );
+            }
+          } else if (!isNaN(+val)) {
+            value[key] = parseInt(val, 10);
+          }
+        }
       }
 
       const object = plainToInstance(this.dtoClass, value);

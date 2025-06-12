@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm';
 import { IEmployee } from './employee.interface';
 
 export interface IDocument {
@@ -22,7 +23,21 @@ export interface ISendDocument {
   data: IFileSend[];
 }
 
+export interface IUpdateSendDocument {
+  data: IFileSend;
+  employee: number;
+}
+
+export interface IUpdateDocumentMSDto extends ICreateDocument {
+  id: number;
+}
+
 export interface IFileSend {
   type: number;
   file: string;
+}
+
+export interface IResponseUpdateDocument {
+  result: UpdateResult;
+  old_file: string;
 }

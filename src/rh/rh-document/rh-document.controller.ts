@@ -1,3 +1,5 @@
+import { Response } from 'express';
+import { resolve } from 'path';
 import {
   Controller,
   Get,
@@ -11,24 +13,29 @@ import {
   Inject,
   UseInterceptors,
   UploadedFiles,
+  Res,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 
 import {
   ErrorManager,
-  FindOneWhitTermAndRelationDto,
+  FindOneDto,
   ICreateDocument,
+  IDocument,
   IFileSend,
+  IResponseUpdateDocument,
+  IUpdateDocumentMSDto,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-import { fileFilter, storage } from './helpers';
+import { fileFilter, removeFile, storage } from './helpers';
 import { ParseAndValidatePipe } from './pipes';
 import { CleanupFilesInterceptor } from './interceptor';
 
@@ -79,44 +86,82 @@ export class RhDocumentController {
     }
   }
 
-  @Get()
-  async findAll(@Query() pagination: PaginationRelationsDto) {
+  @Get(':term')
+  async findFilesForEmployee(
+    @Param() findOneDto: FindOneDto,
+    @Res() res: Response,
+  ) {
+    const { url_file }: IDocument = await sendAndHandleRpcExceptionPromise(
+      this.documentClient,
+      'findOneDocument',
+      findOneDto,
+    );
+
+    if (url_file && url_file.length > 0) {
+      const absolutePath = resolve(url_file);
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.sendFile(absolutePath);
+    } else {
+      res.status(404).json({ message: 'File not found' });
+    }
+  }
+
+  @Get('employee/:id')
+  async findAll(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() pagination: PaginationRelationsDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.documentClient,
       'findAllDocument',
-      pagination,
+      { employee_id: id, ...pagination },
     );
   }
 
-  @Get(':term')
-  async findOne(
-    @Param('term', ParseIntPipe) id: number,
-    @Query() relations: FindOneWhitTermAndRelationDto,
-  ) {
-    const findOneWhitTermAndRelationDto = {
-      ...relations,
-      term: id,
-    };
-
-    return await sendAndHandleRpcExceptionPromise(
-      this.documentClient,
-      'findOneDocument',
-      findOneWhitTermAndRelationDto,
-    );
-  }
-
+  // TODO: Verificar el borrado de documentos si existe un error.
   @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('file', { fileFilter, storage }),
+    CleanupFilesInterceptor,
+  )
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateRhDocumentDto: UpdateDocumentDto,
+    @UploadedFile() file: Express.Multer.File,
+    @Body(new ParseAndValidatePipe(UpdateDocumentDto)) body: any,
   ) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.documentClient,
-      'updateDocument',
-      { id, ...updateRhDocumentDto },
-    );
+    try {
+      const fileData: ICreateDocument = {
+        ...body.data,
+        name: file.filename,
+        url_file: file.path,
+        size: file.size,
+        employee: body.employee,
+      };
+
+      const { result, old_file }: IResponseUpdateDocument =
+        await sendAndHandleRpcExceptionPromise(
+          this.documentClient,
+          'updateDocument',
+          {
+            id,
+            name: fileData.name,
+            url_file: fileData.url_file,
+            size: fileData.size,
+            type: fileData.type,
+            employee: fileData.employee,
+          } as IUpdateDocumentMSDto,
+        );
+
+      removeFile(old_file);
+
+      return result;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error);
+    }
   }
 
+  // TODO: Borrado de documentos en el disco.
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(

@@ -46,8 +46,8 @@ export const removeFiles = (files: Express.Multer.File[]) => {
   });
 };
 
-export const removeFile = (file: Express.Multer.File) => {
-  if (existsSync(file.path)) {
-    unlinkSync(file.path);
+export const removeFile = (file: string) => {
+  if (existsSync(file)) {
+    unlinkSync(file);
   }
 };
