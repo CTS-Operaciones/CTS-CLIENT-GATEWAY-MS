@@ -39,12 +39,9 @@ async function bootstrap() {
     .addTag('Departments ✅')
     .addTag('Positions ✅')
     .addTag('Employees ✅')
-    .addTag('Documents ❌')
+    .addTag('Documents ✅')
     .addTag('Projects ✅')
     .addTag('Extensions ✅')
-    .addTag('Headquarters ⚠️')
-    .addTag('Roles')
-    .addTag('Users')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

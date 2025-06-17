@@ -39,7 +39,7 @@ import { fileFilter, removeFile, storage } from './helpers';
 import { ParseAndValidatePipe } from './pipes';
 import { CleanupFilesInterceptor } from './interceptor';
 
-@ApiTags('Documents ❌')
+@ApiTags('Documents ✅')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
   constructor(
@@ -119,7 +119,7 @@ export class RhDocumentController {
     );
   }
 
-  // TODO: Verificar el borrado de documentos si existe un error.
+  // TODO: #5 Verificar el borrado de documentos si existe un error.
   @Patch(':id')
   @UseInterceptors(
     FileInterceptor('file', { fileFilter, storage }),
@@ -161,7 +161,7 @@ export class RhDocumentController {
     }
   }
 
-  // TODO: Borrado de documentos en el disco.
+  // TODO: #4 Borrado de documentos en el disco.
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(
