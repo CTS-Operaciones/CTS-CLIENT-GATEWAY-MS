@@ -7,6 +7,7 @@ export * from './dtos/pagination.dto';
 export * from './exceptions/rpc-custom.exception';
 export * from './helpers/rcp-hemper';
 export * from './interfaces/auth.interface';
+export * from './interfaces/bank.interface';
 export * from './interfaces/department.interface';
 export * from './interfaces/document.interface';
 export * from './interfaces/employee.interface';

@@ -12,9 +12,11 @@ import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
 import { HeadquartersModule } from './op/headquarters/headquarters.module';
+import { RhBanksModule } from './rh/rh-bank/rh-bank.module';
 
 @Module({
   imports: [
+    RhBanksModule,
     RhDeparmentModule,
     NatsModule,
     RhPositionModule,

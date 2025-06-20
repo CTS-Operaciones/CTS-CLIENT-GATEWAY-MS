@@ -36,12 +36,6 @@ async function bootstrap() {
     .setTitle('Client Gateway')
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
-    .addTag('Departments ✅')
-    .addTag('Positions ✅')
-    .addTag('Employees ✅')
-    .addTag('Documents ✅')
-    .addTag('Projects ✅')
-    .addTag('Extensions ✅')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
+  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -24,6 +25,7 @@ import {
   IEmergencyContact,
   IEmployeeCreate,
 } from '../../../common/';
+import { number } from 'joi';
 
 class EmergencyContactDto implements IEmergencyContact {
   @ApiProperty({
@@ -53,6 +55,16 @@ class EmergencyContactDto implements IEmergencyContact {
 }
 
 export class CreateEmployeeDto implements IEmployeeCreate {
+  @ApiProperty({
+    type: Date,
+    description: 'Date of registration of the employee',
+    example: '2025-01-01',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
+  date_register: Date;
+
   @ApiProperty({
     type: String,
     description: 'Names of the employee',
@@ -223,6 +235,22 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   @IsEnum(STATUS_CIVIL)
   @IsOptional()
   status_civil?: STATUS_CIVIL;
+
+  @ApiProperty({
+    type: number,
+    description: 'id of Bank of account number of the employee',
+  })
+  @IsNumber()
+  @IsOptional()
+  bank_id?: number;
+
+  @ApiProperty({
+    type: String,
+    description: 'Number account bank of the employee',
+  })
+  @IsString()
+  @IsOptional()
+  number_account_bank?: string;
 
   // Relations
   @ApiProperty({
