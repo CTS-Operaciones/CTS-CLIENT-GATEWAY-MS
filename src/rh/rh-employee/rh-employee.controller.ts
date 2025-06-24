@@ -14,12 +14,15 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  FindOneDeleteRelationsDto,
   FindOneRelationsDto,
+  FindOneWhitTermAndRelationDto,
   IEmployee,
   NATS_SERVICE,
   PaginationFilterStatusDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
+
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
 
 @ApiTags('Employees ✅')
@@ -86,6 +89,41 @@ export class RhEmployeeController {
       this.clientEmployee,
       'restore-employee',
       { id },
+    );
+  }
+}
+
+@ApiTags('Asigned Positions ✅')
+@Controller({ path: 'asignedPositions', version: '1' })
+export class RhAsignedPositionsController {
+  constructor(
+    @Inject(NATS_SERVICE)
+    private readonly clientEmployeeHasPosition: ClientProxy,
+  ) {}
+
+  @Get(':id')
+  async getAsignedPositions(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() findOneDeleteRelationsDto: FindOneDeleteRelationsDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'asignedPositionsFindByEmployeeId',
+      {
+        term: id,
+        ...findOneDeleteRelationsDto,
+      },
+    );
+  }
+
+  @Get('verify/:id')
+  async verifyAsignedPositions(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'verifyEmployeeHasPosition',
+      {
+        id,
+      },
     );
   }
 }
