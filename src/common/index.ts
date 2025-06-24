@@ -5,7 +5,7 @@ export * from './constants/status.enum';
 export * from './dtos/findOne.dto';
 export * from './dtos/pagination.dto';
 export * from './exceptions/rpc-custom.exception';
-export * from './helpers/rcp-hemper';
+export * from './helpers/rcp-helper';
 export * from './interfaces/auth.interface';
 export * from './interfaces/bank.interface';
 export * from './interfaces/department.interface';
