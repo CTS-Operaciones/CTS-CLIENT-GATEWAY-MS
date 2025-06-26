@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEnum,
@@ -7,7 +8,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IPaginateFilter, IPagination } from '../interfaces';
-import { ApiProperty } from '@nestjs/swagger';
 import { STATUS, STATUS_EMPLOYEE, STATUS_PROJECT } from '../constants';
 
 export class PaginationDto implements IPagination {

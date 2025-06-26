@@ -10,17 +10,19 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateHeadquartersDto } from './dto/create-headquarters.dto';
 import { UpdateHeadquartersDto } from './dto/update-headquarters.dto';
 
 import {
   NATS_SERVICE,
-  PaginationDto,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@Controller('headquarters')
+@ApiTags('Headquarters ✅')
+@Controller({ path: 'headquarters', version: '1' })
 export class HeadquartersController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientHeadquarters: ClientProxy,
@@ -36,7 +38,8 @@ export class HeadquartersController {
   }
 
   @Get()
-  async findAll(@Query() pagination: PaginationDto) {
+  async findAll(@Query() pagination: PaginationRelationsDto) {
+    console.log({ ...pagination });
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
       'findAllHeadquarters',

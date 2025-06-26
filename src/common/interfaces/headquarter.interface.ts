@@ -16,7 +16,7 @@ export interface ICreateHeadquarter {
   name: string;
   address: string;
   city: string;
-  postal_code: number;
+  postal_code: string;
   phone: string;
   production_days: number;
   number_expedients: number;

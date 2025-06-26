@@ -13,6 +13,7 @@ import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
 import { HeadquartersModule } from './op/headquarters/headquarters.module';
 import { RhBanksModule } from './rh/rh-bank/rh-bank.module';
+import { StaffModule } from './staff/staff.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RhBanksModule } from './rh/rh-bank/rh-bank.module';
     ProjectsModule,
     ResourceModule,
     HeadquartersModule,
+    StaffModule,
   ],
   controllers: [],
   providers: [],

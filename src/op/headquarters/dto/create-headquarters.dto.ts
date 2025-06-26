@@ -4,7 +4,6 @@ import {
   IsNumber,
   IsPhoneNumber,
   IsPositive,
-  IsPostalCode,
   IsString,
 } from 'class-validator';
 import { ICreateHeadquarter, STATUS_PROJECT } from '../../../common';
@@ -28,8 +27,8 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
 
   @ApiProperty({ type: String, description: 'Code postal of the headquarters' })
   @IsNotEmpty()
-  @IsPostalCode('MX')
-  postal_code: number;
+  @IsString()
+  postal_code: string;
 
   @ApiProperty({ type: String, description: 'Phone of the headquarters' })
   @IsString()

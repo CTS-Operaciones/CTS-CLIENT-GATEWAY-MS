@@ -20,7 +20,7 @@ import {
 } from '../../common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Documents')
+@ApiTags('Documents Types ✅')
 @Controller({ path: 'type-document', version: '1' })
 export class RhTypeDocumentController {
   constructor(

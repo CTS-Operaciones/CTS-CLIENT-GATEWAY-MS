@@ -10,4 +10,5 @@ export * from './pagination.interface';
 export * from './position.interface';
 export * from './project.interface';
 export * from './salary.interface';
+export * from './staff.interface';
 export * from './user.interface';
