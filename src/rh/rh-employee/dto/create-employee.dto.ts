@@ -25,7 +25,6 @@ import {
   IEmergencyContact,
   IEmployeeCreate,
 } from '../../../common/';
-import { number } from 'joi';
 
 class EmergencyContactDto implements IEmergencyContact {
   @ApiProperty({
@@ -237,11 +236,13 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   status_civil?: STATUS_CIVIL;
 
   @ApiProperty({
-    type: number,
+    type: Number,
     description: 'id of Bank of account number of the employee',
   })
+  @IsNotEmpty()
   @IsNumber()
-  @IsOptional()
+  @IsPositive()
+  @Min(1)
   bank_id?: number;
 
   @ApiProperty({
