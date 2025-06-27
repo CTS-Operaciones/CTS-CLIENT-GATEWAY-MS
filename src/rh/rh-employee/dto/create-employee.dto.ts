@@ -103,10 +103,10 @@ export class CreateEmployeeDto implements IEmployeeCreate {
     type: Number,
     description: 'Age of the employee',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
   @Min(18)
-  year_old?: number;
+  year_old: number;
 
   @ApiProperty({
     type: String,
