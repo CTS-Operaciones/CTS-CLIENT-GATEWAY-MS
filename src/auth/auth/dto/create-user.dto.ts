@@ -1,13 +1,30 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+
 import {
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
-import { ICreateUser } from '../../../common';
-import { ApiProperty } from '@nestjs/swagger';
+import { ICreateUser, IModuleForUser } from '../../../common';
+
+class CreatePermissionModuleDto implements IModuleForUser {
+  @ApiProperty({ type: Number, description: 'Module id of the user' })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  module: number;
+
+  @ApiProperty({ type: [Number], description: 'Permissions of the user' })
+  @IsArray()
+  @IsNotEmpty()
+  permissions: number[];
+}
 
 export class CreateUserDto implements ICreateUser {
   @ApiProperty({ type: String, description: 'Username of the user' })
@@ -37,5 +54,12 @@ export class CreateUserDto implements ICreateUser {
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
-  role_id: number;
+  role: number;
+
+  @ApiProperty({ type: [CreatePermissionModuleDto] })
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => CreatePermissionModuleDto)
+  modules: CreatePermissionModuleDto[];
 }

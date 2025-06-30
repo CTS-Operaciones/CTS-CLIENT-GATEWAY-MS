@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -26,12 +35,15 @@ export class StaffController {
     );
   }
 
-  @Get()
-  async findAll(@Query() pagination: PaginationRelationsDto) {
+  @Get(':id')
+  async findAll(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() pagination: PaginationRelationsDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'findAllStaff',
-      pagination,
+      { id, pagination },
     );
   }
 }

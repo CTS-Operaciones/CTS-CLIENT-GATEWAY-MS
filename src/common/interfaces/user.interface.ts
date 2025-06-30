@@ -5,9 +5,16 @@ export interface IUser {
   role: IRole;
 }
 
-export interface ICreateUser extends Omit<IUser, 'role'> { 
-  role_id: number;
+export interface ICreateUser extends Omit<IUser, 'role'> {
+  role: number;
+  modules: IModuleForUser[];
 }
+
+export interface IModuleForUser {
+  module: number;
+  permissions: number[];
+}
+
 
 export interface IRole { 
   type: string;

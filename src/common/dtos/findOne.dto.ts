@@ -50,10 +50,10 @@ export class FindOneDto extends OmitType(FindOneWhitTermAndRelationDto, [
   term: string | number;
 }
 
-export class FindOneRelationsDto extends OmitType(FindOneWhitTermAndRelationDto, [
-  'term',
-  'deletes',
-] as const) {
+export class FindOneRelationsDto extends OmitType(
+  FindOneWhitTermAndRelationDto,
+  ['term', 'deletes'] as const,
+) {
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()

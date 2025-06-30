@@ -57,7 +57,7 @@ export class PaginationRelationsDto extends PaginationDto {
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  relations?: boolean;
+  relations?: boolean = false;
 }
 
 export class PaginationFilterStatusDto<T>

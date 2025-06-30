@@ -18,6 +18,7 @@ export class CreateStaffDto implements ICreateStaff {
   @ApiProperty({
     type: Number,
     description: 'Id of boos of staff (this is id of staff in project)',
+    required: false,
   })
   @IsNumber()
   @IsPositive()
