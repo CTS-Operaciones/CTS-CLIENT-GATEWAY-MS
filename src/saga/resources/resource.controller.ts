@@ -6,6 +6,7 @@ import { send } from 'process';
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
 import { ClientProxy } from '@nestjs/microservices';
 import path from 'path';
+import { CreateClasificationDto } from './dto/create-clasification.dto';
 
 @ApiTags('Saga/resources 💻🌸')
 @Controller('resources')
@@ -27,6 +28,28 @@ export class ResourceController {
       this.clientResource,
       'updateResource',
       { id, ...updateResourceDto }
+    )
+  }
+}
+@ApiTags('Saga/Clasificacion 💻🌸')
+@Controller('clasification')
+export class ClasificationController {
+  constructor(@Inject(NATS_SERVICE) private readonly clientClasification: ClientProxy) { }
+  @Post()
+  async createClasification(@Body() createClasificationDto: CreateClasificationDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientClasification,
+      'createClasification',
+      createClasificationDto
+    )
+  }
+
+  @Patch()
+  async updateClasification(@Param('id', ParseIntPipe) id: number, @Body() updateClasificationDto: UpdateResourceDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientClasification,
+      'updateClasification',
+      { id, ...updateClasificationDto }
     )
   }
 }
