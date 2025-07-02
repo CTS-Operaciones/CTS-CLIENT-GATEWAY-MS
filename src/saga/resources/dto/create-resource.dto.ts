@@ -15,13 +15,13 @@ export class CreateResourceDto {
   @IsNotEmpty()
   especifications: string;
 
-  @ApiProperty({ type: String, description: 'Description of the resource' })
+  @ApiProperty({ type: Number, description: 'Description of the resource' })
   @IsPositive()
   @IsNotEmpty()
   @IsNumber()
   clasificationId: number;
 
-  @ApiProperty({ type: String, description: 'Description of the resource' })
+  @ApiProperty({ type: Number, description: 'Description of the resource' })
   @IsPositive()
   @IsNotEmpty()
   @IsNumber()
