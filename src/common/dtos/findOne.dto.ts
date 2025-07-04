@@ -1,6 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 import { IFindOne } from '../interfaces';
 
@@ -14,12 +14,14 @@ export class FindOneWhitTermAndRelationDto implements IFindOne {
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.relations === 'true')
   relations?: boolean;
 
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.deletes === 'true')
   deletes?: boolean;
 }
 
@@ -31,12 +33,14 @@ export class FindOneDeleteRelationsDto extends OmitType(
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.deletes === 'true')
   deletes?: boolean;
 
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.relations === 'true')
   relations?: boolean;
 }
 
@@ -58,6 +62,7 @@ export class FindOneRelationsDto extends OmitType(
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.relations === 'true')
   relations?: boolean;
 }
 
@@ -68,5 +73,6 @@ export class FindOneDeleteDto extends OmitType(FindOneWhitTermAndRelationDto, [
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
+  @Transform(({ obj }) => obj?.deletes === 'true')
   deletes?: boolean;
 }

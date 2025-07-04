@@ -17,7 +17,7 @@ import {
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
-} from '../common';
+} from '../../common';
 import { CreateSignatureDto, CreateTypeSignatureDto } from './dto';
 import { UpdateTypeSignatureDto } from './dto/update-typeSignature.dto';
 

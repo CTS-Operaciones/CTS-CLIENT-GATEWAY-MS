@@ -13,14 +13,17 @@ import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
 import { HeadquartersModule } from './op/headquarters/headquarters.module';
 import { RhBanksModule } from './rh/rh-bank/rh-bank.module';
-import { StaffModule } from './staff/staff.module';
+import { StaffModule } from './staffing/staff/staff.module';
 import { ModuleModule } from './auth/module/module.module';
 import { PermissionModule } from './auth/permission/permission.module';
+import { BondsModule } from './staffing/bonds/bonds.module';
+import { ContractModule } from './rh';
 
 @Module({
   imports: [
     RhBanksModule,
     RhDeparmentModule,
+    ContractModule,
     NatsModule,
     RhPositionModule,
     RhEmployeeModule,
@@ -35,6 +38,7 @@ import { PermissionModule } from './auth/permission/permission.module';
     ResourceModule,
     HeadquartersModule,
     StaffModule,
+    BondsModule,
   ],
   controllers: [],
   providers: [],

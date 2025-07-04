@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsOptional, IsPositive } from 'class-validator';
-import { ICreateStaff } from '../../common';
+import { ICreateStaff } from '../../../common';
 
 export class CreateStaffDto implements ICreateStaff {
   @ApiProperty({ type: Number, description: 'Id EmployeeHasPositions' })

@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -15,7 +16,7 @@ import {
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
-} from '../common';
+} from '../../common';
 
 import { CreateStaffDto } from './dto';
 
@@ -35,6 +36,15 @@ export class StaffController {
     );
   }
 
+  @Get('project')
+  async findAllEmployeeInProject() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'findAllEmployeeInProject',
+      {},
+    );
+  }
+
   @Get(':id')
   async findAll(
     @Param('id', ParseIntPipe) id: number,
@@ -45,5 +55,16 @@ export class StaffController {
       'findAllStaff',
       { id, pagination },
     );
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateStaffDto: CreateStaffDto,
+  ) {
+    return sendAndHandleRpcExceptionPromise(this.clientProxy, 'updateStaff', {
+      id,
+      updateStaffDto,
+    });
   }
 }

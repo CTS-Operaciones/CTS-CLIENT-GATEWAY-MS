@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-import { ICreateTypeSignature } from '../../common';
+import { ICreateTypeSignature } from '../../../common';
 
 export class CreateTypeSignatureDto implements ICreateTypeSignature {
   @ApiProperty({

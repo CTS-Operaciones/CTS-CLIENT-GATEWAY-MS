@@ -45,22 +45,19 @@ export class RhTypeDocumentController {
     );
   }
 
-  @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() findOne: FindOneDto,
-  ) {
+  @Get(':term')
+  async findOne(@Param() findOne: FindOneDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.typeDocumentClient,
       'findOneTypeDocument',
-      { id, ...findOne },
+      findOne,
     );
   }
 
   @Patch(':id')
   async updated(
     @Param('id', ParseIntPipe) id: number,
-    @Query() updateTypeDocumentDto: UpdateTypeDocumentDto,
+    @Body() updateTypeDocumentDto: UpdateTypeDocumentDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.typeDocumentClient,

@@ -39,6 +39,7 @@ async function bootstrap() {
     .addTag('Departments ✅')
     .addTag('Positions ✅')
     .addTag('Bank ✅')
+    .addTag('Contracts Types ✅')
     .addTag('Employees ✅')
     .addTag('Asigned Positions ✅')
     .addTag('Documents Types ✅')

@@ -6,3 +6,5 @@ export * from './rh-position/dto/create-position.dto';
 export * from './rh-position/dto/update-position.dto';
 export * from './rh-position/rh-position.controller';
 export * from './rh-position/rh-position.module';
+export * from './rh-bank/rh-bank.module';
+export * from './rh-contract/contract.module';

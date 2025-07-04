@@ -70,7 +70,7 @@ export class ProjectsController {
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateProjectDto: UpdateProjectDto,
+    @Query() updateProjectDto: UpdateProjectDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProjects,

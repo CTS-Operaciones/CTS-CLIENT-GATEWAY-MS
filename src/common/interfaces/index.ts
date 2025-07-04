@@ -1,5 +1,6 @@
 export * from './auth.interface';
 export * from './bank.interface';
+export * from './bond.interface';
 export * from './department.interface';
 export * from './document.interface';
 export * from './employee.interface';
@@ -15,3 +16,4 @@ export * from './salary.interface';
 export * from './signature.interface';
 export * from './staff.interface';
 export * from './user.interface';
+export * from './typeContract.interface';
