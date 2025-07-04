@@ -11,6 +11,9 @@ import { RhDocumentModule } from './rh/rh-document/rh-document.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
+import { InventoryModule } from './saga/resources/inventory/inventory.module';
+
+
 
 @Module({
   imports: [
@@ -25,6 +28,8 @@ import { ResourceModule } from './saga/resources/resource.module';
     ExtensionsModule,
     ProjectsModule,
     ResourceModule,
+    InventoryModule,
+
   ],
   controllers: [],
   providers: [],

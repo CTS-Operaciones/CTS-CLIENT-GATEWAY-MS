@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { BrandsController, ClasificationController, ModelsController, ResourceController } from './resource.controller';
 import { NatsModule } from 'src/transports/nats.module';
 
+
+
 @Module({
   imports: [NatsModule],
   controllers: [
@@ -9,7 +11,8 @@ import { NatsModule } from 'src/transports/nats.module';
     ResourceController,
     ClasificationController,
     BrandsController,
-    ModelsController
+    ModelsController,
+
 
   ],
 })

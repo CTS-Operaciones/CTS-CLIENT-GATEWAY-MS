@@ -20,7 +20,7 @@ export class ResourceController {
   @Post()
   async createResource(@Body() createResourceDto: CreateResourceDto) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientResource,
+      this.clientResource,           
       'createResource',
       createResourceDto
     )
