@@ -11,7 +11,8 @@ import { RhDocumentModule } from './rh/rh-document/rh-document.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
-import { InventoryModule } from './saga/resources/inventory/inventory.module';
+import { InventoryModule } from './saga/inventory/inventory.module';
+import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 
 
 
@@ -29,6 +30,7 @@ import { InventoryModule } from './saga/resources/inventory/inventory.module';
     ProjectsModule,
     ResourceModule,
     InventoryModule,
+    AddRemoveModule,
 
   ],
   controllers: [],

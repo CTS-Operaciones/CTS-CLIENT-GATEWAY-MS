@@ -3,9 +3,11 @@ import { ClientProxy} from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
+import { CreateStateDto } from './dto/create-state.dto';
+import { UpdateStateDto } from './dto/update-state.dto';
 
 @ApiTags('Saga/Inventory 💻🌸')
-@Controller('')
+  @Controller('inventories')
 export class InventoryController {
   constructor(@Inject(NATS_SERVICE) private readonly clientInventory: ClientProxy) {}
   @Post()
@@ -105,4 +107,52 @@ export class UbicationsController {
     )
   }
 
+}
+
+@ApiTags('Saga/StateInventories 💻🌸')
+@Controller('state')
+export class StateController {
+  constructor(@Inject(NATS_SERVICE) private readonly clientState: ClientProxy) { }
+
+  @Get()
+  async getState() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientState,
+      'findAllState',
+      {}
+    )
+  }
+
+  @Get(':id')
+  async getStateById(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientState,
+      'findOneState',
+      { id }
+    )
+  }
+  @Post()
+  async createState(@Body() createStateDto: CreateStateDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientState,
+      'createState',
+      createStateDto
+    )
+  }
+  @Patch()
+  async updateState(@Body() UpdateStateDto: CreateStateDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientState,
+      'updateState',
+      UpdateStateDto
+    )
+  }
+  @Delete(':id')
+  async removeState(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientState,
+      'removeState',
+      { id }
+    )
+  }
 }
