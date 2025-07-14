@@ -9,13 +9,18 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  NATS_SERVICE,
+  PaginationDto,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Bank ✅')
@@ -33,8 +38,12 @@ export class BankController {
   }
 
   @Get()
-  findAll() {
-    return sendAndHandleRpcExceptionPromise(this.bankClient, 'findAllBank', {});
+  findAll(@Query() pagination: PaginationDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.bankClient,
+      'findAllBank',
+      pagination,
+    );
   }
 
   @Get(':id')

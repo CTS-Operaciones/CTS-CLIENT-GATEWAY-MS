@@ -23,5 +23,5 @@ export class CreateStaffDto implements ICreateStaff {
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  parent?: number;
+  parent?: number = undefined;
 }

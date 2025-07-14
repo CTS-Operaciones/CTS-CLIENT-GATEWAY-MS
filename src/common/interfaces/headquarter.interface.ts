@@ -1,6 +1,6 @@
 import { STATUS_PROJECT } from '../constants';
 
-export interface IHeadquiarter {
+export interface IHeadquarter {
   name: string;
   address: string;
   city: string;

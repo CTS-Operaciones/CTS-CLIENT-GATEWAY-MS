@@ -13,7 +13,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { AddRoleProfileDto, CreateUserDto } from './dto';
 import {
   FindOneRelationsDto,
   NATS_SERVICE,
@@ -59,7 +59,7 @@ export class UserController {
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: AddRoleProfileDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,

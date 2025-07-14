@@ -18,6 +18,7 @@ import { ModuleModule } from './auth/module/module.module';
 import { PermissionModule } from './auth/permission/permission.module';
 import { BondsModule } from './staffing/bonds/bonds.module';
 import { ContractModule } from './rh';
+import { ProfileModule } from './auth/profile/profile.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ContractModule } from './rh';
     RhPositionModule,
     RhEmployeeModule,
     AuthModule,
+    ProfileModule,
     RoleModule,
     ModuleModule,
     PermissionModule,

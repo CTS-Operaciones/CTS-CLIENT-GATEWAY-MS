@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import {
   FindOneRelationsDto,
+  FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
@@ -47,12 +48,13 @@ export class RhPositionController {
   @Get(':term')
   async findOnePosition(
     @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query()
+    { relations, allRelations, deletes }: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-one-position',
-      { term, relations },
+      { term, relations, allRelations, deletes },
     );
   }
 

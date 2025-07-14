@@ -18,7 +18,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-import { CreateStaffDto } from './dto';
+import { CreateStaffDto, UpdateStaffDto } from './dto';
 
 @ApiTags('Staff ⚠️')
 @Controller({ path: 'staff', version: '1' })
@@ -52,7 +52,7 @@ export class StaffController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'findAllStaff',
+      'findAllByHeadquarterIdStaff',
       { id, pagination },
     );
   }
@@ -60,11 +60,11 @@ export class StaffController {
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateStaffDto: CreateStaffDto,
+    @Body() updateStaffDto: UpdateStaffDto,
   ) {
     return sendAndHandleRpcExceptionPromise(this.clientProxy, 'updateStaff', {
       id,
-      updateStaffDto,
+      ...updateStaffDto,
     });
   }
 }

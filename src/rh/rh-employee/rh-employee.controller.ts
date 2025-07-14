@@ -11,14 +11,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneDeleteRelationsDto,
   FindOneRelationsDto,
   FindOneWhitTermAndRelationDto,
   IEmployee,
-  IFindOne,
   NATS_SERVICE,
   PaginationFilterStatusDto,
   sendAndHandleRpcExceptionPromise,
@@ -52,18 +50,21 @@ export class RhEmployeeController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   getItem(
     @Param('id') id: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query()
+    { allRelations, deletes, relations }: FindOneWhitTermAndRelationDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'find-one-employee',
-      { term: id, relations },
+      { term: id, allRelations, deletes, relations },
     );
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async updateItem(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateEmployeeDto,
@@ -76,6 +77,7 @@ export class RhEmployeeController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async deleteItem(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
@@ -104,16 +106,20 @@ export class RhAsignedPositionsController {
 
   // FIXME: #5 Validar Tipado del payload
   @Get(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async getAsignedPositions(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() findOneDeleteRelationsDto: FindOneDeleteRelationsDto,
+    @Param('id') id: string,
+    @Query()
+    { allRelations, deletes, relations }: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
       'asignedPositionsFindByEmployeeId',
       {
         term: id,
-        ...findOneDeleteRelationsDto,
+        allRelations,
+        deletes,
+        relations,
       },
     );
   }

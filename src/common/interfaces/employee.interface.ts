@@ -32,6 +32,11 @@ export interface IEmployee {
   number_account_bank?: string;
 }
 
+export interface IAccount {
+  email: string | undefined;
+  register: boolean;
+}
+
 export interface IEmergencyContact {
   name: string;
   relationship: string;
@@ -39,6 +44,8 @@ export interface IEmergencyContact {
 }
 
 export interface IEmployeeCreate extends Omit<IEmployee, 'bank'> {
-  position_id: number;
+  position_id: number[];
   bank_id?: number;
+  typeContract: number;
+  account: IAccount;
 }

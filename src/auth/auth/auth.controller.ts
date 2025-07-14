@@ -1,17 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import { ChangePasswordDto, LoginDto } from './dto';
-import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller({ path: 'auth', version: '1' })

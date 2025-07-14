@@ -12,6 +12,7 @@ export * from './pagination.interface';
 export * from './permission.interface';
 export * from './position.interface';
 export * from './project.interface';
+export * from './profile.interface';
 export * from './salary.interface';
 export * from './signature.interface';
 export * from './staff.interface';

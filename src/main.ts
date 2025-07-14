@@ -36,6 +36,7 @@ async function bootstrap() {
     .setTitle('Client Gateway')
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
+    .addTag('Profile ✅')
     .addTag('Departments ✅')
     .addTag('Positions ✅')
     .addTag('Bank ✅')

@@ -11,6 +11,11 @@ import { Type } from 'class-transformer';
 import { ICreateProject } from '../../../common';
 
 export class CreateProjectDto implements ICreateProject {
+  @ApiProperty({ type: String, description: 'Contract number of the project' })
+  @IsString()
+  @IsNotEmpty()
+  contract_number: string;
+
   @ApiProperty({ type: String, description: 'Name of the project' })
   @IsString()
   @IsNotEmpty()

@@ -1,47 +1,61 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 
 import { IFindOne } from '../interfaces';
+import { ToBoolean } from '../decorators';
 
-export class FindOneWhitTermAndRelationDto implements IFindOne {
-  @ApiProperty({ type: String || Number, required: true })
-  @IsString()
-  @IsNotEmpty()
-  term: string | number;
-
-  @ApiProperty({ type: Boolean, required: false })
+export class FindOneWhitTermAndRelationDto implements Omit<IFindOne, 'term'> {
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    description: 'Indica si se deben incluir las relaciones en la respuesta',
+  })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.relations === 'true')
-  relations?: boolean;
+  @ToBoolean('relations')
+  relations?: boolean = false;
 
-  @ApiProperty({ type: Boolean, required: false })
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    description:
+      'Indica si se deben incluir las relaciones eliminadas en la respuesta',
+  })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.deletes === 'true')
-  deletes?: boolean;
+  @ToBoolean('deletes')
+  deletes?: boolean = false;
+
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    description:
+      'Indica si se deben incluir todas las relaciones en la respuesta',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('allRelations')
+  allRelations?: boolean = false;
 }
 
-export class FindOneDeleteRelationsDto extends OmitType(
-  FindOneWhitTermAndRelationDto,
-  ['term'] as const,
-) {
+export class FindOneDeleteRelationsDto {
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.deletes === 'true')
-  deletes?: boolean;
+  @ToBoolean('relations')
+  relations?: boolean = false;
 
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.relations === 'true')
-  relations?: boolean;
+  @ToBoolean('deletes')
+  deletes?: boolean = false;
 }
 
 export class FindOneDto extends OmitType(FindOneWhitTermAndRelationDto, [
@@ -56,23 +70,22 @@ export class FindOneDto extends OmitType(FindOneWhitTermAndRelationDto, [
 
 export class FindOneRelationsDto extends OmitType(
   FindOneWhitTermAndRelationDto,
-  ['term', 'deletes'] as const,
+  ['deletes'] as const,
 ) {
   @ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.relations === 'true')
-  relations?: boolean;
+  @ToBoolean('relations')
+  relations?: boolean = false;
 }
 
 export class FindOneDeleteDto extends OmitType(FindOneWhitTermAndRelationDto, [
-  'term',
   'relations',
 ] as const) {
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
-  @Transform(({ obj }) => obj?.deletes === 'true')
-  deletes?: boolean;
+  @ToBoolean('deletes')
+  deletes?: boolean = false;
 }
