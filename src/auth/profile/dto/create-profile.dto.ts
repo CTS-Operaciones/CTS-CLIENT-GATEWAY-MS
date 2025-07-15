@@ -42,25 +42,26 @@ export class AddModuleToProfileDto implements IAddModuleToProfile {
 
 export class CreateProfileDto implements ICreateProfile {
   @ApiProperty({
+    type: Boolean,
+    required: false,
+    description: 'Indicate if the profile is extended from another profile',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('extends')
+  extends: boolean;
+
+  @ApiProperty({
     type: Number,
     required: false,
     description:
       'Id of the profile, is required if the extends property is true',
   })
   @IsNumber()
-  @IsNotEmpty()
+  @IsPositive()
   @IsOptional()
   id: number;
-
-  @ApiProperty({
-    type: String,
-    required: false,
-    description:
-      'Name of the profile, is required if the saved property is true',
-  })
-  @IsString()
-  @IsOptional()
-  name: string = '';
 
   @ApiProperty({
     type: Boolean,
@@ -74,15 +75,14 @@ export class CreateProfileDto implements ICreateProfile {
   saved: boolean;
 
   @ApiProperty({
-    type: Boolean,
+    type: String,
     required: false,
-    description: 'Indicate if the profile is extended from another profile',
+    description:
+      'Name of the profile, is required if the saved property is true',
   })
-  @IsBoolean()
+  @IsString()
   @IsOptional()
-  @Type(() => Boolean)
-  @ToBoolean('extends')
-  extends: boolean;
+  name: string = '';
 
   @ApiProperty({
     type: [AddModuleToProfileDto],

@@ -1,6 +1,6 @@
-import { Body, Controller, Inject, Param, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import { ChangePasswordDto, LoginDto } from './dto';
@@ -28,6 +28,15 @@ export class AuthController {
       this.clientAuth,
       'chagePasswordAuth',
       { id, ...changePasswordDto },
+    );
+  }
+
+  @Get('reset-password/:id')
+  async resetPassword(@Param('id') id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientAuth,
+      'resetPasswordAuth',
+      { id },
     );
   }
 }

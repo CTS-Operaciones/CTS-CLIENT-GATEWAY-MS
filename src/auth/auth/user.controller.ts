@@ -45,14 +45,11 @@ export class UserController {
   }
 
   @Get(':term')
-  async findOne(
-    @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
-  ) {
+  async findOne(@Param('term') term: string) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,
       'findOneUser',
-      { term, relations },
+      { term },
     );
   }
 

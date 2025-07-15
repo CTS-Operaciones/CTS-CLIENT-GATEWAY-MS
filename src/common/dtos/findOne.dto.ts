@@ -61,6 +61,7 @@ export class FindOneDeleteRelationsDto {
 export class FindOneDto extends OmitType(FindOneWhitTermAndRelationDto, [
   'relations',
   'deletes',
+  'allRelations',
 ] as const) {
   @ApiProperty({ type: String || Number, required: true })
   @IsString()
