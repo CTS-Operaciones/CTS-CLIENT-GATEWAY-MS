@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 
@@ -27,7 +28,7 @@ export class ContractController {
   ) {}
 
   @Post()
-  async create(@Payload() createTypeContractDto: CreateTypeContractDto) {
+  async create(@Body() createTypeContractDto: CreateTypeContractDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'createTypeContract',
@@ -36,7 +37,7 @@ export class ContractController {
   }
 
   @Get()
-  async findAll(@Payload() pagination: PaginationDto) {
+  async findAll(@Query() pagination: PaginationDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'findAllTypeContract',
