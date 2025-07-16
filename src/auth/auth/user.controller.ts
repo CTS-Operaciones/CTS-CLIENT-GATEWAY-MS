@@ -17,6 +17,7 @@ import { AddRoleProfileDto, CreateUserDto } from './dto';
 import {
   FindOneRelationsDto,
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
@@ -40,6 +41,15 @@ export class UserController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,
       'findAllUser',
+      pagination,
+    );
+  }
+
+  @Get('emails')
+  async findEmails(@Query() pagination: PaginationDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientUser,
+      'findEmailsNotCreated',
       pagination,
     );
   }
