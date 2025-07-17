@@ -36,6 +36,7 @@ async function bootstrap() {
     .setTitle('Client Gateway')
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
+    .addTag('Notification 📨')
     .addTag('Permission')
     .addTag('Module')
     .addTag('Profile')

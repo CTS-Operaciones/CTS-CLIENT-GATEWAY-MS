@@ -19,6 +19,7 @@ import { PermissionModule } from './auth/permission/permission.module';
 import { BondsModule } from './staffing/bonds/bonds.module';
 import { ContractModule } from './rh';
 import { ProfileModule } from './auth/profile/profile.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ProfileModule } from './auth/profile/profile.module';
     HeadquartersModule,
     StaffModule,
     BondsModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [],
