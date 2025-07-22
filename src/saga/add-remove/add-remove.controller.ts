@@ -59,7 +59,8 @@ export class AddRemoveController {
     );
   }
 }
-
+@ApiTags('Inventory has add-remove')
+@Controller('inventory-has-add-remove')
 export class inventoryHasAddRemoveController {
   @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;
   @Post()
@@ -71,12 +72,12 @@ export class inventoryHasAddRemoveController {
     );
   }
 
-  @Get()
-  async findAll() {
+  @Get('id')
+  async getInventoryById(@Param('id') id: string) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventoryhasAdd,
       'findOneInventoryHasAdd',
-      {},
+      { id },
     );
   }
 

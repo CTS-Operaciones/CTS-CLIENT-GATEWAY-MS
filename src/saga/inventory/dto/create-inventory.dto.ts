@@ -1,55 +1,41 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-
+import { STATUS_RESOURCE } from '../../../common/constants/status.enum';
 export class CreateInventoryDto {
-  @ApiProperty({ type: String, description: 'Name of the resource' })
+  @ApiProperty({ type: String, description: 'Name of the inventory' })
   @IsString()
   @IsNotEmpty()
   Idname: string;
 
-  @ApiProperty({ type: String, description: 'Serial number of the resource' })
+  @ApiProperty({ type: String, description: 'Serial number of the inventory' })
   @IsString()
   @IsNotEmpty()
   serialNumber: string;
 
-  @ApiProperty({ type:Number, description: 'User id' })
+  @ApiProperty({ type: Number, description: 'User id of the inventory' })
   @IsNumber()
+  user_id: number;
+
+  @ApiProperty({ type: Number, description: 'State id of the inventory' })
+  @IsNumber()
+  stateId: number;
+
+  @ApiProperty({ type: Number, description: 'Resource id of the inventory' })
+  @IsNumber()
+  resourceId: number;
+
+  @ApiProperty({ type: Number, description: 'Status of the inventory' })
+  @IsEnum(STATUS_RESOURCE)
   @IsNotEmpty()
-  @IsPositive()
-  user_id: number
+  status: STATUS_RESOURCE;
 
-  @ApiProperty({ type: Number, description: 'State id' })
-  @IsNumber()  
-  stateId: number
-
-  @ApiProperty({ type: Number, description: 'Resource id' })
+  @ApiProperty({ type: Number, description: 'Ubication id of the inventory' })
   @IsNumber()
-  resourceId: number
-
-  @ApiProperty({ type: Number, description: 'Add resource id' })
-  @IsNumber()
-  addRemovalId: number
-
-  @ApiProperty({ type: Number, description: 'Ubication id' })
-  @IsNumber()
-  ubications: number
-
-  @ApiProperty({ type: Number, description: 'Assignment id' })
-  @IsNumber()  
-  assignmentId: number
-
-  @ApiProperty({ type: Number, description: 'Admissions discharges id' })
-  @IsNumber()
-  admissionsDischargesId: number
-
-  @ApiProperty({ type: Number, description: 'Habilitation id' })
-  @IsNumber()
-  habilitationId: number
-
-  @ApiProperty({ type: Number, description: 'Mantenance id' })
-  @IsNumber()
-  mantenanceId: number
-
-
-
+  ubications: number;
 }

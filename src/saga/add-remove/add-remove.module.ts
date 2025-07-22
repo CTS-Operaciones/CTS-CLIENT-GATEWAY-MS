@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { NatsModule } from 'src/transports/nats.module';
-import { AddRemoveController } from './add-remove.controller';  
+import {
+  AddRemoveController,
+  inventoryHasAddRemoveController,
+} from './add-remove.controller';
 @Module({
   imports: [NatsModule],
-  controllers: [AddRemoveController],
-  
+  controllers: [AddRemoveController, inventoryHasAddRemoveController],
 })
 export class AddRemoveModule {}

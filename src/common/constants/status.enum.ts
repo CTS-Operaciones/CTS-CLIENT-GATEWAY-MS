@@ -12,7 +12,6 @@ export enum STATUS_PROJECT {
   FINALIZED = 'FINALIZED',
 }
 
-
 export enum STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
@@ -65,4 +64,10 @@ export enum ROLE {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ADMIN = 'ADMIN',
   USER = 'USER',
+}
+
+export enum STATUS_RESOURCE {
+  TRAYECTO = 'TRAYECTO',
+  ALMACEN = 'ALMACEN',
+  DISPONIBLE = 'DISPONIBLE',
 }

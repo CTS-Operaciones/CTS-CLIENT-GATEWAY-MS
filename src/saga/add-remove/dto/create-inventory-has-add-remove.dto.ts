@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
@@ -8,9 +9,11 @@ import {
 } from 'class-validator';
 import { CreateResourceDto as createResourceDto } from '../../resources/dto/create-resource.dto';
 import { Type } from 'class-transformer';
+import { STATUS_RESOURCE } from 'src/common';
 
 export class CreateHasAddRemoveDto {
   // Resource
+  @ApiProperty({ type: createResourceDto, description: 'Resource' })
   @ValidateNested()
   @Type(() => createResourceDto)
   resource: createResourceDto;
@@ -22,14 +25,25 @@ export class CreateHasAddRemoveDto {
   idActa: number;
   // Inventory
 
-  @ApiProperty({ type: Number, description: 'Id (name) del inventario' })
+  @ApiProperty({ type: String, description: 'Id (name) del inventario' })
   @IsString()
   idName: string;
   @ApiProperty({ type: String, description: 'Serial number del inventario' })
   @IsString()
   serialNumber: string;
 
-  @ApiProperty({ type: Number, description: 'Ubication id of the resource add/remove' })
+  @ApiProperty({
+    type: Number,
+    description: 'Ubication id of the resource add/remove',
+  })
   @IsNumber()
   ubications: number;
+
+  @ApiProperty({ type: Number, description: 'User id of the inventory' })
+  @IsNumber()
+  user_id: number;
+  @ApiProperty({ type: Number, description: 'State id of the inventory' })
+  @IsEnum(STATUS_RESOURCE)
+  @IsNotEmpty()
+  status: STATUS_RESOURCE;
 }
