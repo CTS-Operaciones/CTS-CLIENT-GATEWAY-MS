@@ -1,7 +1,22 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  FindOneWhitTermAndRelationDto,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from 'src/common';
 import { CreateAddRemoveDto } from './dto/create-add-remove.dto';
 import { CreateHasAddRemoveDto } from '../add-remove/dto/create-inventory-has-add-remove.dto';
 @ApiTags('add-remove')
@@ -30,11 +45,20 @@ export class AddRemoveController {
   }
 
   @Get(':id')
-  async getResource(@Param('id', ParseIntPipe) id: number) {
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of the acta add-remove',
+  })
+  async getAddRemoveById(
+    @Param('id', ParseIntPipe) id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAddRemove,
       'findOneAddRemove',
-      { id },
+      { term: id, ...find },
     );
   }
 
@@ -72,12 +96,17 @@ export class inventoryHasAddRemoveController {
     );
   }
 
-  @Get('id')
-  async getInventoryById(@Param('id') id: string) {
+  @Get(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id del acta' })
+  async getInventoryById(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventoryhasAdd,
       'findOneInventoryHasAdd',
-      { id },
+      { term: id, ...find },
     );
   }
 
@@ -90,4 +119,3 @@ export class inventoryHasAddRemoveController {
     );
   }
 }
-  

@@ -13,8 +13,7 @@ import { ProjectsModule } from './op/projects/projects.module';
 import { ResourceModule } from './saga/resources/resource.module';
 import { InventoryModule } from './saga/inventory/inventory.module';
 import { AddRemoveModule } from './saga/add-remove/add-remove.module';
-
-
+import { AssigmentModule } from './saga/assigment/assigment.module';
 
 @Module({
   imports: [
@@ -31,7 +30,7 @@ import { AddRemoveModule } from './saga/add-remove/add-remove.module';
     ResourceModule,
     InventoryModule,
     AddRemoveModule,
-
+    AssigmentModule,
   ],
   controllers: [],
   providers: [],
