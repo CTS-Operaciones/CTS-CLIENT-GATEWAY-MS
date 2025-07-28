@@ -25,7 +25,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@ApiTags('Headquarters ✅')
+@ApiTags('Headquarters 🧾')
 @Controller({ path: 'headquarters', version: '1' })
 export class HeadquartersController {
   constructor(

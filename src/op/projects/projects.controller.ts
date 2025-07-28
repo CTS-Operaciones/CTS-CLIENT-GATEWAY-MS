@@ -26,7 +26,7 @@ import {
   UpdateProjectStatus,
 } from './dto/update-project.dto';
 
-@ApiTags('Projects ✅')
+@ApiTags('Projects 🧾')
 @Controller({ path: 'projects', version: '1' })
 export class ProjectsController {
   constructor(

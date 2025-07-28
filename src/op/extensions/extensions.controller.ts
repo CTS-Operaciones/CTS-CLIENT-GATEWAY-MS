@@ -22,7 +22,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@ApiTags('Extensions ✅')
+@ApiTags('Extensions 🧾')
 @Controller({ path: 'extensions', version: '1' })
 export class ExtensionsController {
   constructor(
