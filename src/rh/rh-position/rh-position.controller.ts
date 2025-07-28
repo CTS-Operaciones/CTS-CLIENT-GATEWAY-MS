@@ -14,7 +14,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
   PaginationRelationsDto,
@@ -22,7 +21,7 @@ import {
 } from '../../common';
 import { CreatePositionDto, UpdatePositionDto } from './dto';
 
-@ApiTags('Positions ✅')
+@ApiTags('Positions 🪪')
 @Controller({ path: 'position', version: '1' })
 export class RhPositionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}

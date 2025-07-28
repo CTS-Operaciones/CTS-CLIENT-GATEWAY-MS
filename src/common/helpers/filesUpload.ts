@@ -2,8 +2,8 @@ import { existsSync, unlinkSync } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 
-import { ErrorManager } from '../../../common/utils/errorManager';
-import { envs } from '../../../common';
+import { ErrorManager } from '../utils/errorManager';
+import { envs } from '../configs';
 
 export const fileFilter = (
   _req: Express.Request,
@@ -17,7 +17,16 @@ export const fileFilter = (
     );
 
   const fileExptension = file.mimetype.split('/')[1];
-  const validExtensions = ['pdf', 'PDF'];
+  const validExtensions = [
+    'pdf',
+    'PDF',
+    'jpg',
+    'JPG',
+    'jpeg',
+    'JPEG',
+    'png',
+    'PNG',
+  ];
 
   //TODO: Retornar error si no se encuentra la extension PDF o pdf
   if (validExtensions.includes(fileExptension)) {
@@ -32,7 +41,11 @@ export const storage = diskStorage({
 
   filename: (req, file, cb) => {
     const extension = file.originalname.split('.').pop();
-    const name = `${uuidv4()}.${extension}`;
+    let name = `${uuidv4()}.${extension}`;
+
+    if (extension !== 'pdf' && extension !== 'PDF') {
+      name = `login.${extension}`;
+    }
 
     cb(null, name);
   },

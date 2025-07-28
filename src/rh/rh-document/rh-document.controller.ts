@@ -35,11 +35,15 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-import { fileFilter, removeFile, storage } from './helpers';
+import {
+  CleanupFilesInterceptor,
+  fileFilter,
+  removeFile,
+  storage,
+} from '../../common';
 import { ParseAndValidatePipe } from './pipes';
-import { CleanupFilesInterceptor } from './interceptor';
 
-@ApiTags('Documents ✅')
+@ApiTags('Documents 🪪')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
   constructor(

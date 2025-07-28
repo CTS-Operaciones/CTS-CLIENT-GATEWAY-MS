@@ -6,11 +6,20 @@ import {
 } from '@nestjs/common';
 import { Observable, catchError, throwError } from 'rxjs';
 import * as fs from 'fs';
+import { envs } from '../configs';
 
 @Injectable()
 export class CleanupFilesInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
+
+    if (req.files) {
+      const files = fs.readdirSync(envs.FOLDER_PDFS).filter((file) => {
+        file.split('.').includes('login');
+      });
+
+      console.log(files);
+    }
 
     return next.handle().pipe(
       catchError((err) => {

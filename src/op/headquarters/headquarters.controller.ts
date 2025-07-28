@@ -8,12 +8,16 @@ import {
   Delete,
   Inject,
   Query,
+  Put,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateHeadquartersDto } from './dto/create-headquarters.dto';
-import { UpdateHeadquartersDto } from './dto/update-headquarters.dto';
+import {
+  UpdateAddQuotaEmployeePosition,
+  UpdateHeadquartersDto,
+} from './dto/update-headquarters.dto';
 
 import {
   NATS_SERVICE,
@@ -32,7 +36,7 @@ export class HeadquartersController {
   async create(@Body() createHeadquartersDto: CreateHeadquartersDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
-      'createHeadquarters',
+      'headquarters.create',
       createHeadquartersDto,
     );
   }
@@ -42,7 +46,7 @@ export class HeadquartersController {
     console.log({ ...pagination });
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
-      'findAllHeadquarters',
+      'headquarters.findAll',
       pagination,
     );
   }
@@ -51,7 +55,7 @@ export class HeadquartersController {
   async findOne(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
-      'findOneHeadquarters',
+      'headquarters.findOne',
       { id },
     );
   }
@@ -63,8 +67,20 @@ export class HeadquartersController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
-      'updateHeadquarters',
+      'headquarters.update',
       { id, ...updateHeadquartersDto },
+    );
+  }
+
+  @Put(':id')
+  async updateQuotaEmployeeForPosition(
+    @Param('id') id: string,
+    @Body() updateAddQuotaEmployeePosition: UpdateAddQuotaEmployeePosition,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientHeadquarters,
+      'headquarters.updateQuotaEmploye',
+      { id, ...updateAddQuotaEmployeePosition },
     );
   }
 
@@ -72,7 +88,7 @@ export class HeadquartersController {
   async remove(@Param('id') id: string) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
-      'removeHeadquarters',
+      'headquarters.remove',
       { id },
     );
   }

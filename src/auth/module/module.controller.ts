@@ -11,6 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateModuleDto, UpdateModuleDto } from './dto';
 import {
@@ -19,6 +20,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiTags('Module 🔐')
 @Controller({ path: 'module', version: '1' })
 export class ModuleController {
   constructor(

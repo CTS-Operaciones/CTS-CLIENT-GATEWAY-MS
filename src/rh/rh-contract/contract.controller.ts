@@ -9,7 +9,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateTypeContractDto, UpdateTypeContractDto } from './dto';
 import {
@@ -18,9 +19,8 @@ import {
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Contracts Types ✅')
+@ApiTags('Contracts Types 🪪')
 @Controller({ path: 'type-contract', version: '1' })
 export class ContractController {
   constructor(

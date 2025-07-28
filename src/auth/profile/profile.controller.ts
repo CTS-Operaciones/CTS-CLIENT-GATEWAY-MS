@@ -20,7 +20,7 @@ import {
 } from '../../common';
 import { CreateProfileDto, UpdateProfileDto } from './dto';
 
-@ApiTags('Profile')
+@ApiTags('Profile 🔐')
 @Controller({ path: 'profile', version: '1' })
 export class ProfileController {
   constructor(

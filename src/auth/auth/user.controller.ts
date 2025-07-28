@@ -15,14 +15,13 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AddRoleProfileDto, CreateUserDto } from './dto';
 import {
-  FindOneRelationsDto,
   NATS_SERVICE,
   PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@ApiTags('Users')
+@ApiTags('Users 🔐')
 @Controller({ path: 'user', version: '1' })
 export class UserController {
   constructor(@Inject(NATS_SERVICE) private readonly clientUser: ClientProxy) {}

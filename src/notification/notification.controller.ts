@@ -1,22 +1,11 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
-import { ApiTags } from '@nestjs/swagger';
+import { NATS_SERVICE } from '../common';
 
-@ApiTags('Notification 📨')
 @Controller({ path: 'notification', version: '1' })
 export class NotificationController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientNotification: ClientProxy,
   ) {}
-
-  @Get()
-  async sendMainTestinf() {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientNotification,
-      'mail.sendMail.test',
-      {},
-    );
-  }
 }

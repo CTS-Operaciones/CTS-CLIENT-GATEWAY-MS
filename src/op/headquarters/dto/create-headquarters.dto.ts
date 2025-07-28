@@ -1,13 +1,35 @@
 import {
+  IsArray,
+  IsDate,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPhoneNumber,
   IsPositive,
   IsString,
+  ValidateNested,
 } from 'class-validator';
-import { ICreateHeadquarter, STATUS_PROJECT } from '../../../common';
+import {
+  ICreateHeadquarter,
+  IQuotaEmployeePosition,
+  STATUS_PROJECT,
+} from '../../../common';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+
+export class AddQuotaEmployeePosition implements IQuotaEmployeePosition {
+  @ApiProperty({ type: Number, description: 'Maximum number of employees' })
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  max_employee: number;
+
+  @ApiProperty({ type: Number, description: 'Position ID' })
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  position_id: number;
+}
 
 export class CreateHeadquartersDto implements ICreateHeadquarter {
   @ApiProperty({ type: String, description: 'Name of the headquarters' })
@@ -36,6 +58,23 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsNotEmpty()
   phone: string;
 
+  @ApiProperty({
+    type: Date,
+    description: 'Start date of the project in the headquarters',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  @Type(() => Date)
+  start_date: Date;
+
+  @ApiProperty({
+    type: Date,
+    description: 'End date of the project in the headquarters',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  end_date: Date;
+
   @ApiProperty({ type: Number, description: 'Number of productions days' })
   @IsNotEmpty()
   @IsNumber()
@@ -61,4 +100,13 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsNumber()
   @IsPositive()
   project: number;
+
+  @ApiProperty({
+    type: [AddQuotaEmployeePosition],
+    description: 'Quota employee positions',
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => AddQuotaEmployeePosition)
+  quotaEmployeePosition: AddQuotaEmployeePosition[];
 }

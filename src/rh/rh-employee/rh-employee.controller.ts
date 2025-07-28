@@ -14,7 +14,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
   FindOneWhitTermAndRelationDto,
   IEmployee,
   NATS_SERVICE,
@@ -24,7 +23,7 @@ import {
 
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
 
-@ApiTags('Employees ✅')
+@ApiTags('Employees 🪪')
 @Controller({ path: 'employee', version: '1' })
 export class RhEmployeeController {
   constructor(
@@ -96,7 +95,7 @@ export class RhEmployeeController {
   }
 }
 
-@ApiTags('Asigned Positions ✅')
+@ApiTags('Asigned Positions 🪪')
 @Controller({ path: 'asignedPositions', version: '1' })
 export class RhAsignedPositionsController {
   constructor(

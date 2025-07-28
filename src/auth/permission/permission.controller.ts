@@ -11,6 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreatePermissionDto, UpdatePermissionDto } from './dto';
 import {
@@ -19,6 +20,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiTags('Permission 🔐')
 @Controller({ path: 'permission', version: '1' })
 export class PermissionController {
   constructor(

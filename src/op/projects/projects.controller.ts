@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
   Param,
@@ -14,10 +13,9 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
+  FindOneDeleteRelationsDto,
   IProject,
   NATS_SERVICE,
-  PaginationDto,
   PaginationFilterProjectStatusDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
@@ -58,12 +56,12 @@ export class ProjectsController {
   @Get(':term')
   async findOne(
     @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query() { relations, deletes }: FindOneDeleteRelationsDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProjects,
       'findOneProject',
-      { term, relations },
+      { term, relations, deletes },
     );
   }
 

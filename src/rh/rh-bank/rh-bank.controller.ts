@@ -23,7 +23,7 @@ import {
 } from '../../common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Bank ✅')
+@ApiTags('Bank 🪪')
 @Controller({ path: 'banks', version: '1' })
 export class BankController {
   constructor(@Inject(NATS_SERVICE) private readonly bankClient: ClientProxy) {}

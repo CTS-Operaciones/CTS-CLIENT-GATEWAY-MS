@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 
 import { NatsModule } from '../../transports/nats.module';
 import { AuthController } from './auth.controller';

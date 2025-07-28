@@ -20,6 +20,7 @@ import { BondsModule } from './staffing/bonds/bonds.module';
 import { ContractModule } from './rh';
 import { ProfileModule } from './auth/profile/profile.module';
 import { NotificationModule } from './notification/notification.module';
+import { MarketingModule } from './marketing/marketing.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { NotificationModule } from './notification/notification.module';
     ProfileModule,
     RoleModule,
     ModuleModule,
+    MarketingModule,
     PermissionModule,
     RhBondModule,
     RhDocumentModule,
