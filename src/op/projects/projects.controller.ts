@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -68,21 +69,12 @@ export class ProjectsController {
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Query() updateProjectDto: UpdateProjectDto,
+    @Body() updateProjectDto: UpdateProjectDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProjects,
       'updateProject',
       { id, ...updateProjectDto },
-    );
-  }
-
-  @Patch(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientProjects,
-      'removeProject',
-      { id },
     );
   }
 
@@ -95,6 +87,15 @@ export class ProjectsController {
       this.clientProjects,
       'changeStatusProject',
       { id, ...updateProjectStatus },
+    );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProjects,
+      'removeProject',
+      { id },
     );
   }
 }
