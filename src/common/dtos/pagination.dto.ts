@@ -63,6 +63,20 @@ export class PaginationRelationsDto extends PaginationDto {
   relations?: boolean = false;
 }
 
+export class RelationsDto {
+  @ApiProperty({
+    required: false,
+    default: false,
+    type: Boolean,
+    description: 'Get data with relations',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('relations')
+  relations?: boolean = false;
+}
+
 export class PaginationFilterStatusDto<T>
   extends PaginationRelationsDto
   implements IPaginateFilter<T>

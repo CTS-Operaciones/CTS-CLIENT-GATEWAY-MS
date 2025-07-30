@@ -22,6 +22,7 @@ import {
 import {
   NATS_SERVICE,
   PaginationRelationsDto,
+  RelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
@@ -52,11 +53,11 @@ export class HeadquartersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number, @Query() relations: RelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
       'headquarters.findOne',
-      { id },
+      { id, relations },
     );
   }
 

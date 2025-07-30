@@ -8,7 +8,10 @@ import {
 } from './create-headquarters.dto';
 
 export class UpdateHeadquartersDto extends PartialType(
-  OmitType(CreateHeadquartersDto, ['project'] as const),
+  OmitType(CreateHeadquartersDto, [
+    'project',
+    'quotaEmployeePosition',
+  ] as const),
 ) {}
 
 export class UpdateAddQuotaEmployeePosition {
@@ -20,5 +23,5 @@ export class UpdateAddQuotaEmployeePosition {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AddQuotaEmployeePosition)
-  quota: AddQuotaEmployeePosition[];
+  quotaEmployeePosition: AddQuotaEmployeePosition[];
 }
