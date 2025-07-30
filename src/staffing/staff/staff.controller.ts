@@ -14,6 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import {
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
@@ -31,28 +32,31 @@ export class StaffController {
   async create(@Body() createStaffDto: CreateStaffDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'createStaff',
+      'staff.create',
       createStaffDto,
     );
   }
 
-  @Get('project')
-  async findAllEmployeeInProject() {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientProxy,
-      'findAllEmployeeInProject',
-      {},
-    );
-  }
-
-  @Get(':id')
-  async findAll(
+  @Get('project/:id')
+  async findAllEmployeeInProject(
     @Param('id', ParseIntPipe) id: number,
-    @Query() pagination: PaginationRelationsDto,
+    @Query() pagination: PaginationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'findAllByHeadquarterIdStaff',
+      'staff.findAll.project',
+      { id, pagination },
+    );
+  }
+
+  @Get('headquarter/:id')
+  async findAllEmployeeInHeadquarter(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() pagination: PaginationDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'staff.findAll.headquarter',
       { id, pagination },
     );
   }
@@ -62,7 +66,7 @@ export class StaffController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateStaffDto: UpdateStaffDto,
   ) {
-    return sendAndHandleRpcExceptionPromise(this.clientProxy, 'updateStaff', {
+    return sendAndHandleRpcExceptionPromise(this.clientProxy, 'staff.update', {
       id,
       ...updateStaffDto,
     });
