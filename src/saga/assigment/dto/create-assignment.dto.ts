@@ -6,7 +6,7 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
-import {  ASSIGNMENT_STATUS} from 'src/common/constants/sagaEnums';
+import { ASSIGNMENT_STATUS } from 'src/common';
 export class CreateAssignmentDto {
   @ApiProperty({ type: String, description: 'Name of the assignment' })
   @IsString()

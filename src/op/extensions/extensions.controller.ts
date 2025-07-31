@@ -22,7 +22,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@ApiTags('Extensions ✅')
+@ApiTags('Extensions 🧾')
 @Controller({ path: 'extensions', version: '1' })
 export class ExtensionsController {
   constructor(
@@ -73,6 +73,15 @@ export class ExtensionsController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientExtensions,
       'removeExtension',
+      { id },
+    );
+  }
+
+  @Delete('restore/:id')
+  async restore(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientExtensions,
+      'restoreExtension',
       { id },
     );
   }

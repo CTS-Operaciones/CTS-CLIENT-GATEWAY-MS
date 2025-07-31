@@ -13,15 +13,15 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { AddRoleProfileDto, CreateUserDto } from './dto';
 import {
-  FindOneRelationsDto,
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-@ApiTags('Users')
+@ApiTags('Users 🔐')
 @Controller({ path: 'user', version: '1' })
 export class UserController {
   constructor(@Inject(NATS_SERVICE) private readonly clientUser: ClientProxy) {}
@@ -44,22 +44,28 @@ export class UserController {
     );
   }
 
+  @Get('emails')
+  async findEmails(@Query() pagination: PaginationDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientUser,
+      'findEmailsNotCreated',
+      pagination,
+    );
+  }
+
   @Get(':term')
-  async findOne(
-    @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
-  ) {
+  async findOne(@Param('term') term: string) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,
       'findOneUser',
-      { term, relations },
+      { term },
     );
   }
 
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: AddRoleProfileDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUser,

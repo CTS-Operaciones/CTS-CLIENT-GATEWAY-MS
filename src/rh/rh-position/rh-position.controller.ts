@@ -14,14 +14,14 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
+  FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { CreatePositionDto, UpdatePositionDto } from './dto';
 
-@ApiTags('Positions ✅')
+@ApiTags('Positions 🪪')
 @Controller({ path: 'position', version: '1' })
 export class RhPositionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}
@@ -47,12 +47,13 @@ export class RhPositionController {
   @Get(':term')
   async findOnePosition(
     @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query()
+    { relations, allRelations, deletes }: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-one-position',
-      { term, relations },
+      { term, relations, allRelations, deletes },
     );
   }
 

@@ -11,18 +11,19 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
+  FindOneWhitTermAndRelationDto,
   IEmployee,
   NATS_SERVICE,
   PaginationFilterStatusDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
+
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
 
-@ApiTags('Employees ✅')
+@ApiTags('Employees 🪪')
 @Controller({ path: 'employee', version: '1' })
 export class RhEmployeeController {
   constructor(
@@ -48,18 +49,21 @@ export class RhEmployeeController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   getItem(
     @Param('id') id: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query()
+    { allRelations, deletes, relations }: FindOneWhitTermAndRelationDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'find-one-employee',
-      { term: id, relations },
+      { term: id, allRelations, deletes, relations },
     );
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async updateItem(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateEmployeeDto,
@@ -72,6 +76,7 @@ export class RhEmployeeController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async deleteItem(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
@@ -86,6 +91,46 @@ export class RhEmployeeController {
       this.clientEmployee,
       'restore-employee',
       { id },
+    );
+  }
+}
+
+@ApiTags('Asigned Positions 🪪')
+@Controller({ path: 'asignedPositions', version: '1' })
+export class RhAsignedPositionsController {
+  constructor(
+    @Inject(NATS_SERVICE)
+    private readonly clientEmployeeHasPosition: ClientProxy,
+  ) {}
+
+  // FIXME: #5 Validar Tipado del payload
+  @Get(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
+  async getAsignedPositions(
+    @Param('id') id: string,
+    @Query()
+    { allRelations, deletes, relations }: FindOneWhitTermAndRelationDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'asignedPositionsFindByEmployeeId',
+      {
+        term: id,
+        allRelations,
+        deletes,
+        relations,
+      },
+    );
+  }
+
+  @Get('verify/:id')
+  async verifyAsignedPositions(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'verifyEmployeeHasPosition',
+      {
+        id,
+      },
     );
   }
 }

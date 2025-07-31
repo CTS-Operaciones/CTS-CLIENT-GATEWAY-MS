@@ -1,12 +1,6 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  IsString,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { STATUS_RESOURCE } from '../../../common/constants/status.enum';
+import { STATUS_RESOURCE } from 'src/common';
 export class CreateInventoryDto {
   @ApiProperty({ type: String, description: 'Name of the inventory' })
   @IsString()

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateTypeDocumentDto, UpdateTypeDocumentDto } from './dto copy';
+import { CreateTypeDocumentDto, UpdateTypeDocumentDto } from './dto';
 import {
   FindOneDto,
   NATS_SERVICE,
@@ -20,7 +20,7 @@ import {
 } from '../../common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Documents')
+@ApiTags('Documents Types 🪪')
 @Controller({ path: 'type-document', version: '1' })
 export class RhTypeDocumentController {
   constructor(
@@ -45,22 +45,19 @@ export class RhTypeDocumentController {
     );
   }
 
-  @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() findOne: FindOneDto,
-  ) {
+  @Get(':term')
+  async findOne(@Param() findOne: FindOneDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.typeDocumentClient,
       'findOneTypeDocument',
-      { id, ...findOne },
+      findOne,
     );
   }
 
   @Patch(':id')
   async updated(
     @Param('id', ParseIntPipe) id: number,
-    @Query() updateTypeDocumentDto: UpdateTypeDocumentDto,
+    @Body() updateTypeDocumentDto: UpdateTypeDocumentDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.typeDocumentClient,

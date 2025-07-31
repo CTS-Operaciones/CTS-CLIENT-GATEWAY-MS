@@ -65,9 +65,3 @@ export enum ROLE {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
-
-export enum STATUS_RESOURCE {
-  TRAYECTO = 'TRAYECTO',
-  ALMACEN = 'ALMACEN',
-  DISPONIBLE = 'DISPONIBLE',
-}

@@ -1,19 +1,15 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  Auth,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 import { ChangePasswordDto, LoginDto } from './dto';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Auth')
+@ApiTags('Auth 🔐')
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(@Inject(NATS_SERVICE) private readonly clientAuth: ClientProxy) {}
@@ -36,6 +32,17 @@ export class AuthController {
       this.clientAuth,
       'chagePasswordAuth',
       { id, ...changePasswordDto },
+    );
+  }
+
+  @ApiBearerAuth()
+  @Auth()
+  @Get('reset-password/:id')
+  async resetPassword(@Param('id') id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientAuth,
+      'resetPasswordAuth',
+      { id },
     );
   }
 }

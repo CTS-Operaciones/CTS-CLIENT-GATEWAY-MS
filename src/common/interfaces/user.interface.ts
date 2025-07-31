@@ -1,14 +1,12 @@
-export interface IUser { 
-  username: string;
-  email: string;
-  password: string;
-  role: IRole;
+export interface ICreateUser {
+  email: number;
 }
 
-export interface ICreateUser extends Omit<IUser, 'role'> { 
-  role_id: number;
+export interface IAddPermission {
+  profile: number;
+  role: number;
 }
 
-export interface IRole { 
+export interface IRole {
   type: string;
 }

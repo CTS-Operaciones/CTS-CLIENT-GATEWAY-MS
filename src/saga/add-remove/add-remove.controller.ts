@@ -19,7 +19,7 @@ import {
 } from 'src/common';
 import { CreateAddRemoveDto } from './dto/create-add-remove.dto';
 import { CreateHasAddRemoveDto } from '../add-remove/dto/create-inventory-has-add-remove.dto';
-@ApiTags('add-remove')
+@ApiTags('add-remove  💻🌸')
 @Controller('add-remove')
 export class AddRemoveController {
   constructor(
@@ -83,7 +83,7 @@ export class AddRemoveController {
     );
   }
 }
-@ApiTags('Inventory has add-remove')
+@ApiTags('Saga/Inventory has add-remove  💻🌸')
 @Controller('inventory-has-add-remove')
 export class inventoryHasAddRemoveController {
   @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;

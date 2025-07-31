@@ -20,7 +20,7 @@ import {
 } from '../../common';
 import { CreateRoleDto, UpdateRoleDto } from './dto';
 
-@ApiTags('Roles')
+@ApiTags('Roles 🔐')
 @Controller({ path: 'role', version: '1' })
 export class RoleController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRole: ClientProxy) {}

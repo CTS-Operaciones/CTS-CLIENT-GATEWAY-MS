@@ -5,13 +5,15 @@ import {
   STATUS_CIVIL,
   STATUS_EMPLOYEE,
 } from '../constants';
+import { IBank } from './bank.interface';
 
 export interface IEmployee {
+  date_register: Date;
   names: string;
   first_last_name: string;
   second_last_name?: string;
   date_birth: string;
-  year_old?: number;
+  year_old: number;
   email: string;
   telephone?: string;
   address?: string;
@@ -26,6 +28,13 @@ export interface IEmployee {
   status: STATUS_EMPLOYEE;
   blood_type?: BLOOD_TYPE;
   status_civil?: STATUS_CIVIL;
+  bank?: IBank;
+  number_account_bank?: string;
+}
+
+export interface IAccount {
+  email: string | undefined;
+  register: boolean;
 }
 
 export interface IEmergencyContact {
@@ -34,6 +43,9 @@ export interface IEmergencyContact {
   phone: string;
 }
 
-export interface IEmployeeCreate extends IEmployee {
-  position_id: number;
+export interface IEmployeeCreate extends Omit<IEmployee, 'bank'> {
+  position_id: number[];
+  bank_id?: number;
+  typeContract: number;
+  account: IAccount;
 }

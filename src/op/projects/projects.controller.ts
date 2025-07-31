@@ -14,10 +14,9 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  FindOneRelationsDto,
+  FindOneDeleteRelationsDto,
   IProject,
   NATS_SERVICE,
-  PaginationDto,
   PaginationFilterProjectStatusDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
@@ -28,7 +27,7 @@ import {
   UpdateProjectStatus,
 } from './dto/update-project.dto';
 
-@ApiTags('Projects ✅')
+@ApiTags('Projects 🧾')
 @Controller({ path: 'projects', version: '1' })
 export class ProjectsController {
   constructor(
@@ -58,12 +57,12 @@ export class ProjectsController {
   @Get(':term')
   async findOne(
     @Param('term') term: string,
-    @Query() { relations }: FindOneRelationsDto,
+    @Query() { relations, deletes }: FindOneDeleteRelationsDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProjects,
       'findOneProject',
-      { term, relations },
+      { term, relations, deletes },
     );
   }
 
@@ -79,15 +78,6 @@ export class ProjectsController {
     );
   }
 
-  @Patch(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientProjects,
-      'removeProject',
-      { id },
-    );
-  }
-
   @Patch('status-change/:id')
   async changeStatus(
     @Param('id') id: number,
@@ -97,6 +87,15 @@ export class ProjectsController {
       this.clientProjects,
       'changeStatusProject',
       { id, ...updateProjectStatus },
+    );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProjects,
+      'removeProject',
+      { id },
     );
   }
 }

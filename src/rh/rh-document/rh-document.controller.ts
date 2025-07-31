@@ -1,3 +1,5 @@
+import { Response } from 'express';
+import { resolve } from 'path';
 import {
   Controller,
   Get,
@@ -9,21 +11,39 @@ import {
   Query,
   ParseIntPipe,
   Inject,
+  UseInterceptors,
+  UploadedFiles,
+  Res,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
-import { CreateDocumentDto, UpdateDocumentDto } from './dto copy';
+import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 
 import {
-  FindOneRelationsDto,
-  FindOneWhitTermAndRelationDto,
+  ErrorManager,
+  FindOneDto,
+  ICreateDocument,
+  IDocument,
+  IFileSend,
+  IResponseUpdateDocument,
+  IUpdateDocumentMSDto,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Documents ❎')
+import {
+  CleanupFilesInterceptor,
+  fileFilter,
+  removeFile,
+  storage,
+} from '../../common';
+import { ParseAndValidatePipe } from './pipes';
+
+@ApiTags('Documents 🪪')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
   constructor(
@@ -31,52 +51,121 @@ export class RhDocumentController {
   ) {}
 
   @Post()
-  async create(@Body() createRhDocumentDto: CreateDocumentDto) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.documentClient,
-      'createDocument',
-      createRhDocumentDto,
-    );
-  }
+  @UseInterceptors(
+    AnyFilesInterceptor({ fileFilter, storage }),
+    CleanupFilesInterceptor,
+  )
+  async create(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body(new ParseAndValidatePipe(CreateDocumentDto)) body: any,
+  ) {
+    try {
+      const { data, employee } = body;
 
-  @Get()
-  async findAll(@Query() pagination: PaginationRelationsDto) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.documentClient,
-      'findAllDocument',
-      pagination,
-    );
+      const fileData: ICreateDocument[] = [];
+
+      files.forEach((file) => {
+        const index = data.findIndex(
+          (el: IFileSend) => el.file == file.fieldname,
+        );
+
+        index > -1 &&
+          fileData.push({
+            ...data[index],
+            employee,
+            type: data[index].type,
+            name: file.filename,
+            url_file: file.path,
+            size: file.size,
+          });
+      });
+
+      return await sendAndHandleRpcExceptionPromise(
+        this.documentClient,
+        'createDocument',
+        { files: fileData },
+      );
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error);
+    }
   }
 
   @Get(':term')
-  async findOne(
-    @Param('term', ParseIntPipe) id: number,
-    @Query() relations: FindOneWhitTermAndRelationDto,
+  async findFilesForEmployee(
+    @Param() findOneDto: FindOneDto,
+    @Res() res: Response,
   ) {
-    const findOneWhitTermAndRelationDto = {
-      ...relations,
-      term: id,
-    };
-
-    return await sendAndHandleRpcExceptionPromise(
+    const { url_file }: IDocument = await sendAndHandleRpcExceptionPromise(
       this.documentClient,
       'findOneDocument',
-      findOneWhitTermAndRelationDto,
+      findOneDto,
     );
+
+    if (url_file && url_file.length > 0) {
+      const absolutePath = resolve(url_file);
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.sendFile(absolutePath);
+    } else {
+      res.status(404).json({ message: 'File not found' });
+    }
   }
 
-  @Patch(':id')
-  async update(
+  @Get('employee/:id')
+  async findAll(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateRhDocumentDto: UpdateDocumentDto,
+    @Query() pagination: PaginationRelationsDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.documentClient,
-      'updateDocument',
-      { id, ...updateRhDocumentDto },
+      'findAllDocument',
+      { employee_id: id, ...pagination },
     );
   }
 
+  // TODO: #5 Verificar el borrado de documentos si existe un error.
+  @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('file', { fileFilter, storage }),
+    CleanupFilesInterceptor,
+  )
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body(new ParseAndValidatePipe(UpdateDocumentDto)) body: any,
+  ) {
+    try {
+      const fileData: ICreateDocument = {
+        ...body.data,
+        name: file.filename,
+        url_file: file.path,
+        size: file.size,
+        employee: body.employee,
+      };
+
+      const { result, old_file }: IResponseUpdateDocument =
+        await sendAndHandleRpcExceptionPromise(
+          this.documentClient,
+          'updateDocument',
+          {
+            id,
+            name: fileData.name,
+            url_file: fileData.url_file,
+            size: fileData.size,
+            type: fileData.type,
+            employee: fileData.employee,
+          } as IUpdateDocumentMSDto,
+        );
+
+      removeFile(old_file);
+
+      return result;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error);
+    }
+  }
+
+  // TODO: #4 Borrado de documentos en el disco.
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(

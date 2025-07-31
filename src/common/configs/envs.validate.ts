@@ -4,12 +4,14 @@ import * as joi from 'joi';
 interface IEnvsVars {
   PORT_APP: number;
   NATS_SERVERS: string[];
+  FOLDER_PDFS: string;
 }
 
 const envsSchema = joi
   .object({
     PORT_APP: joi.number().required(),
     NATS_SERVERS: joi.array().items(joi.string()).required(),
+    FOLDER_PDFS: joi.string().required(),
   })
   .unknown(true);
 
@@ -27,4 +29,5 @@ const envsVars: IEnvsVars = value;
 export const envs = {
   PORT_APP: envsVars.PORT_APP,
   NATS_SERVERS: envsVars.NATS_SERVERS,
+  FOLDER_PDFS: envsVars.FOLDER_PDFS,
 };

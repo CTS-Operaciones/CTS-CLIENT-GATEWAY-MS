@@ -5,18 +5,22 @@ import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
+import { UpdateUbicationDto } from './dto/update-ubication.dto';
+import { UpdateInventoryDto } from './dto/update-inventory.dto';
 
 @ApiTags('Saga/Inventory 💻🌸')
-  @Controller('inventories')
+@Controller('inventories')
 export class InventoryController {
-  constructor(@Inject(NATS_SERVICE) private readonly clientInventory: ClientProxy) {}
+  constructor(
+    @Inject(NATS_SERVICE) private readonly clientInventory: ClientProxy,
+  ) {}
   @Post()
   async createInventory(@Body() createInventoryDto: CreateInventoryDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'createInventory',
-      createInventoryDto
-    )
+      createInventoryDto,
+    );
   }
 
   @Get()
@@ -24,8 +28,8 @@ export class InventoryController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'findAllInventory',
-      {}
-    )
+      {},
+    );
   }
 
   @Get(':id')
@@ -33,51 +37,55 @@ export class InventoryController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'findOneInventory',
-      { id }
-    )
+      { id },
+    );
   }
- 
-  @Patch ()
-  async updateInventory(@Body() updateInventoryDto: CreateInventoryDto) {
+
+  @Patch(':id')
+  async updateInventory(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateInventoryDto: UpdateInventoryDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'updateInventory',
-      updateInventoryDto
-    )
-  } 
+      { id, ...updateInventoryDto },
+    );
+  }
 
   @Delete(':id')
   async removeInventory(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'removeInventory',
-      { id }
-    )
+      { id },
+    );
   }
-
 }
 
 @ApiTags('Saga/Ubications 💻🌸')
 @Controller('ubications')
 export class UbicationsController {
-  constructor(@Inject(NATS_SERVICE) private readonly clientUbications: ClientProxy) { }
-  
+  constructor(
+    @Inject(NATS_SERVICE) private readonly clientUbications: ClientProxy,
+  ) {}
+
   @Post()
   async createUbication(@Body() createInventoryDto: CreateInventoryDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'createUbication',
-      createInventoryDto
-    )
+      createInventoryDto,
+    );
   }
 
   @Get()
   async getUbication() {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
-      'findAllUbication',
-      {}
-    )
+      'findAllUbications',
+      {},
+    );
   }
 
   @Get(':id')
@@ -85,17 +93,20 @@ export class UbicationsController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'findOneUbication',
-      { id }
-    )
+      { id },
+    );
   }
 
-  @Patch ()
-  async updateUbication(@Body() updateInventoryDto: CreateInventoryDto) {
+  @Patch(':id')
+  async updateUbication(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateInventoryDto: UpdateUbicationDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'updateUbication',
-      updateInventoryDto
-    )
+      { id, ...updateInventoryDto },
+    );
   }
 
   @Delete(':id')
@@ -103,24 +114,25 @@ export class UbicationsController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'removeUbication',
-      { id }
-    )
+      { id },
+    );
   }
-
 }
 
 @ApiTags('Saga/StateInventories 💻🌸')
 @Controller('state')
 export class StateController {
-  constructor(@Inject(NATS_SERVICE) private readonly clientState: ClientProxy) { }
+  constructor(
+    @Inject(NATS_SERVICE) private readonly clientState: ClientProxy,
+  ) {}
 
   @Get()
   async getState() {
     return await sendAndHandleRpcExceptionPromise(
       this.clientState,
       'findAllState',
-      {}
-    )
+      {},
+    );
   }
 
   @Get(':id')
@@ -128,31 +140,34 @@ export class StateController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientState,
       'findOneState',
-      { id }
-    )
+      { id },
+    );
   }
   @Post()
   async createState(@Body() createStateDto: CreateStateDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientState,
       'createState',
-      createStateDto
-    )
+      createStateDto,
+    );
   }
-  @Patch()
-  async updateState(@Body() UpdateStateDto: CreateStateDto) {
+  @Patch(':id')
+  async updateState(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateStateDto: UpdateStateDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientState,
       'updateState',
-      UpdateStateDto
-    )
+      { id, ...UpdateStateDto },
+    );
   }
   @Delete(':id')
   async removeState(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientState,
       'removeState',
-      { id }
-    )
+      { id },
+    );
   }
 }

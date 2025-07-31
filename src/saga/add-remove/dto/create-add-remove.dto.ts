@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
-import { ADD_REMOVE } from "../../../common/constants/statusAdd.enum";
+import { ADD_REMOVE } from 'src/common';
 import { ApiProperty } from '@nestjs/swagger';
 export class CreateAddRemoveDto {
   @ApiProperty({
