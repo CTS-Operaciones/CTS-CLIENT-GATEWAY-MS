@@ -1,7 +1,22 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { ClientProxy} from '@nestjs/microservices';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
+import {
+  FindOneWhitTermAndRelationDto,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from 'src/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
@@ -34,11 +49,16 @@ export class InventoryController {
   }
 
   @Get(':id')
-  async getInventoryById(@Param('id', ParseIntPipe) id: number) {
+  async getInventoryById(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
+    console.log(id, typeof id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'findOneInventory',
-      { id },
+      { term: id, ...find },
     );
   }
 
@@ -90,7 +110,7 @@ export class UbicationsController {
   }
 
   @Get(':id')
-  async getUbicationById(@Param('id', ParseIntPipe) id: number) {
+  async getUbicationById(@Param('id') id: string) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'findOneUbication',

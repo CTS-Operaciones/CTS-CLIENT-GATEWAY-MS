@@ -68,7 +68,6 @@ export class AddRemoveController {
     @Param('id') id: number,
     @Body() updateAddRemoveDto: UpdateAddRemoveDto,
   ) {
-    console.log(updateAddRemoveDto, id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientAddRemove,
       'updateAddRemove',

@@ -1,6 +1,6 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { STATUS_RESOURCE } from 'src/common';
+import { STATUS_ENTRIES } from 'src/common';
 export class CreateInventoryDto {
   @ApiProperty({ type: String, description: 'Name of the inventory' })
   @IsString()
@@ -24,10 +24,12 @@ export class CreateInventoryDto {
   @IsNumber()
   resourceId: number;
 
-  @ApiProperty({ type: Number, description: 'Status of the inventory' })
-  @IsEnum(STATUS_RESOURCE)
+  @ApiProperty({
+    enum: STATUS_ENTRIES,
+  })
+  @IsEnum(STATUS_ENTRIES)
   @IsNotEmpty()
-  status: STATUS_RESOURCE;
+  status: STATUS_ENTRIES;
 
   @ApiProperty({ type: Number, description: 'Ubication id of the inventory' })
   @IsNumber()
