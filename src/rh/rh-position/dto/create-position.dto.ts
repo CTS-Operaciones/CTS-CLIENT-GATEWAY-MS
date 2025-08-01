@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   MaxLength,
@@ -49,7 +50,16 @@ export class CreatePositionDto implements ICreatePosition {
   })
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
-  @Min(1)
-  department_id: number;
+  @IsOptional()
+  department_id?: number = undefined;
+
+  @ApiProperty({
+    type: Number,
+    description: 'Id of the parent position',
+    required: false,
+  })
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  parent?: number = undefined;
 }

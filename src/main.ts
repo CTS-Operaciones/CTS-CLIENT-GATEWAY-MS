@@ -56,6 +56,7 @@ async function bootstrap() {
     .addTag('Projects 🧾')
     .addTag('Headquarters 🧾')
     .addTag('Staff ⚠️')
+    .addTag('Bonds 💰')
     .addTag('TypeSignature 🧾')
     .addTag('Signature ⚠️')
     .build();

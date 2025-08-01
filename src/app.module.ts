@@ -6,7 +6,6 @@ import { RhPositionModule } from './rh/rh-position/rh-position.module';
 import { RhEmployeeModule } from './rh/rh-employee/rh-employee.module';
 import { AuthModule } from './auth/auth/auth.module';
 import { RoleModule } from './auth/role/role.module';
-import { RhBondModule } from './rh/rh-bond/rh-bond.module';
 import { RhDocumentModule } from './rh/rh-document/rh-document.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
@@ -36,7 +35,6 @@ import { MarketingModule } from './marketing/marketing.module';
     ModuleModule,
     MarketingModule,
     PermissionModule,
-    RhBondModule,
     RhDocumentModule,
     ExtensionsModule,
     ProjectsModule,

@@ -25,7 +25,9 @@ import {
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Bonds 💰')
 @Controller({ path: 'bond', version: '1' })
 export class BondsController {
   constructor(

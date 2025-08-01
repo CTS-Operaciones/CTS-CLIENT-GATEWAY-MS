@@ -18,6 +18,7 @@ import {
   sendAndHandleRpcExceptionPromise,
   FindOneRelationsDto,
   PaginationRelationsDto,
+  FindOneWhitTermAndRelationDto,
 } from '../../common';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
 
@@ -48,12 +49,12 @@ export class RhDepartmentController {
   async findOneEmployee(
     @Param('term') term: string,
     @Query()
-    { relations }: FindOneRelationsDto,
+    find: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-one-department',
-      { term, relations },
+      { term, ...find },
     );
   }
 
