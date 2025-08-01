@@ -7,6 +7,7 @@ import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
 import { UpdateUbicationDto } from './dto/update-ubication.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
+import { CreateUbicationDto } from './dto/create-ubication.dto';
 
 @ApiTags('Saga/Inventory 💻🌸')
 @Controller('inventories')
@@ -71,7 +72,7 @@ export class UbicationsController {
   ) {}
 
   @Post()
-  async createUbication(@Body() createInventoryDto: CreateInventoryDto) {
+  async createUbication(@Body() createInventoryDto: CreateUbicationDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientUbications,
       'createUbication',

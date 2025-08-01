@@ -1,10 +1,25 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from 'src/common';
+import {
+  FindOneWhitTermAndRelationDto,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from 'src/common';
 import { CreateClasificationDto } from './dto/create-clasification.dto';
 import { CreateModelDto } from './dto/create-model.dto';
 import { UpdateModelDto } from './dto/update-model.dto';
@@ -37,11 +52,23 @@ export class ResourceController {
   }
 
   @Get(':id')
-  async getResource(@Param('id', ParseIntPipe) id: number) {
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of the acta resource',
+  })
+  @Get(':id')
+  async getResource(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
+    console.log({ term: id, ...find });
     return await sendAndHandleRpcExceptionPromise(
       this.clientResource,
       'findOneResource',
-      { id },
+
+      { term: id, ...find },
     );
   }
   @Patch(':id')
@@ -228,4 +255,3 @@ export class ModelsController {
     );
   }
 }
-

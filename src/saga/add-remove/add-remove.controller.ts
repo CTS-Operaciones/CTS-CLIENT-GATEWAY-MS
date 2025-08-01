@@ -19,6 +19,7 @@ import {
 } from 'src/common';
 import { CreateAddRemoveDto } from './dto/create-add-remove.dto';
 import { CreateHasAddRemoveDto } from '../add-remove/dto/create-inventory-has-add-remove.dto';
+import { UpdateAddRemoveDto } from './dto/update-add-remove.dto';
 @ApiTags('add-remove  💻🌸')
 @Controller('add-remove')
 export class AddRemoveController {
@@ -51,7 +52,7 @@ export class AddRemoveController {
     description: 'Id of the acta add-remove',
   })
   async getAddRemoveById(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Query()
     find: FindOneWhitTermAndRelationDto,
   ) {
@@ -62,11 +63,12 @@ export class AddRemoveController {
     );
   }
 
-  @Patch()
+  @Patch(':id')
   async updateAddRemove(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateAddRemoveDto: CreateAddRemoveDto,
+    @Param('id') id: number,
+    @Body() updateAddRemoveDto: UpdateAddRemoveDto,
   ) {
+    console.log(updateAddRemoveDto, id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientAddRemove,
       'updateAddRemove',
@@ -89,6 +91,7 @@ export class inventoryHasAddRemoveController {
   @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;
   @Post()
   async addRemove(@Body() createInventoryhasAdd: CreateHasAddRemoveDto) {
+    console.log(createInventoryhasAdd);
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventoryhasAdd,
       'createInventoryHasAdd',

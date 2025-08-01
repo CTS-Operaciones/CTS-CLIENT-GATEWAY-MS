@@ -42,7 +42,10 @@ export class CreateHasAddRemoveDto {
   @ApiProperty({ type: Number, description: 'User id of the inventory' })
   @IsNumber()
   user_id: number;
-  @ApiProperty({ type: Number, description: 'State id of the inventory' })
+  @ApiProperty({
+    type: Number,
+    description: 'State id of the inventory [TRAYECTO/ALMACEN/DISPONIBLE]',
+  })
   @IsEnum(STATUS_RESOURCE)
   @IsNotEmpty()
   status: STATUS_RESOURCE;
