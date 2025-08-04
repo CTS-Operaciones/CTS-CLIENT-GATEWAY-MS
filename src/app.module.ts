@@ -9,7 +9,6 @@ import { RoleModule } from './auth/role/role.module';
 import { RhDocumentModule } from './rh/rh-document/rh-document.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
 import { ProjectsModule } from './op/projects/projects.module';
-import { ResourceModule } from './saga/resources/resource.module';
 import { HeadquartersModule } from './op/headquarters/headquarters.module';
 import { RhBanksModule } from './rh/rh-bank/rh-bank.module';
 import { StaffModule } from './staffing/staff/staff.module';
@@ -20,6 +19,11 @@ import { ContractModule } from './rh';
 import { ProfileModule } from './auth/profile/profile.module';
 import { NotificationModule } from './notification/notification.module';
 import { MarketingModule } from './marketing/marketing.module';
+import { ResourceModule } from './saga/resources/resource.module';
+import { InventoryModule } from './saga/inventory/inventory.module';
+import { AddRemoveModule } from './saga/add-remove/add-remove.module';
+import { AssigmentModule } from './saga/assigment/assigment.module';
+
 
 @Module({
   imports: [
@@ -43,6 +47,9 @@ import { MarketingModule } from './marketing/marketing.module';
     StaffModule,
     BondsModule,
     NotificationModule,
+    InventoryModule,
+    AddRemoveModule,
+    AssigmentModule
   ],
   controllers: [],
   providers: [],

@@ -1,7 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateResourceDto } from './create-resource.dto';
-import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 
-export class UpdateResourceDto extends PartialType(CreateResourceDto) {
- 
-}
+export class UpdateResourceDto extends PartialType(CreateResourceDto) {}
