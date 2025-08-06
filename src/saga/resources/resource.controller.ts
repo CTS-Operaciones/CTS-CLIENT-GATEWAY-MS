@@ -227,11 +227,15 @@ export class ModelsController {
   }
 
   @Get(':id')
-  async getModel(@Param('id', ParseIntPipe) id: number) {
+  async getModel(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientModels,
       'findOneModel',
-      { id },
+      { id, ...find },
     );
   }
 
@@ -243,7 +247,7 @@ export class ModelsController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientModels,
       'updateModel',
-      { id, ...UpdateModelDto },
+      { id, ...updateModelDto },
     );
   }
   @Delete(':id')
