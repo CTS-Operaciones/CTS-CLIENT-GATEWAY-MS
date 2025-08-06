@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { NatsModule } from 'src/transports/nats.module';
-import { AssigmentController } from './assigment.controller';
+import {
+  AssigmentController,
+  inventoryHasAssignRemoveController,
+} from './assigment.controller';
 
 @Module({
   imports: [NatsModule],
-  controllers: [AssigmentController],
-  
+  controllers: [AssigmentController, inventoryHasAssignRemoveController],
 })
 export class AssigmentModule {}
