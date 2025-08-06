@@ -227,11 +227,16 @@ export class ModelsController {
   }
 
   @Get(':id')
-  async getModel(@Param('id', ParseIntPipe) id: number) {
+  async getModel(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
+    console.log(id, typeof id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientModels,
       'findOneModel',
-      { id },
+      { term: id, ...find },
     );
   }
 
