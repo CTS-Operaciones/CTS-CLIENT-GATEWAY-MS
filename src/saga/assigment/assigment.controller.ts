@@ -16,6 +16,8 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationDto,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 
@@ -40,11 +42,14 @@ export class AssigmentController {
   }
 
   @Get()
-  findAll() {
+  findAll(
+    @Query()
+    pagination: PaginationRelationsDto,
+  ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientAssigment,
       'findAllAssignments',
-      {},
+      pagination,
     );
   }
 

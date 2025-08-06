@@ -18,6 +18,7 @@ import { UpdateResourceDto } from './dto/update-resource.dto';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import { CreateClasificationDto } from './dto/create-clasification.dto';
@@ -43,11 +44,11 @@ export class ResourceController {
     );
   }
   @Get()
-  async getAllResources() {
+  async getAllResources(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientResource,
       'findAllResources',
-      {},
+      pagination,
     );
   }
 

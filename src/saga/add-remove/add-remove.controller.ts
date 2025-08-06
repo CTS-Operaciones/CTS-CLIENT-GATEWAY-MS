@@ -15,6 +15,7 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import { CreateAddRemoveDto } from './dto/create-add-remove.dto';
@@ -37,11 +38,11 @@ export class AddRemoveController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAddRemove,
       'findAllAddRemove',
-      {},
+      pagination,
     );
   }
 
