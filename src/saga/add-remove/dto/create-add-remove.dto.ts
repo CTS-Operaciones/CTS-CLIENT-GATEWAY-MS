@@ -18,23 +18,9 @@ export class CreateAddRemoveDto {
   @IsNotEmpty()
   observations: string;
 
-  /*   @ApiProperty({ type: [Number], description: 'Inventory id of the resource add/remove' })
-  @IsNumber()
-  idIventory: number[];
- */
   @ApiProperty({
-    type: String,
-    description: 'Type of the resource add/remove: ALTA/BAJA',
+    enum: ADD_REMOVE,
   })
   @IsEnum(ADD_REMOVE)
   type: ADD_REMOVE;
-
-  @ApiProperty({
-    type: Number,
-    description: 'Ubication id of the resource add/remove',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  @IsPositive()
-  ubicationId: number;
 }
