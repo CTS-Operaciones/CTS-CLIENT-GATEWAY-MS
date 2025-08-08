@@ -28,6 +28,15 @@ export class StaffController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Get('all')
+  async findAll() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'staff.findAll',
+      {},
+    );
+  }
+
   @Post()
   async create(@Body() createStaffDto: CreateStaffDto) {
     return await sendAndHandleRpcExceptionPromise(
