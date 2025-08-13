@@ -18,6 +18,7 @@ import { UpdateResourceDto } from './dto/update-resource.dto';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import { CreateClasificationDto } from './dto/create-clasification.dto';
@@ -43,11 +44,11 @@ export class ResourceController {
     );
   }
   @Get()
-  async getAllResources() {
+  async getAllResources(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientResource,
       'findAllResources',
-      {},
+      pagination,
     );
   }
 
@@ -227,11 +228,16 @@ export class ModelsController {
   }
 
   @Get(':id')
-  async getModel(@Param('id', ParseIntPipe) id: number) {
+  async getModel(
+    @Param('id') id: string,
+    @Query()
+    find: FindOneWhitTermAndRelationDto,
+  ) {
+    console.log(id, typeof id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientModels,
       'findOneModel',
-      { id },
+      { term: id, ...find },
     );
   }
 

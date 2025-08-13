@@ -5,7 +5,7 @@ export class CreateInventoryDto {
   @ApiProperty({ type: String, description: 'Name of the inventory' })
   @IsString()
   @IsNotEmpty()
-  Idname: string;
+  idName: string;
 
   @ApiProperty({ type: String, description: 'Serial number of the inventory' })
   @IsString()

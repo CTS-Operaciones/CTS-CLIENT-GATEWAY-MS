@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  IsString,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { ASSIGNMENT_STATUS } from 'src/common';
 export class CreateAssignmentDto {
   @ApiProperty({ type: String, description: 'Name of the assignment' })
