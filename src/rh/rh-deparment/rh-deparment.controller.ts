@@ -16,7 +16,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import {
   NATS_SERVICE,
   sendAndHandleRpcExceptionPromise,
-  FindOneRelationsDto,
   PaginationRelationsDto,
   FindOneWhitTermAndRelationDto,
 } from '../../common';

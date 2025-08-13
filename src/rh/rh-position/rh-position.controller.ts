@@ -44,6 +44,15 @@ export class RhPositionController {
     );
   }
 
+  @Get('list')
+  async getAllPlainFormat(@Query() pagination: PaginationRelationsDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'find-all-positions-plainformat',
+      pagination,
+    );
+  }
+
   @Get(':term')
   async findOnePosition(
     @Param('term') term: string,
