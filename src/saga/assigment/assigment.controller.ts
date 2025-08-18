@@ -26,7 +26,7 @@ import { CreateHasAssignDto } from './dto/create-inventory-has-assign.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 
 @ApiTags('Saga/Assignment 💻 🌸')
-@Controller('assignment')
+@Controller({ path: 'assignment', version: '1' })
 export class AssigmentController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientAssigment: ClientProxy,
@@ -93,7 +93,7 @@ export class AssigmentController {
 }
 
 @ApiTags('Saga/Inventory Has Assigment 💻🌸')
-@Controller('inventory-has-assigment')
+@Controller({ path: 'inventory-has-assigment', version: '1' })
 export class inventoryHasAssignRemoveController {
   constructor(
     @Inject(NATS_SERVICE)

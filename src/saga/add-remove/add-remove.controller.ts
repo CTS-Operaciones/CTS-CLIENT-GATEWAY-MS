@@ -22,7 +22,7 @@ import { CreateAddRemoveDto } from './dto/create-add-remove.dto';
 import { CreateHasAddRemoveDto } from '../add-remove/dto/create-inventory-has-add-remove.dto';
 import { UpdateAddRemoveDto } from './dto/update-add-remove.dto';
 @ApiTags('add-remove  💻🌸')
-@Controller('add-remove')
+@Controller({ path: 'add-remove', version: '1' })
 export class AddRemoveController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientAddRemove: ClientProxy,
@@ -86,7 +86,7 @@ export class AddRemoveController {
   }
 }
 @ApiTags('Saga/Inventory has add-remove  💻🌸')
-@Controller('inventory-has-add-remove')
+@Controller({ path: 'inventory-has-add-remove', version: '1' })
 export class inventoryHasAddRemoveController {
   @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;
   @Post()
@@ -96,6 +96,19 @@ export class inventoryHasAddRemoveController {
       this.clientInventoryhasAdd,
       'createInventoryHasAdd',
       createInventoryhasAdd,
+    );
+  }
+  @Get('resource/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of the acta add-remove',
+  })
+  async getResourceByActa(@Param('id') id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientInventoryhasAdd,
+      'getResourcesByActa',
+      { id },
     );
   }
 

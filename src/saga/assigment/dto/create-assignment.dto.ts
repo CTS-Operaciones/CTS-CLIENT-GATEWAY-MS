@@ -21,7 +21,7 @@ export class CreateAssignmentDto {
   @IsString()
   accessories: string;
 
-  @ApiProperty({ type: String, description: 'Status of the assignment' })
+  @ApiProperty({ enum: ASSIGNMENT_STATUS })
   @IsString()
   @IsNotEmpty()
   @IsEnum(ASSIGNMENT_STATUS)

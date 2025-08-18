@@ -4,21 +4,19 @@ import { STATUS_ENTRIES } from 'src/common';
 export class CreateInventoryDto {
   @ApiProperty({ type: String, description: 'Name of the inventory' })
   @IsString()
-  @IsNotEmpty()
-  idName: string;
+  idName?: string;
 
   @ApiProperty({ type: String, description: 'Serial number of the inventory' })
   @IsString()
-  @IsNotEmpty()
-  serialNumber: string;
+  serialNumber?: string;
 
   @ApiProperty({ type: Number, description: 'User id of the inventory' })
   @IsNumber()
-  user_id: number;
+  user_id?: number;
 
   @ApiProperty({ type: Number, description: 'State id of the inventory' })
   @IsNumber()
-  stateId: number;
+  stateId?: number;
 
   @ApiProperty({ type: Number, description: 'Resource id of the inventory' })
   @IsNumber()
@@ -29,9 +27,9 @@ export class CreateInventoryDto {
   })
   @IsEnum(STATUS_ENTRIES)
   @IsNotEmpty()
-  status: STATUS_ENTRIES;
+  status?: STATUS_ENTRIES;
 
   @ApiProperty({ type: Number, description: 'Ubication id of the inventory' })
   @IsNumber()
-  ubications: number;
+  ubications?: number;
 }

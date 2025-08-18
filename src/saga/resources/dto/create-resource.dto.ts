@@ -1,5 +1,12 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { TYPE_RESOURCE } from 'src/common';
 
 export class CreateResourceDto {
   @ApiProperty({ type: String, description: 'Name of the resource' })
@@ -31,4 +38,11 @@ export class CreateResourceDto {
   @IsNotEmpty()
   @IsNumber()
   modelId: number;
+  @ApiProperty({
+    enum: TYPE_RESOURCE,
+    description: 'Type of the resource',
+  })
+  @IsEnum(TYPE_RESOURCE)
+  @IsNotEmpty()
+  type: string;
 }
