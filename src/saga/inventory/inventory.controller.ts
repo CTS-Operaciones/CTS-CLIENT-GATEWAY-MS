@@ -25,7 +25,7 @@ import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { CreateUbicationDto } from './dto/create-ubication.dto';
 
 @ApiTags('Saga/Inventory 💻🌸')
-@Controller('inventories')
+@Controller({ path: 'inventories', version: '1' })
 export class InventoryController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientInventory: ClientProxy,
@@ -85,7 +85,7 @@ export class InventoryController {
 }
 
 @ApiTags('Saga/Ubications 💻🌸')
-@Controller('ubications')
+@Controller({ path: 'ubications', version: '1' })
 export class UbicationsController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientUbications: ClientProxy,
@@ -141,7 +141,7 @@ export class UbicationsController {
 }
 
 @ApiTags('Saga/StateInventories 💻🌸')
-@Controller('state')
+@Controller({ path: 'states', version: '1' })
 export class StateController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientState: ClientProxy,

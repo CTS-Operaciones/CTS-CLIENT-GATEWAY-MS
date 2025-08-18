@@ -13,7 +13,7 @@ import { STATUS_RESOURCE } from 'src/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHasAssignDto {
-// Resource
+  // Resource
   @ApiProperty({ type: createResourceDto, description: 'Resource' })
   @ValidateNested()
   @Type(() => createResourceDto)
@@ -43,9 +43,9 @@ export class CreateHasAssignDto {
   @ApiProperty({ type: Number, description: 'User id of the inventory' })
   @IsNumber()
   user_id: number;
+
   @ApiProperty({
-    type: Number,
-    description: 'State id of the inventory [TRAYECTO/ALMACEN/DISPONIBLE]',
+    enum: STATUS_RESOURCE,
   })
   @IsEnum(STATUS_RESOURCE)
   @IsNotEmpty()

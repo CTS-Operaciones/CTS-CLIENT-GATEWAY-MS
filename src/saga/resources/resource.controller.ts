@@ -29,7 +29,7 @@ import { UpdateBrandDto } from './dto/update-brand.dto';
 import { UpdateClasificationDto } from './dto/update-clasification.dto';
 
 @ApiTags('Saga/resources 💻🌸')
-@Controller('resources')
+@Controller({ path: 'resources', version: '1' })
 export class ResourceController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientResource: ClientProxy,
@@ -43,12 +43,28 @@ export class ResourceController {
       createResourceDto,
     );
   }
+  @Get('/concat')
+  async getResourceConcat() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientResource,
+      'getAllResourcesConcat',
+      {},
+    );
+  }
   @Get()
   async getAllResources(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientResource,
       'findAllResources',
       pagination,
+    );
+  }
+  @Get()
+  async getAllResourcesConcat() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientResource,
+      'getAllResourcesConcat',
+      {},
     );
   }
 
@@ -72,6 +88,7 @@ export class ResourceController {
       { term: id, ...find },
     );
   }
+
   @Patch(':id')
   async updateResource(
     @Param('id', ParseIntPipe) id: number,
@@ -93,7 +110,7 @@ export class ResourceController {
   }
 }
 @ApiTags('Saga/Clasificacion 💻🌸')
-@Controller('clasification')
+@Controller({ path: 'clasification', version: '1' })
 export class ClasificationController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientClasification: ClientProxy,
@@ -150,7 +167,7 @@ export class ClasificationController {
 }
 
 @ApiTags('Saga/Brands 💻🌸')
-@Controller('brands')
+@Controller({ path: 'brands', version: '1' })
 export class BrandsController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientBrands: ClientProxy,
@@ -205,7 +222,7 @@ export class BrandsController {
 }
 
 @ApiTags('Saga/Models 💻🌸')
-@Controller('models')
+@Controller({ path: 'models', version: '1' })
 export class ModelsController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientModels: ClientProxy,

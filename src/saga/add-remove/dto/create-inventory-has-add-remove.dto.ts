@@ -1,52 +1,39 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
-  IsEnum,
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsPositive,
-  IsString,
   ValidateNested,
 } from 'class-validator';
-import { CreateResourceDto as createResourceDto } from '../../resources/dto/create-resource.dto';
-import { Type } from 'class-transformer';
-import { STATUS_RESOURCE } from 'src/common';
 
+export class ResourceDto {
+  @ApiProperty({ type: Number, description: 'Id del recurso' })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  idResource: number;
+
+  @ApiProperty({
+    type: Number,
+    description: 'Cantidad de elelementos del recurso',
+  })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  quantity: number;
+}
 export class CreateHasAddRemoveDto {
-  // Resource
-  @ApiProperty({ type: createResourceDto, description: 'Resource' })
-  @ValidateNested()
-  @Type(() => createResourceDto)
-  resource: createResourceDto;
-  //Id del acta
-  @ApiProperty({ type: Number, description: 'Id del acta' })
+  @ApiProperty({ type: Number, description: 'Id del acta de inventario' })
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
   idActa: number;
-  // Inventory
 
-  @ApiProperty({ type: String, description: 'Id (name) del inventario' })
-  @IsString()
-  idName: string;
-  @ApiProperty({ type: String, description: 'Serial number del inventario' })
-  @IsString()
-  serialNumber: string;
-
-  @ApiProperty({
-    type: Number,
-    description: 'Ubication id of the resource add/remove',
-  })
-  @IsNumber()
-  ubications: number;
-
-  @ApiProperty({ type: Number, description: 'User id of the inventory' })
-  @IsNumber()
-  user_id: number;
-  @ApiProperty({
-    type: Number,
-    description: 'State id of the inventory [TRAYECTO/ALMACEN/DISPONIBLE]',
-  })
-  @IsEnum(STATUS_RESOURCE)
-  @IsNotEmpty()
-  status: STATUS_RESOURCE;
+  @ApiProperty({ type: [ResourceDto], description: 'Recurso' })
+  @IsArray()
+  @ValidateNested()
+  @Type(() => ResourceDto)
+  resource: ResourceDto[];
 }
