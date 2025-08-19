@@ -19,7 +19,13 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-import { CreateStaffDto, FindStaffDto, UpdateStaffDto } from './dto';
+import {
+  CreateStaffDto,
+  FindBossForStaffDto,
+  FindStaffInHeadquarterDto,
+  FindStaffInProjectDto,
+  UpdateStaffDto,
+} from './dto';
 
 @ApiTags('Staff ⚠️')
 @Controller({ path: 'staff', version: '1' })
@@ -40,7 +46,7 @@ export class StaffController {
   @Get('project/:id')
   async findAllEmployeeInProject(
     @Param('id', ParseIntPipe) id: number,
-    @Query() filters: FindStaffDto,
+    @Query() filters: FindStaffInProjectDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
@@ -52,12 +58,21 @@ export class StaffController {
   @Get('headquarter/:id')
   async findAllEmployeeInHeadquarter(
     @Param('id', ParseIntPipe) id: number,
-    @Query() filters: FindStaffDto,
+    @Query() filters: FindStaffInHeadquarterDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'staff.findAll.headquarter',
       { id, filters },
+    );
+  }
+
+  @Get('boss/staff')
+  async findAllBossStaff(@Query() params: FindBossForStaffDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'staff.findBossForStaff',
+      params,
     );
   }
 

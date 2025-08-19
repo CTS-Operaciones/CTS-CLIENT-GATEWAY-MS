@@ -1,16 +1,11 @@
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsOptional } from 'class-validator';
+
 import { ToBoolean } from '../../../common';
-import { ApiProperty } from '@nestjs/swagger';
+import { CreateStaffDto } from './create-staff.dto';
 
-export class FindStaffDto {
-  @ApiProperty({ type: Boolean, required: false, default: false })
-  @IsBoolean()
-  @IsOptional()
-  @Type(() => Boolean)
-  @ToBoolean('headquarter')
-  headquarter?: boolean = false;
-
+export class FindStaffInHeadquarterDto {
   @ApiProperty({ type: Boolean, required: false, default: false })
   @IsBoolean()
   @IsOptional()
@@ -32,3 +27,16 @@ export class FindStaffDto {
   @ToBoolean('employees')
   employees?: boolean = false;
 }
+
+export class FindStaffInProjectDto extends FindStaffInHeadquarterDto {
+  @ApiProperty({ type: Boolean, required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('headquarter')
+  headquarter?: boolean = false;
+}
+
+export class FindBossForStaffDto extends OmitType(CreateStaffDto, [
+  'parent',
+] as const) {}
