@@ -16,11 +16,11 @@ export class CreateInventoryDto {
 
   @ApiProperty({ type: Number, description: 'State id of the inventory' })
   @IsNumber()
-  stateId?: number;
+  state?: number;
 
   @ApiProperty({ type: Number, description: 'Resource id of the inventory' })
   @IsNumber()
-  resourceId: number;
+  resource: number;
 
   @ApiProperty({
     enum: STATUS_ENTRIES,
