@@ -112,6 +112,20 @@ export class inventoryHasAddRemoveController {
     );
   }
 
+  @Get('resourceChildren/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of the acta add-remove',
+  })
+  async getChildrenByResource(@Param('id') id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientInventoryhasAdd,
+      'getChildrenByResource',
+      { id },
+    );
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id del acta' })
   async getInventoryById(
