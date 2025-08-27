@@ -23,4 +23,11 @@ export class CreateAddRemoveDto {
   })
   @IsEnum(ADD_REMOVE)
   type: ADD_REMOVE;
+
+  @ApiProperty({
+    type: String,
+    description: 'Numero de la factura',
+  })
+  @IsString()
+  factura: string;
 }

@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 import { ASSIGNMENT_STATUS } from 'src/common';
 export class CreateAssignmentDto {
   @ApiProperty({ type: String, description: 'Name of the assignment' })
@@ -12,14 +18,19 @@ export class CreateAssignmentDto {
   @IsNotEmpty()
   date: string;
 
-  @ApiProperty({ type: String, description: 'Hours of the assignment' })
+  @ApiProperty({ type: String, description: 'comment of the assignment' })
   @IsString()
-  @IsNotEmpty()
-  hours: string;
+  comments: string;
 
-  @ApiProperty({ type: String, description: 'Accessories of the assignment' })
-  @IsString()
-  accessories: string;
+  @ApiProperty({ type: Number, description: 'Id of the project' })
+  @IsNumber()
+  @IsPositive()
+  project_id: number;
+
+  @ApiProperty({ type: Number, description: 'I of the user' })
+  @IsNumber()
+  @IsPositive()
+  user_id: number;
 
   @ApiProperty({ enum: ASSIGNMENT_STATUS })
   @IsString()
