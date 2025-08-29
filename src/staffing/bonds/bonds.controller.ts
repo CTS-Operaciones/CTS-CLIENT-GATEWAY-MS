@@ -39,7 +39,7 @@ export class BondsController {
   createType(@Body() createTypeBondDto: CreateTypeBondDto) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeCreate',
+      'bond.type.create',
       createTypeBondDto,
     );
   }
@@ -48,7 +48,7 @@ export class BondsController {
   findAllTypes(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeFindAll',
+      'bond.type.findAll',
       pagination,
     );
   }
@@ -57,7 +57,7 @@ export class BondsController {
   findOneType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeFindOne',
+      'bond.type.findOne',
       { id },
     );
   }
@@ -69,7 +69,7 @@ export class BondsController {
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeUpdate',
+      'bond.type.update',
       { id, ...updateTypeBondDto },
     );
   }
@@ -78,7 +78,7 @@ export class BondsController {
   removeType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeRemove',
+      'bond.type.remove',
       { id },
     );
   }
@@ -87,7 +87,7 @@ export class BondsController {
   restoreType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondTypeRestore',
+      'bond.type.restore',
       { id },
     );
   }
@@ -100,7 +100,7 @@ export class BondsController {
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionCreate',
+      'bond.description.create',
       createDescriptionBondDto,
     );
   }
@@ -109,7 +109,7 @@ export class BondsController {
   findAllDescriptions(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionFindAll',
+      'bond.description.findAll',
       pagination,
     );
   }
@@ -118,7 +118,7 @@ export class BondsController {
   findOneDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionFindOne',
+      'bond.description.findOne',
       { id },
     );
   }
@@ -130,7 +130,7 @@ export class BondsController {
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionUpdate',
+      'bond.description.update',
       { id, ...updateDescriptionBondDto },
     );
   }
@@ -139,7 +139,7 @@ export class BondsController {
   removeDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionRemove',
+      'bond.description.remove',
       { id },
     );
   }
@@ -148,7 +148,7 @@ export class BondsController {
   restoreDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondDescriptionRestore',
+      'bond.description.restore',
       { id },
     );
   }

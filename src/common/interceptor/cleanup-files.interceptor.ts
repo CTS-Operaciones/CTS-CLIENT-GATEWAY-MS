@@ -17,8 +17,6 @@ export class CleanupFilesInterceptor implements NestInterceptor {
       const files = fs.readdirSync(envs.FOLDER_PDFS).filter((file) => {
         file.split('.').includes('login');
       });
-
-      console.log(files);
     }
 
     return next.handle().pipe(

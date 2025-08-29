@@ -23,6 +23,7 @@ import { ResourceModule } from './saga/resources/resource.module';
 import { InventoryModule } from './saga/inventory/inventory.module';
 import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 import { AssigmentModule } from './saga/assigment/assigment.module';
+import { DismissalModule } from './staffing/dismissal/dismissal.module';
 
 
 @Module({
@@ -49,7 +50,8 @@ import { AssigmentModule } from './saga/assigment/assigment.module';
     NotificationModule,
     InventoryModule,
     AddRemoveModule,
-    AssigmentModule
+    AssigmentModule,
+    DismissalModule
   ],
   controllers: [],
   providers: [],

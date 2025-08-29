@@ -17,11 +17,14 @@ import {
   FindOneWhitTermAndRelationDto,
   IEmployee,
   NATS_SERVICE,
-  PaginationFilterStatusDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
-import { CreateEmployeeDto, UpdateEmployeeDto } from './dto';
+import {
+  CreateEmployeeDto,
+  FilterRelationsDto,
+  UpdateEmployeeDto,
+} from './dto';
 
 @ApiTags('Employees 🪪')
 @Controller({ path: 'employee', version: '1' })
@@ -40,7 +43,7 @@ export class RhEmployeeController {
   }
 
   @Get()
-  async getItems(@Query() pagination: PaginationFilterStatusDto<IEmployee>) {
+  async getItems(@Query() pagination: FilterRelationsDto<IEmployee>) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'findAll-employees',

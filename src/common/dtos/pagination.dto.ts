@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IPaginateFilter, IPagination } from '../interfaces';
-import { STATUS, STATUS_EMPLOYEE, STATUS_PROJECT } from '../constants';
+import { STATUS_EMPLOYEE, STATUS_PROJECT } from '../constants';
 import { ToBoolean } from '../decorators/toBoolean.decorator';
 
 export class PaginationDto implements IPagination {
@@ -77,15 +77,15 @@ export class RelationsDto {
   relations?: boolean = false;
 }
 
-export class PaginationFilterStatusDto<T>
+export class PaginationFilterStatusEmployeeDto<T>
   extends PaginationRelationsDto
   implements IPaginateFilter<T>
 {
   @ApiProperty({
     required: false,
-    enum: [...Object.values(STATUS), ...Object.values(STATUS_EMPLOYEE)],
+    enum: [...Object.values(STATUS_EMPLOYEE)],
   })
-  @IsEnum([...Object.values(STATUS), ...Object.values(STATUS_EMPLOYEE)])
+  @IsEnum([...Object.values(STATUS_EMPLOYEE)])
   @IsOptional()
   status?: T extends { status: infer U } ? U : never;
 }
