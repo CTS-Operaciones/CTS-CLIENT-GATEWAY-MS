@@ -19,6 +19,7 @@ export * from './interfaces/bank.interface';
 export * from './interfaces/bond.interface';
 export * from './interfaces/department.interface';
 export * from './interfaces/document.interface';
+export * from './interfaces/dismissal.interface';
 export * from './interfaces/employee.interface';
 export * from './interfaces/extension.interface';
 export * from './interfaces/find.interface';

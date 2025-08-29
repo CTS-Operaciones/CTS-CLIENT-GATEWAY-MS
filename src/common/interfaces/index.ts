@@ -3,6 +3,7 @@ export * from './bank.interface';
 export * from './bond.interface';
 export * from './department.interface';
 export * from './document.interface';
+export * from './dismissal.interface';
 export * from './employee.interface';
 export * from './extension.interface';
 export * from './find.interface';

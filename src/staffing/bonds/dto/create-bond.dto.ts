@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsPositive,
@@ -11,6 +12,23 @@ import {
 import { IBondCreate, IDescriptionBond, ITypesBond } from '../../../common';
 
 export class CreateBondDto implements IBondCreate {
+  @ApiProperty({ type: Number, required: true })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  @Min(1)
+  staff_id: number;
+
+  @ApiProperty({ type: Date, required: true })
+  @IsNotEmpty()
+  @IsDate()
+  date_assigned: Date;
+
+  @ApiProperty({ type: Date, required: true })
+  @IsNotEmpty()
+  @IsDate()
+  date_limit: Date;
+
   @ApiProperty({ type: Number, required: true })
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsNotEmpty()
