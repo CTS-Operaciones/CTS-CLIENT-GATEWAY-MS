@@ -59,6 +59,20 @@ export class ResourceController {
       pagination,
     );
   }
+
+  @Get('/getInventoriesByResource/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of the resource',
+  })
+  async getInventoriesByResource(@Param('id') id: string) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientResource,
+      'findInventoriesByResource',
+      { id },
+    );
+  }
   @Get()
   async getAllResourcesConcat() {
     return await sendAndHandleRpcExceptionPromise(
