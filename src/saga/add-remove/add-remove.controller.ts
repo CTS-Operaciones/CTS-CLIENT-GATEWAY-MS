@@ -118,6 +118,7 @@ export class inventoryHasAddRemoveController {
     type: Number,
     description: 'Id of the acta add-remove',
   })
+
   async getChildrenByResource(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventoryhasAdd,
