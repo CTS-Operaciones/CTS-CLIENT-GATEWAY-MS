@@ -24,7 +24,7 @@ import { InventoryModule } from './saga/inventory/inventory.module';
 import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 import { AssigmentModule } from './saga/assigment/assigment.module';
 import { DismissalModule } from './staffing/dismissal/dismissal.module';
-
+import { PresenceModule } from './staffing/presence/presence.module';
 
 @Module({
   imports: [
@@ -51,7 +51,8 @@ import { DismissalModule } from './staffing/dismissal/dismissal.module';
     InventoryModule,
     AddRemoveModule,
     AssigmentModule,
-    DismissalModule
+    DismissalModule,
+    PresenceModule,
   ],
   controllers: [],
   providers: [],

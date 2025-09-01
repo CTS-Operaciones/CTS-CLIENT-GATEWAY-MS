@@ -31,6 +31,7 @@ export * from './interfaces/permission.interface';
 export * from './interfaces/position.interface';
 export * from './interfaces/profile.interface';
 export * from './interfaces/project.interface';
+export * from './interfaces/presence.interface';
 export * from './interfaces/salary.interface';
 export * from './interfaces/signature.interface';
 export * from './interfaces/staff.interface';
