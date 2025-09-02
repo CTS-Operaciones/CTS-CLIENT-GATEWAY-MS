@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
   IsEnum,
@@ -7,7 +8,6 @@ import {
 } from 'class-validator';
 
 import { PaginationDto, PRESENCE_REASON } from '../../../common';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class FilterFindAllPresenceDto extends PaginationDto {
   @ApiProperty({ type: Number })

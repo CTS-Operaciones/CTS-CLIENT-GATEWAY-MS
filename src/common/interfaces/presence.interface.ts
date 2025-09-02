@@ -10,6 +10,6 @@ export interface ICheckInPresence extends ICreatePresence {
   reason: PRESENCE_REASON;
 }
 
-export interface ICheckOutPresence extends Omit<ICreatePresence, 'date'> {
+export interface ICheckOutPresence {
   check_out: string;
 }

@@ -1,3 +1,4 @@
+import { ApiParam, ApiProperty } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -5,22 +6,22 @@ import {
   Get,
   Inject,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import {
   CheckInDto,
   CheckOutDto,
-  UpdatePresenceDto,
-  FilterFindAllPresenceDto,
-} from './dto';
+  CreatePresenceDto,
+} from './dto/create-presence.dto';
+import { UpdatePresenceDto } from './dto/updae-presence.dto';
+import { FilterFindAllPresenceDto } from './dto/filter-findAll.dto';
 
-@ApiTags('Presence ⚠️')
 @Controller({ path: 'presence', version: '1' })
 export class PresenceController {
   constructor(
@@ -36,12 +37,15 @@ export class PresenceController {
     );
   }
 
-  @Post('checkOut')
-  checkOut(@Body() checkOutDto: CheckOutDto) {
+  @Post('checkOut/:id')
+  checkOut(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() checkOutDto: CheckOutDto,
+  ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'presence.checkOut',
-      checkOutDto,
+      { id, ...checkOutDto },
     );
   }
 
@@ -53,15 +57,6 @@ export class PresenceController {
       pagination,
     );
   }
-
-  // @Patch(':id')
-  // update(@Param() id: number, @Body() updatePresenceDto: UpdatePresenceDto) {
-  //   return sendAndHandleRpcExceptionPromise(
-  //     this.clientProxy,
-  //     'presence.update',
-  //     { id, ...updatePresenceDto },
-  //   );
-  // }
 
   @Delete(':id')
   remove(@Param() id: number) {
