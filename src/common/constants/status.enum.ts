@@ -12,7 +12,6 @@ export enum STATUS_PROJECT {
   FINALIZED = 'FINALIZED',
 }
 
-
 export enum STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
@@ -67,4 +66,11 @@ export enum ROLE {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ADMIN = 'ADMIN',
   USER = 'USER',
+}
+
+export enum PRESENCE_REASON {
+  AUSENCE = 'AUSENCE',
+  PRESENCE = 'PRESENCE',
+  PERMISSION = 'PERMISSION',
+  VACATION = 'VACATION',
 }
