@@ -8,6 +8,7 @@ export * from './employee.interface';
 export * from './extension.interface';
 export * from './find.interface';
 export * from './headquarter.interface';
+export * from './holiday.interface';
 export * from './image.interface';
 export * from './module.interface';
 export * from './pagination.interface';

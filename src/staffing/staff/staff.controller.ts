@@ -27,7 +27,7 @@ import {
   UpdateStaffDto,
 } from './dto';
 
-@ApiTags('Staff ⚠️')
+@ApiTags('Staff 👩‍💼👨‍💼')
 @Controller({ path: 'staff', version: '1' })
 export class StaffController {
   constructor(

@@ -24,6 +24,7 @@ export * from './interfaces/employee.interface';
 export * from './interfaces/extension.interface';
 export * from './interfaces/find.interface';
 export * from './interfaces/headquarter.interface';
+export * from './interfaces/holiday.interface';
 export * from './interfaces/image.interface';
 export * from './interfaces/module.interface';
 export * from './interfaces/pagination.interface';

@@ -43,10 +43,7 @@ export class CheckInDto extends CreatePresenceDto implements ICheckInPresence {
   reason: PRESENCE_REASON = PRESENCE_REASON.PRESENCE;
 }
 
-export class CheckOutDto
-  extends CreatePresenceDto
-  implements ICheckOutPresence
-{
+export class CheckOutDto implements ICheckOutPresence {
   @ApiProperty({ type: String, example: '14:00:00', required: false })
   @IsOptional()
   @Matches(/^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/, {
