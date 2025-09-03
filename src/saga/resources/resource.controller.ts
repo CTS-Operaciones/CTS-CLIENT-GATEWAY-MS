@@ -66,7 +66,7 @@ export class ResourceController {
     type: Number,
     description: 'Id of the resource',
   })
-  async getInventoriesByResource(@Param('id') id: string) {
+  async getInventoriesByResource(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientResource,
       'findInventoriesByResource',
