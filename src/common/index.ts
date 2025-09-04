@@ -38,4 +38,5 @@ export * from './interfaces/signature.interface';
 export * from './interfaces/staff.interface';
 export * from './interfaces/typeContract.interface';
 export * from './interfaces/user.interface';
+export * from './interfaces/vacation.interface';
 export * from './utils/errorManager';

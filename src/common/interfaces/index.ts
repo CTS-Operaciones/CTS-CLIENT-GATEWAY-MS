@@ -22,3 +22,4 @@ export * from './signature.interface';
 export * from './staff.interface';
 export * from './typeContract.interface';
 export * from './user.interface';
+export * from './vacation.interface';
