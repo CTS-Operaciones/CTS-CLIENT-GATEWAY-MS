@@ -28,12 +28,9 @@ import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 import { AssigmentModule } from './saga/assigment/assigment.module';
 import { DismissalModule } from './staffing/dismissal/dismissal.module';
 import { PresenceModule } from './staffing/presence/presence.module';
-<<<<<<< HEAD
 import { AdmissionDischargeModule } from './saga/admission-discharge/admission-discharge.module';
-=======
 import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
 
->>>>>>> 28832db654e7d6367b1149c38f39740ea1f14dbe
 @Module({
   imports: [
     RhBanksModule,
@@ -62,11 +59,8 @@ import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
     AssigmentModule,
     DismissalModule,
     PresenceModule,
-<<<<<<< HEAD
     AdmissionDischargeModule,
-=======
     RhVacationModule,
->>>>>>> 28832db654e7d6367b1149c38f39740ea1f14dbe
   ],
   controllers: [],
   providers: [],
