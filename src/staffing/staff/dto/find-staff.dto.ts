@@ -35,6 +35,13 @@ export class FindStaffInProjectDto extends FindStaffInHeadquarterDto {
   @Type(() => Boolean)
   @ToBoolean('headquarter')
   headquarter?: boolean = false;
+
+  @ApiProperty({ type: Boolean, required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('tree')
+  tree?: boolean = false;
 }
 
 export class FindBossForStaffDto extends OmitType(CreateStaffDto, [

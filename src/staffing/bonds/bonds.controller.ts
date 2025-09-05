@@ -23,6 +23,7 @@ import {
 import {
   NATS_SERVICE,
   PaginationDto,
+  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { ApiTags } from '@nestjs/swagger';
@@ -158,23 +159,23 @@ export class BondsController {
   create(@Body() createBondDto: CreateBondDto) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondCreate',
+      'bond.create',
       createBondDto,
     );
   }
 
   @Get()
-  findAll(@Query() pagination: PaginationDto) {
+  findAll(@Query() pagination: PaginationRelationsDto) {
     return sendAndHandleRpcExceptionPromise(
       this.bondsService,
-      'bondFindAll',
+      'bond.findAll',
       pagination,
     );
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bondFindOne', {
+    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.findOne', {
       id,
     });
   }
@@ -184,7 +185,7 @@ export class BondsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBondDto: UpdateBondDto,
   ) {
-    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bondUpdate', {
+    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.update', {
       id,
       ...updateBondDto,
     });
@@ -192,14 +193,14 @@ export class BondsController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bondRemove', {
+    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.remove', {
       id,
     });
   }
 
   @Delete('restore/:id')
   restore(@Param('id', ParseIntPipe) id: number) {
-    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bondRestore', {
+    return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.restore', {
       id,
     });
   }
