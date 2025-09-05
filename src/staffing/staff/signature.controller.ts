@@ -21,7 +21,7 @@ import {
 import { CreateSignatureDto, CreateTypeSignatureDto } from './dto';
 import { UpdateTypeSignatureDto } from './dto/update-typeSignature.dto';
 
-@ApiTags('Signature ⚠️')
+@ApiTags('Signature 🖊️')
 @Controller({ path: 'signature', version: '1' })
 export class SignatureController {
   constructor(
@@ -38,7 +38,7 @@ export class SignatureController {
   }
 }
 
-@ApiTags('TypeSignature ✅')
+@ApiTags('TypeSignature 🧾')
 @Controller({ path: 'typeSignature', version: '1' })
 export class TypeSignatureController {
   constructor(

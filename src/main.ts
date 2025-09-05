@@ -37,8 +37,11 @@ async function bootstrap() {
     .addBearerAuth()
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
+    .addTag('Vacation 🏖️')
+    .addTag('Holiday 📅')
     .addTag('Presence ⚠️')
-    .addTag('Staff ⚠️')
+    .addTag('Dismissal ⌛')
+    .addTag('Staff 👩‍💼👨‍💼')
     .addTag('Marketing 📲')
     .addTag('Permission 🔐')
     .addTag('Module 🔐')
@@ -59,7 +62,7 @@ async function bootstrap() {
     .addTag('Headquarters 🧾')
     .addTag('Bonds 💰')
     .addTag('TypeSignature 🧾')
-    .addTag('Signature ⚠️')
+    .addTag('Signature 🖊️')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

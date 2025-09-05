@@ -1,4 +1,4 @@
-import { ApiParam, ApiProperty } from '@nestjs/swagger';
+import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -22,6 +22,7 @@ import {
 import { UpdatePresenceDto } from './dto/updae-presence.dto';
 import { FilterFindAllPresenceDto } from './dto/filter-findAll.dto';
 
+@ApiTags('Presence ⚠️')
 @Controller({ path: 'presence', version: '1' })
 export class PresenceController {
   constructor(
