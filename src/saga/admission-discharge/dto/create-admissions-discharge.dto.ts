@@ -6,6 +6,7 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
+import { number } from 'joi';
 import { STATUS_ADMISSION } from 'src/common/';
 export class CreateAdmissionsDischargeDto {
   @ApiProperty({ type: String, description: 'Reason of the admission' })
@@ -22,13 +23,13 @@ export class CreateAdmissionsDischargeDto {
   @IsString()
   date: string;
 
-  @ApiProperty({ type: String, description: 'Id of the project(Sede)' })
+  @ApiProperty({ type: Number, description: 'Id of the project(Sede)' })
   @IsPositive()
   @IsNotEmpty()
   @IsNumber()
   project_id: number;
 
-  @ApiProperty({ type: String, description: 'User id' })
+  @ApiProperty({ type: Number, description: 'User id' })
   @IsPositive()
   @IsNotEmpty()
   @IsNumber()

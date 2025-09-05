@@ -42,8 +42,8 @@ export class AdmissionDischargeController {
   }
 
   @Get()
-  async findAll(@Query() pagination: PaginationRelationsDto) {
-    return await sendAndHandleRpcExceptionPromise(
+  findAll(@Query() pagination: PaginationRelationsDto) {
+    return sendAndHandleRpcExceptionPromise(
       this.clientAdmissionDischarge,
       'findAllAdmissionsDischarges',
       pagination,
@@ -77,15 +77,6 @@ export class AdmissionDischargeController {
       this.clientAdmissionDischarge,
       'updateAdmissionsDischarge',
       { id, updateAdmissionDisschargeDto },
-    );
-  }
-
-  @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
-      'removeAdmissionsDischarge',
-      { id },
     );
   }
 }
