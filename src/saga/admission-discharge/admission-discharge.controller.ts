@@ -21,11 +21,10 @@ import {
 import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
 import {CreateHasAdmisaionHasDischargeDto } from './dto/create-inventory-has-admissions.discharge.dto'
 import { UpdateAdmissionsDischargeDto } from './dto/update-admissions-discharge.dto';
-import { UpdateHasAdmissionDto } from './dto/update-inventory-has-admissions.discharge.dto';
 
-@ApiTags('admission-discharge  💻🌸')
+@ApiTags('Saga/Admission-discharge  💻🌸')
 @Controller({ path: 'add-admission-discharge', version: '1' })
-export class AddRemoveController {
+export class AdmissionDischargeController {
   constructor(
     @Inject(NATS_SERVICE)
     private readonly clientAdmissionDischarge: ClientProxy,
@@ -77,7 +76,7 @@ export class AddRemoveController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAdmissionDischarge,
       'updateAdmissionsDischarge',
-      {id, updateAdmissionDisschargeDto},
+      { id, updateAdmissionDisschargeDto },
     );
   }
 

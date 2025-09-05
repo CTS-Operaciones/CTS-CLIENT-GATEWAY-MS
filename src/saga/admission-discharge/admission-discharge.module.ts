@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { NatsModule } from 'src/transports/nats.module';
 import {
-  AddRemoveController,
+  AdmissionDischargeController,
   inventoryHasAddRemoveController,
 } from './admission-discharge.controller';
 @Module({
   imports: [NatsModule],
-  controllers: [AddRemoveController, inventoryHasAddRemoveController],
+  controllers: [AdmissionDischargeController, inventoryHasAddRemoveController],
 })
-export class AddRemoveModule {}
+export class AdmissionDischargeModule {}

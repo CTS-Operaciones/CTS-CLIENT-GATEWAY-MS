@@ -25,7 +25,7 @@ import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 import { AssigmentModule } from './saga/assigment/assigment.module';
 import { DismissalModule } from './staffing/dismissal/dismissal.module';
 import { PresenceModule } from './staffing/presence/presence.module';
-
+import { AdmissionDischargeModule } from './saga/admission-discharge/admission-discharge.module';
 @Module({
   imports: [
     RhBanksModule,
@@ -53,6 +53,7 @@ import { PresenceModule } from './staffing/presence/presence.module';
     AssigmentModule,
     DismissalModule,
     PresenceModule,
+    AdmissionDischargeModule,
   ],
   controllers: [],
   providers: [],
