@@ -56,11 +56,11 @@ async function bootstrap() {
     .addTag('Documents Types 🪪')
     .addTag('Employees 🪪')
     .addTag('Documents 🪪')
+    .addTag('Bonds 💰')
     .addTag('Asigned Positions 🪪')
     .addTag('Extensions 🧾')
     .addTag('Projects 🧾')
     .addTag('Headquarters 🧾')
-    .addTag('Bonds 💰')
     .addTag('TypeSignature 🧾')
     .addTag('Signature 🖊️')
     .build();

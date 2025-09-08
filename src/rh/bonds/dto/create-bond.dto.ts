@@ -17,7 +17,7 @@ export class CreateBondDto implements IBondCreate {
   @IsNotEmpty()
   @IsPositive()
   @Min(1)
-  staff_id: number;
+  employee_id: number;
 
   @ApiProperty({ type: Date, required: true })
   @IsNotEmpty()

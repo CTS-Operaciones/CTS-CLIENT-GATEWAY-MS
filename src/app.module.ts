@@ -9,7 +9,7 @@ import { HeadquartersModule } from './op/headquarters/headquarters.module';
 import { StaffModule } from './staffing/staff/staff.module';
 import { ModuleModule } from './auth/module/module.module';
 import { PermissionModule } from './auth/permission/permission.module';
-import { BondsModule } from './staffing/bonds/bonds.module';
+import { BondsModule } from './rh/bonds/bonds.module';
 import {
   ContractModule,
   HolidayModule,
@@ -26,7 +26,7 @@ import { ResourceModule } from './saga/resources/resource.module';
 import { InventoryModule } from './saga/inventory/inventory.module';
 import { AddRemoveModule } from './saga/add-remove/add-remove.module';
 import { AssigmentModule } from './saga/assigment/assigment.module';
-import { DismissalModule } from './staffing/dismissal/dismissal.module';
+import { DismissalModule } from './rh/dismissal/dismissal.module';
 import { PresenceModule } from './staffing/presence/presence.module';
 import { AdmissionDischargeModule } from './saga/admission-discharge/admission-discharge.module';
 import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';

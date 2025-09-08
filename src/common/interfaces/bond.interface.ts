@@ -16,10 +16,13 @@ export interface IBondCreate {
   amount: number;
   description_id: number;
   type_id: number;
+  employee_id: number;
+  date_assigned: Date;
+  date_limit: Date;
 }
 
 export interface IAssignBondToStaff {
-  staff_id: number;
+  employee_id: number;
   date_assigned: string;
   date_limit: string;
   date_registration: string;

@@ -19,7 +19,7 @@ import {
   UpdateBondDto,
   UpdateDescriptionBondDto,
   UpdateTypeBondDto,
-} from './dto/';
+} from './dto';
 import {
   NATS_SERVICE,
   PaginationDto,

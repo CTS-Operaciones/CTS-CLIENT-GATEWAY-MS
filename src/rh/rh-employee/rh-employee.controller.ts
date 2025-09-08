@@ -106,7 +106,6 @@ export class RhAsignedPositionsController {
     private readonly clientEmployeeHasPosition: ClientProxy,
   ) {}
 
-  // FIXME: #5 Validar Tipado del payload
   @Get(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async getAsignedPositions(
