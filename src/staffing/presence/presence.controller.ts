@@ -1,4 +1,4 @@
-import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -7,19 +7,13 @@ import {
   Inject,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
-import {
-  CheckInDto,
-  CheckOutDto,
-  CreatePresenceDto,
-} from './dto/create-presence.dto';
-import { UpdatePresenceDto } from './dto/updae-presence.dto';
+import { CheckInDto, CheckOutDto } from './dto/create-presence.dto';
 import { FilterFindAllPresenceDto } from './dto/filter-findAll.dto';
 
 @ApiTags('Presence ⚠️')
