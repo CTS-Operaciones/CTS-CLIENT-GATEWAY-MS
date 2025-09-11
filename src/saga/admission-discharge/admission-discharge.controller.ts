@@ -76,50 +76,24 @@ export class AdmissionDischargeController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAdmissionDischarge,
       'updateAdmissionsDischarge',
-      { id, updateAdmissionDisschargeDto },
+      { id, ...updateAdmissionDisschargeDto },
     );
   }
 }
 @ApiTags('Saga/Inventory has admission discharge  💻🌸')
 @Controller({ path: 'inventory-has-admission-discharge', version: '1' })
 export class inventoryHasAddRemoveController {
-  @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;
+  @Inject(NATS_SERVICE)
+  private readonly clientInventoryHasDischarge: ClientProxy;
   @Post()
   async createInventoryHasAdmissionDischarge(
-    @Body() createInventoryhasAdmissionDischarge: CreateHasAdmisaionHasDischargeDto,
+    @Body()
+    createInventoryhasAdmissionDischarge: CreateHasAdmisaionHasDischargeDto,
   ) {
-    
     return await sendAndHandleRpcExceptionPromise(
-      this.clientInventoryhasAdd,
+      this.clientInventoryHasDischarge,
       'createInventoryhasAdmissionDischarge',
       createInventoryhasAdmissionDischarge,
-    );
-  }
-  @Get('resource/:id')
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'Id of the acta admission discharge',
-  })
-  async getResourceByActa(@Param('id') id: number) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientInventoryhasAdd,
-      'getResourcesByActa',
-      { id },
-    );
-  }
-
-  @Get('resourceChildren/:id')
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'Id of the acta add-remove',
-  })
-  async getChildrenByResource(@Param('id') id: number) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientInventoryhasAdd,
-      'getChildrenByResource',
-      { id },
     );
   }
 
@@ -131,8 +105,8 @@ export class inventoryHasAddRemoveController {
     find: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientInventoryhasAdd,
-      'findOneInventoryHasAdd',
+      this.clientInventoryHasDischarge,
+      'findOneInventoryHasAdmission',
       { term: id, ...find },
     );
   }
@@ -140,8 +114,8 @@ export class inventoryHasAddRemoveController {
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientInventoryhasAdd,
-      'removeInventoryHasAdd',
+      this.clientInventoryHasDischarge,
+      'removeInventoryHasAdmission',
       { id },
     );
   }
