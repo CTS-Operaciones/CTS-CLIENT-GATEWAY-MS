@@ -6,9 +6,15 @@ import {
   SignatureController,
   TypeSignatureController,
 } from './signature.controller';
+import { PayrollController } from './payroll.controller';
 
 @Module({
   imports: [NatsModule],
-  controllers: [StaffController, TypeSignatureController, SignatureController],
+  controllers: [
+    StaffController,
+    TypeSignatureController,
+    SignatureController,
+    PayrollController,
+  ],
 })
 export class StaffModule {}
