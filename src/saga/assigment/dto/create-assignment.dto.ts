@@ -8,11 +8,6 @@ import {
 } from 'class-validator';
 import { ASSIGNMENT_STATUS } from 'src/common';
 export class CreateAssignmentDto {
-  @ApiProperty({ type: String, description: 'Name of the assignment' })
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
   @ApiProperty({ type: String, description: 'Date of the assignment' })
   @IsString()
   @IsNotEmpty()
