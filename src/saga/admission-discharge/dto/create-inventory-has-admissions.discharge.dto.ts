@@ -12,7 +12,7 @@ import {
 
 export class CreateHasAdmisaionHasDischargeDto {
   //Id del acta
-  @ApiProperty({ type: String, description: 'Id of the admission' })
+  @ApiProperty({ type: Number, description: 'Id of the admission' })
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
