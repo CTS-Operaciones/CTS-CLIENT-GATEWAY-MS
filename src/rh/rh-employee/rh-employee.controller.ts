@@ -42,16 +42,20 @@ export class RhEmployeeController {
     );
   }
 
-  @Get()
-  async getItems(@Query() pagination: FilterRelationsDto<IEmployee>) {
+  @Get(':name')
+  @ApiParam({ name: 'name', type: String, description: 'Name of employee' })
+  async getItems(
+    @Param('name') name: string | undefined = undefined,
+    @Query() pagination: FilterRelationsDto<IEmployee>,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'findAll-employees',
-      pagination,
+      { name, ...pagination },
     );
   }
 
-  @Get(':id')
+  @Get('/findOne/:id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   getItem(
     @Param('id') id: string,
