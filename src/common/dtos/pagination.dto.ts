@@ -7,7 +7,7 @@ import {
   IsPositive,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IPaginateFilter, IPagination } from '../interfaces';
+import { IFilterExternal, IPaginateFilter, IPagination } from '../interfaces';
 import { STATUS_EMPLOYEE, STATUS_PROJECT } from '../constants';
 import { ToBoolean } from '../decorators/toBoolean.decorator';
 
@@ -101,4 +101,21 @@ export class PaginationFilterProjectStatusDto<T>
   @IsEnum([...Object.values(STATUS_PROJECT)])
   @IsOptional()
   status?: T extends { status: infer U } ? U : never;
+}
+
+export class PaginationFilterHeadquartersExternalDto
+  extends PaginationRelationsDto
+  implements IFilterExternal
+{
+  @ApiProperty({
+    required: false,
+    default: true,
+    type: Boolean,
+    description: 'Get data only CTS headquarters',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('isExternal')
+  isExternal?: boolean = true;
 }

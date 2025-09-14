@@ -21,7 +21,7 @@ import {
 
 import {
   NATS_SERVICE,
-  PaginationRelationsDto,
+  PaginationFilterHeadquartersExternalDto,
   RelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
@@ -43,8 +43,7 @@ export class HeadquartersController {
   }
 
   @Get()
-  async findAll(@Query() pagination: PaginationRelationsDto) {
-    console.log({ ...pagination });
+  async findAll(@Query() pagination: PaginationFilterHeadquartersExternalDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHeadquarters,
       'headquarters.findAll',

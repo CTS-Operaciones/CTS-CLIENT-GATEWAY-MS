@@ -48,6 +48,8 @@ export class RhEmployeeController {
     @Param('name') name: string | undefined = undefined,
     @Query() pagination: FilterRelationsDto<IEmployee>,
   ) {
+    if (name === ' ') name = undefined;
+
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'findAll-employees',

@@ -19,6 +19,10 @@ export interface IPaginateFilter<T> {
   status?: T extends { status: infer U } ? U : never;
 }
 
+export interface IFilterExternal {
+  isExternal?: boolean;
+}
+
 export interface IRelationsEnable {
   relations?: boolean;
   deletes?: boolean;
