@@ -36,6 +36,7 @@ export class StaffController {
 
   @Post()
   async create(@Body() createStaffDto: CreateStaffDto) {
+    console.log('createStaffDto', createStaffDto);
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'staff.create',
