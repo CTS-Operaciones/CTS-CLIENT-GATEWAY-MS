@@ -8,6 +8,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsPhoneNumber,
   IsPositive,
@@ -28,6 +29,8 @@ import {
   IEmergencyContact,
   ToBoolean,
   IAccount,
+  IEmploymentRecordCreate,
+  IEmployeeHasPosition,
 } from '../../../common/';
 
 class AccountDto implements IAccount {
@@ -74,7 +77,27 @@ class EmergencyContactDto implements IEmergencyContact {
   phone: string;
 }
 
-export class CreateEmployeeDto implements IEmployeeCreate {
+export class EmployeeHasPositionDto implements IEmployeeHasPosition {
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  position_id: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  headquarter_id: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  parent_id?: number;
+}
+
+export class EmploymentRecordDto implements IEmploymentRecordCreate {
   @ApiProperty({
     type: Date,
     description: 'Date of registration of employee',
@@ -84,6 +107,103 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   @Type(() => Date)
   date_register: Date;
 
+  @ApiProperty({
+    type: String,
+    description: 'Personal Email of employee',
+  })
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Telephone number of employee',
+    example: '+5212222222222',
+  })
+  @MaxLength(15)
+  @IsString()
+  @IsOptional()
+  telephone?: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Address of employee',
+  })
+  @MaxLength(200)
+  @IsString()
+  @IsOptional()
+  address?: string;
+
+  @ApiProperty({
+    type: EmergencyContactDto,
+    isArray: true,
+    description: 'Emergency contact information',
+  })
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => EmergencyContactDto)
+  emergency_contact?: EmergencyContactDto[];
+
+  @ApiProperty({
+    enum: STATUS_CIVIL,
+    description: 'Status civil',
+  })
+  @IsEnum(STATUS_CIVIL)
+  @IsOptional()
+  status_civil?: STATUS_CIVIL;
+
+  @ApiProperty({
+    type: String,
+    description: 'Number account bank',
+  })
+  @IsString()
+  @MaxLength(20)
+  @IsOptional()
+  number_account_bank?: string;
+
+  // Relations
+  @ApiProperty({
+    type: Number,
+    description: 'Bank ID',
+  })
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  bank_id?: number;
+
+  @ApiProperty({
+    type: Number,
+    description: 'Type of contract ID',
+  })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  @Min(1)
+  typeContract: number;
+
+  @ApiProperty({
+    type: AccountDto,
+    description: 'Basic information for account of the system',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => AccountDto)
+  account: AccountDto;
+
+  @ApiProperty({
+    type: EmployeeHasPositionDto,
+    isArray: true,
+    description: 'Position information',
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => EmployeeHasPositionDto)
+  employee_has_position: EmployeeHasPositionDto[];
+}
+
+export class CreateEmployeeDto implements IEmployeeCreate {
   @ApiProperty({
     type: String,
     description: 'Names of employee',
@@ -126,33 +246,6 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   @IsNumber()
   @Min(18)
   year_old: number;
-
-  @ApiProperty({
-    type: String,
-    description: 'Personal Email of employee',
-  })
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @ApiProperty({
-    type: String,
-    description: 'Telephone number of employee',
-    example: '+5212222222222',
-  })
-  @MaxLength(15)
-  @IsString()
-  @IsOptional()
-  telephone?: string;
-
-  @ApiProperty({
-    type: String,
-    description: 'Address of employee',
-  })
-  @MaxLength(200)
-  @IsString()
-  @IsOptional()
-  address?: string;
 
   @ApiProperty({
     enum: GENDER,
@@ -208,17 +301,6 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   alergy?: string;
 
   @ApiProperty({
-    type: EmergencyContactDto,
-    isArray: true,
-    description: 'Emergency contact information',
-  })
-  @IsArray()
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => EmergencyContactDto)
-  emergency_contact?: EmergencyContactDto[];
-
-  @ApiProperty({
     enum: NACIONALITY_EMPLOYEE,
     description: 'Nationality employee',
   })
@@ -242,59 +324,12 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   blood_type?: BLOOD_TYPE;
 
   @ApiProperty({
-    enum: STATUS_CIVIL,
-    description: 'Status civil',
+    type: EmploymentRecordDto,
+    description: 'Emergency contact information',
+    required: false,
   })
-  @IsEnum(STATUS_CIVIL)
-  @IsOptional()
-  status_civil?: STATUS_CIVIL;
-
-  @ApiProperty({
-    type: String,
-    description: 'Number account bank',
-  })
-  @IsString()
-  @MaxLength(20)
-  @IsOptional()
-  number_account_bank?: string;
-
-  // Relations
-  @ApiProperty({
-    type: Number,
-    description: 'Bank ID',
-  })
-  @IsOptional()
-  @IsNumber()
-  @IsPositive()
-  @Min(1)
-  bank_id?: number;
-
-  @ApiProperty({
-    type: [Number],
-    description: 'Array of position IDs',
-  })
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsNumber({}, { each: true })
-  @IsPositive({ each: true })
-  position_id: number[];
-
-  @ApiProperty({
-    type: Number,
-    description: 'Type of contract ID',
-  })
-  @IsNumber()
-  @IsPositive()
-  @IsNotEmpty()
-  @Min(1)
-  typeContract: number;
-
-  @ApiProperty({
-    type: AccountDto,
-    description: 'Basic information for account of the system',
-  })
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => AccountDto)
-  account: AccountDto;
+  @IsObject()
+  @ValidateNested({ each: true })
+  @Type(() => EmploymentRecordDto)
+  contract: EmploymentRecordDto;
 }
