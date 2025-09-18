@@ -84,12 +84,12 @@ export class FilterRelationsDto<T> extends FilterEnumsDto<T> {
   @ToBoolean('documents')
   documents?: boolean = false;
 
-  @ApiProperty({ type: Boolean, required: false })
+  /*@ApiProperty({ type: Boolean, required: false })
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
   @ToBoolean('dismissal')
-  dismissal?: boolean = false;
+  dismissal?: boolean = false;*/
 
   // @IsNumber()
   // @IsPositive()

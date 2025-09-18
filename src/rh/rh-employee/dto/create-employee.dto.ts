@@ -78,18 +78,30 @@ class EmergencyContactDto implements IEmergencyContact {
 }
 
 export class EmployeeHasPositionDto implements IEmployeeHasPosition {
+  @ApiProperty({
+    type: Number,
+    description: 'ID of position',
+  })
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   @Min(1)
   position_id: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'ID of headquarter',
+  })
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   @Min(1)
   headquarter_id: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'ID of parent employee',
+  })
   @IsOptional()
   @IsNumber()
   @IsPositive()
