@@ -6,7 +6,6 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
-import { number } from 'joi';
 import { STATUS_ADMISSION } from 'src/common/';
 export class CreateAdmissionsDischargeDto {
   @ApiProperty({ type: String, description: 'Reason of the admission' })
@@ -38,4 +37,15 @@ export class CreateAdmissionsDischargeDto {
   @ApiProperty({ enum: STATUS_ADMISSION })
   @IsEnum(STATUS_ADMISSION)
   type: STATUS_ADMISSION;
+
+  @ApiProperty({ type: Number, description: 'Id of the assignment' })
+  @IsPositive()
+  @IsNotEmpty()
+  @IsNumber()
+  assignmentId: number;
+
+  @ApiProperty({ type: Number, description: 'Is preassignment' })
+  @IsString()
+  @IsNotEmpty()
+  is_preassignment;
 }
