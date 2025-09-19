@@ -1,11 +1,9 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -18,24 +16,24 @@ import {
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
-import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
+import {createAdmissionDischargeDto} from './dto/create-habilitation.dto';
 
-import { UpdateAdmissionsDischargeDto } from './dto/update-admissions-discharge.dto';
+import { UpdateHabilitationDto } from './dto/update-habilitation.dto';
 
-@ApiTags('Saga/Admission-discharge  💻🌸')
-@Controller({ path: 'add-admission-discharge', version: '1' })
+@ApiTags('Saga/Habilitation  💻🌸')
+@Controller({ path: 'habilitation', version: '1' })
 export class AdmissionDischargeController {
   constructor(
     @Inject(NATS_SERVICE)
-    private readonly clientAdmissionDischarge: ClientProxy,
+    private readonly clientHabilitation: ClientProxy,
   ) {}
 
   @Post()
   async admission(
-    @Body() createAdmissionDischargeDto: CreateAdmissionsDischargeDto,
+    @Body() createAdmissionDischargeDto: createAdmissionDischargeDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
+      this.clientHabilitation,
       'createAdmissionsDischarge',
       createAdmissionDischargeDto,
     );
@@ -44,7 +42,7 @@ export class AdmissionDischargeController {
   @Get()
   findAll(@Query() pagination: PaginationRelationsDto) {
     return sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
+      this.clientHabilitation,
       'findAllAdmissionsDischarges',
       pagination,
     );
@@ -62,7 +60,7 @@ export class AdmissionDischargeController {
     find: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
+      this.clientHabilitation,
       'findOneAdmissionsDischarge',
       { term: id, ...find },
     );
@@ -74,7 +72,7 @@ export class AdmissionDischargeController {
     @Body() updateAdmissionDisschargeDto: UpdateAdmissionsDischargeDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
+      this.clientHabilitation,
       'updateAdmissionsDischarge',
       { id, ...updateAdmissionDisschargeDto },
     );
