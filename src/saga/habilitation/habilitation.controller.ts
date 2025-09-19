@@ -1,11 +1,9 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -18,34 +16,32 @@ import {
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
-import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
+import { CreateHabilitationDto } from './dto/create-habilitation.dto';
 
-import { UpdateAdmissionsDischargeDto } from './dto/update-admissions-discharge.dto';
+import { UpdateHabilitationDto } from './dto/update-habilitation.dto';
 
-@ApiTags('Saga/Admission-discharge  💻🌸')
-@Controller({ path: 'add-admission-discharge', version: '1' })
+@ApiTags('Saga/Habilitation  💻🌸')
+@Controller({ path: 'habilitation', version: '1' })
 export class AdmissionDischargeController {
   constructor(
     @Inject(NATS_SERVICE)
-    private readonly clientAdmissionDischarge: ClientProxy,
+    private readonly clientHabilitation: ClientProxy,
   ) {}
 
   @Post()
-  async admission(
-    @Body() createAdmissionDischargeDto: CreateAdmissionsDischargeDto,
-  ) {
+  async admission(@Body() createHabilitationDto: CreateHabilitationDto) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
-      'createAdmissionsDischarge',
-      createAdmissionDischargeDto,
+      this.clientHabilitation,
+      'createHabilitation',
+      createHabilitationDto,
     );
   }
 
   @Get()
   findAll(@Query() pagination: PaginationRelationsDto) {
     return sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
-      'findAllAdmissionsDischarges',
+      this.clientHabilitation,
+      'findAllHabilitation',
       pagination,
     );
   }
@@ -54,7 +50,7 @@ export class AdmissionDischargeController {
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'Id of the acta admission discharge',
+    description: 'Id of the acta',
   })
   async getAdmissionDischargeById(
     @Param('id') id: string,
@@ -62,21 +58,21 @@ export class AdmissionDischargeController {
     find: FindOneWhitTermAndRelationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
-      'findOneAdmissionsDischarge',
+      this.clientHabilitation,
+      'findOneHabilitation',
       { term: id, ...find },
     );
   }
 
   @Patch(':id')
-  async updateAdmissionDischarge(
+  async updateHabilitation(
     @Param('id') id: number,
-    @Body() updateAdmissionDisschargeDto: UpdateAdmissionsDischargeDto,
+    @Body() updateHabilitationDto: UpdateHabilitationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
-      this.clientAdmissionDischarge,
-      'updateAdmissionsDischarge',
-      { id, ...updateAdmissionDisschargeDto },
+      this.clientHabilitation,
+      'updateHabilitation',
+      { id, ...updateHabilitationDto },
     );
   }
 }

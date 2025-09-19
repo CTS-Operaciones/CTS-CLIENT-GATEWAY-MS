@@ -27,7 +27,7 @@ export class CreateResourceDto {
   especifications: string;
   @ApiProperty({
     type: Number,
-    description: 'Clasification id of the resource',
+    description: 'Clasification id of the resou rce',
   })
   @IsPositive()
   @IsNotEmpty()
