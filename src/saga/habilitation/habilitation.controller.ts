@@ -16,7 +16,7 @@ import {
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
-import {createAdmissionDischargeDto} from './dto/create-habilitation.dto';
+import { CreateHabilitationDto } from './dto/create-habilitation.dto';
 
 import { UpdateHabilitationDto } from './dto/update-habilitation.dto';
 
@@ -29,13 +29,11 @@ export class AdmissionDischargeController {
   ) {}
 
   @Post()
-  async admission(
-    @Body() createAdmissionDischargeDto: createAdmissionDischargeDto,
-  ) {
+  async admission(@Body() createHabilitationDto: CreateHabilitationDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
-      'createAdmissionsDischarge',
-      createAdmissionDischargeDto,
+      'createHabilitation',
+      createHabilitationDto,
     );
   }
 
@@ -43,7 +41,7 @@ export class AdmissionDischargeController {
   findAll(@Query() pagination: PaginationRelationsDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
-      'findAllAdmissionsDischarges',
+      'findAllHabilitation',
       pagination,
     );
   }
@@ -52,7 +50,7 @@ export class AdmissionDischargeController {
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'Id of the acta admission discharge',
+    description: 'Id of the acta',
   })
   async getAdmissionDischargeById(
     @Param('id') id: string,
@@ -61,20 +59,20 @@ export class AdmissionDischargeController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
-      'findOneAdmissionsDischarge',
+      'findOneHabilitation',
       { term: id, ...find },
     );
   }
 
   @Patch(':id')
-  async updateAdmissionDischarge(
+  async updateHabilitation(
     @Param('id') id: number,
-    @Body() updateAdmissionDisschargeDto: UpdateAdmissionsDischargeDto,
+    @Body() updateHabilitationDto: UpdateHabilitationDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
-      'updateAdmissionsDischarge',
-      { id, ...updateAdmissionDisschargeDto },
+      'updateHabilitation',
+      { id, ...updateHabilitationDto },
     );
   }
 }
