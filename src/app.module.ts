@@ -31,7 +31,7 @@ import { PresenceModule } from './staffing/presence/presence.module';
 import { AdmissionDischargeModule } from './saga/admission-discharge/admission-discharge.module';
 import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
 import { AttendancePermissionModule } from './rh/attendance-permission/attendance-permission.module';
-
+import { HabilitationModule } from './saga/habilitation/habilitation.module';
 @Module({
   imports: [
     RhBanksModule,
@@ -63,6 +63,7 @@ import { AttendancePermissionModule } from './rh/attendance-permission/attendanc
     AdmissionDischargeModule,
     RhVacationModule,
     AttendancePermissionModule,
+    HabilitationModule,
   ],
   controllers: [],
   providers: [],

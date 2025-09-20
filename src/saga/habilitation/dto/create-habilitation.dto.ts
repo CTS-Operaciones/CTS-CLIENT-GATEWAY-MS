@@ -30,15 +30,19 @@ export class CreateHabilitationDto {
   @IsPositive()
   project_id: number;
 
-  @ApiProperty({ type: Number, description: '' })
+  @ApiProperty({ type: Boolean, description: 'Boolean isRed' })
   @IsBoolean()
   isRed: boolean;
+  @ApiProperty({ type: Boolean, description: 'Boolean isLuz' })
   @IsBoolean()
   isLuz: boolean;
+  @ApiProperty({ type: Boolean, description: 'Boolean isExtra' })
   @IsBoolean()
   isExtra: boolean;
+  @ApiProperty({ type: String, description: 'Signature' })
   @IsString()
   singCliente: string;
+  @ApiProperty({ type: Number, description: 'id of the admissions discharge' })
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()

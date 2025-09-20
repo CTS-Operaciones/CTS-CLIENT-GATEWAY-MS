@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
 } from 'class-validator';
-import { ASSIGNMENT_STATUS } from 'src/common';
+import { ASSIGNMENT_STATUS, ToBoolean } from 'src/common';
 export class CreateAssignmentDto {
   @ApiProperty({ type: String, description: 'Date of the assignment' })
   @IsString()
@@ -28,8 +30,14 @@ export class CreateAssignmentDto {
   user_id: number;
 
   @ApiProperty({ enum: ASSIGNMENT_STATUS })
-  @IsString()
   @IsNotEmpty()
   @IsEnum(ASSIGNMENT_STATUS)
-  type: ASSIGNMENT_STATUS;
+  type: ASSIGNMENT_STATUS = ASSIGNMENT_STATUS.ASIGNACION;
+
+  @ApiProperty({ type: Boolean, description: 'is preassignment' })
+  @IsBoolean()
+  @IsNotEmpty()
+  @Type(() => Boolean)
+  @ToBoolean('is_preassignment')
+  is_preassignment: boolean = false;
 }
