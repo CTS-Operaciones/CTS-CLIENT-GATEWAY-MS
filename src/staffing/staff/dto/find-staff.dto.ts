@@ -1,6 +1,12 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsOptional } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+} from 'class-validator';
 
 import { ToBoolean } from '../../../common';
 import { CreateStaffDto } from './create-staff.dto';
@@ -46,4 +52,11 @@ export class FindStaffInProjectDto extends FindStaffInHeadquarterDto {
 
 export class FindBossForStaffDto extends OmitType(CreateStaffDto, [
   'parent',
-] as const) {}
+  'employeeHasPositions',
+] as const) {
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  position: number;
+}
