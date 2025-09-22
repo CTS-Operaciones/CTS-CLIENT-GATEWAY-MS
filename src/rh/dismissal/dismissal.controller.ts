@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Inject,
   Query,
 } from '@nestjs/common';
