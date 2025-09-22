@@ -9,17 +9,17 @@ import {
 } from 'class-validator';
 import { Timestamp } from 'typeorm';
 export class CreateHabilitationDto {
-  @ApiProperty({ type: Number, description: 'Date' })
+  @ApiProperty({ type: Date, description: 'Date' })
   @IsDate()
   @IsNotEmpty()
-  fecha: Timestamp;
+  fecha: Date;
 
-  @ApiProperty({ type: Number, description: 'Name' })
+  @ApiProperty({ type: String, description: 'Name' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ type: Number, description: 'Observations' })
+  @ApiProperty({ type: String, description: 'Observations' })
   @IsString()
   @IsNotEmpty()
   observations: string;

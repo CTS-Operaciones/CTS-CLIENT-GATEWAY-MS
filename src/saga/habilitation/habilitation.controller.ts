@@ -63,7 +63,7 @@ export class AdmissionDischargeController {
       { term: id, ...find },
     );
   }
-
+  /* 
   @Patch(':id')
   async updateHabilitation(
     @Param('id') id: number,
@@ -74,5 +74,5 @@ export class AdmissionDischargeController {
       'updateHabilitation',
       { id, ...updateHabilitationDto },
     );
-  }
+  } */
 }

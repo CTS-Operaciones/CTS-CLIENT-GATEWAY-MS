@@ -67,7 +67,7 @@ export class AdmissionDischargeController {
       { term: id, ...find },
     );
   }
-
+  /* 
   @Patch(':id')
   async updateAdmissionDischarge(
     @Param('id') id: number,
@@ -78,5 +78,5 @@ export class AdmissionDischargeController {
       'updateAdmissionsDischarge',
       { id, ...updateAdmissionDisschargeDto },
     );
-  }
+  } */
 }

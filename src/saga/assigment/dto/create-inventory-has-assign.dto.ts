@@ -1,16 +1,15 @@
 
 import {
   IsArray,
+  IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
-  IsString,
-  ValidateNested,
 } from 'class-validator';
-import { CreateResourceDto as createResourceDto } from '../../resources/dto/create-resource.dto';
+
 import { Type } from 'class-transformer';
-import { STATUS_RESOURCE } from 'src/common';
+import { ASSIGNMENT_STATUS, ToBoolean } from 'src/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHasAssignDto {
@@ -21,7 +20,19 @@ export class CreateHasAssignDto {
   @IsNotEmpty()
   idActa: number;
 
-  @ApiProperty({ type: [Number], description: 'Recurso' })
+  @ApiProperty({ type: [Number], description: 'Resource' })
   @IsArray()
   idInventory: number[];
+
+  @ApiProperty({ enum: ASSIGNMENT_STATUS, description: 'Assigment Status' })
+  @IsEnum(ASSIGNMENT_STATUS)
+  @IsNotEmpty()
+  type: ASSIGNMENT_STATUS = ASSIGNMENT_STATUS.ASIGNACION;
+
+  @ApiProperty({ type: Boolean, description: 'Is Boolea?' })
+  @IsBoolean()
+  @IsNotEmpty()
+  @Type(() => Boolean)
+  @ToBoolean('is_preassignment')
+  is_preassignment: boolean = false;
 }
