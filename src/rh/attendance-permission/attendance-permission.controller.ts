@@ -19,12 +19,13 @@ import {
 } from '../../common';
 import {
   CreateAttendancePermissionDto,
+  SetStatusOfPermissionDto,
   UpdateAttendancePermissionDto,
 } from './dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Attendance Permission 🗓️')
-@Controller('attendance-permission')
+@Controller({ path: 'attendance-permission', version: '1' })
 export class AttendancePermissionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}
 
@@ -34,6 +35,15 @@ export class AttendancePermissionController {
       this.clientRH,
       'attendancePermission.create',
       createAttendancePermissionDto,
+    );
+  }
+
+  @Post('change-status')
+  setStatus(@Body() setStatusOfPermissionDto: SetStatusOfPermissionDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'attendancePermission.setStatusOfPermission',
+      setStatusOfPermissionDto,
     );
   }
 
