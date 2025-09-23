@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
+  IsDate,
   IsEnum,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -118,4 +120,24 @@ export class PaginationFilterHeadquartersExternalDto
   @Type(() => Boolean)
   @ToBoolean('isExternal')
   isExternal?: boolean = true;
+}
+
+export class FilterDateDismissalDto extends PaginationRelationsDto {
+  @ApiProperty({
+    required: true,
+    type: Date,
+    description: 'Start date',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  start_date: Date;
+
+  @ApiProperty({
+    required: true,
+    type: Date,
+    description: 'End date',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  end_date: Date;
 }

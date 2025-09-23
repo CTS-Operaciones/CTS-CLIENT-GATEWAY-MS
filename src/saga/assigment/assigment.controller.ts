@@ -12,11 +12,9 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
-
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
-  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
@@ -129,6 +127,15 @@ export class inventoryHasAssignRemoveController {
       this.clientInventoryhasAssign,
       'removeInventoryHasAssign',
       { id },
+    );
+  }
+
+  @Patch()
+  async update(@Body() updateAssignmentHasDto: CreateHasAssignDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientInventoryhasAssign,
+      'updateInventoryHasAssigment',
+      { ...updateAssignmentHasDto },
     );
   }
 }

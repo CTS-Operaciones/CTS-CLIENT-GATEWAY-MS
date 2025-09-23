@@ -5,4 +5,4 @@ import { AdmissionDischargeController } from './habilitation.controller';
   imports: [NatsModule],
   controllers: [AdmissionDischargeController],
 })
-export class AdmissionDischargeModule {}
+export class HabilitationModule {}

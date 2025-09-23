@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
 } from 'class-validator';
-import { STATUS_ADMISSION } from 'src/common/';
+import { STATUS_ADMISSION, ToBoolean } from 'src/common/';
 export class CreateAdmissionsDischargeDto {
   @ApiProperty({ type: String, description: 'Reason of the admission' })
   @IsString()
@@ -42,10 +44,5 @@ export class CreateAdmissionsDischargeDto {
   @IsPositive()
   @IsNotEmpty()
   @IsNumber()
-  assignmentId: number;
-
-  @ApiProperty({ type: Number, description: 'Is preassignment' })
-  @IsString()
-  @IsNotEmpty()
-  is_preassignment;
+  assignment: number;
 }

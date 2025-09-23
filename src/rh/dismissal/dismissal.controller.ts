@@ -5,16 +5,16 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Inject,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { CreateDismissalDto } from './dto/create-dismissal.dto';
 import {
+  FilterDateDismissalDto,
   NATS_SERVICE,
-  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
@@ -35,7 +35,7 @@ export class DismissalController {
   }
 
   @Get()
-  findAll(pagination: PaginationRelationsDto) {
+  findAll(@Query() pagination: FilterDateDismissalDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'dismissal.findAll',
@@ -64,12 +64,12 @@ export class DismissalController {
     );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return sendAndHandleRpcExceptionPromise(
-      this.clientProxy,
-      'dismissal.remove',
-      { id },
-    );
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return sendAndHandleRpcExceptionPromise(
+  //     this.clientProxy,
+  //     'dismissal.remove',
+  //     { id },
+  //   );
+  // }
 }
