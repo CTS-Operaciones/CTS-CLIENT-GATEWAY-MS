@@ -20,7 +20,7 @@ import {
 } from 'src/common';
 import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
 
-import { UpdateAdmissionsDischargeDto } from './dto/update-admissions-discharge.dto';
+
 
 @ApiTags('Saga/Admission-discharge  💻🌸')
 @Controller({ path: 'add-admission-discharge', version: '1' })
