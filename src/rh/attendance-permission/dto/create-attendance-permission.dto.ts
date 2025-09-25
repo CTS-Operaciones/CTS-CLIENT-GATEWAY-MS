@@ -18,6 +18,12 @@ import {
 export class CreateAttendancePermissionDto
   implements ICreateAttendancePermission
 {
+  @ApiProperty({ type: Number, required: true })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  employee_id: number;
+
   @ApiProperty({ enum: ATTENDANCE_PERMISSION_TYPE, required: true })
   @IsEnum(ATTENDANCE_PERMISSION_TYPE)
   @IsNotEmpty()
@@ -33,23 +39,45 @@ export class CreateAttendancePermissionDto
   @IsDate()
   end_date: Date;
 
+  @ApiProperty({ type: String, required: false, example: '08:00:00' })
+  @IsOptional()
+  @IsString()
+  time_start?: string;
+
+  @ApiProperty({ type: String, required: false, example: '17:00:00' })
+  @IsOptional()
+  @IsString()
+  time_end?: string;
+
   @ApiProperty({ type: String, required: true })
   @IsNotEmpty()
   @IsString()
   reason: string;
 
-  @ApiProperty({
-    enum: STATUS_VACATIONS_PERMISSION,
-    required: false,
-    default: STATUS_VACATIONS_PERMISSION.PENDING,
-  })
-  @IsEnum(STATUS_VACATIONS_PERMISSION)
-  @IsOptional()
-  status: STATUS_VACATIONS_PERMISSION = STATUS_VACATIONS_PERMISSION.PENDING;
-
   @ApiProperty({ type: Number, required: true })
   @IsNotEmpty()
   @IsNumber()
+  requested_at: number = 0;
+}
+
+export class SetStatusOfPermissionDto {
+  @ApiProperty({ type: Number, required: true })
+  @IsNumber()
   @IsPositive()
-  requested_at: number;
+  @IsNotEmpty()
+  id: number;
+
+  @ApiProperty({ enum: STATUS_VACATIONS_PERMISSION, required: true })
+  @IsEnum(STATUS_VACATIONS_PERMISSION)
+  @IsNotEmpty()
+  status: STATUS_VACATIONS_PERMISSION;
+
+  @ApiProperty({ type: String, required: true })
+  @IsNotEmpty()
+  @IsString()
+  approved_by: string;
+
+  @ApiProperty({ type: String, required: true })
+  @IsNotEmpty()
+  approved_at: string;
 }
