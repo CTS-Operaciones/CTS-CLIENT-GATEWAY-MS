@@ -22,6 +22,7 @@ import {
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { CreateHasAssignDto } from './dto/create-inventory-has-assign.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
+import { SearchDto } from '../generalDto/search.dto';
 
 @ApiTags('Saga/Assignment 💻 🌸')
 @Controller({ path: 'assignment', version: '1' })
@@ -79,7 +80,15 @@ export class AssigmentController {
       { id, ...updateAssignmentDto },
     );
   }
-
+  @Post('/ByTerm')
+  findByTerm(@Body() searchDto: SearchDto) {
+    console.log(searchDto);
+    return sendAndHandleRpcExceptionPromise(
+      this.clientAssigment,
+      'findByTermRemoveAssignment',
+      searchDto,
+    );
+  }
   @Delete(':id')
   remove(@Param('id') id: string) {
     return sendAndHandleRpcExceptionPromise(
