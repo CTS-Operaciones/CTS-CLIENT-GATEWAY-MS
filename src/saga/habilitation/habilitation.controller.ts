@@ -17,8 +17,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import { CreateHabilitationDto } from './dto/create-habilitation.dto';
-
-import { UpdateHabilitationDto } from './dto/update-habilitation.dto';
+import { SearchDto } from '../generalDto/search.dto';
 
 @ApiTags('Saga/Habilitation  💻🌸')
 @Controller({ path: 'habilitation', version: '1' })
@@ -29,7 +28,7 @@ export class AdmissionDischargeController {
   ) {}
 
   @Post()
-  async admission(@Body() createHabilitationDto: CreateHabilitationDto) {
+  async habilitation(@Body() createHabilitationDto: CreateHabilitationDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
       'createHabilitation',
@@ -52,7 +51,7 @@ export class AdmissionDischargeController {
     type: Number,
     description: 'Id of the acta',
   })
-  async getAdmissionDischargeById(
+  async getHabilitationById(
     @Param('id') id: string,
     @Query()
     find: FindOneWhitTermAndRelationDto,
@@ -61,6 +60,16 @@ export class AdmissionDischargeController {
       this.clientHabilitation,
       'findOneHabilitation',
       { term: id, ...find },
+    );
+  }
+
+  @Post('/ByTerm')
+  findByTerm(@Body() searchDto: SearchDto) {
+    console.log(searchDto);
+    return sendAndHandleRpcExceptionPromise(
+      this.clientHabilitation,
+      'findByTerm',
+      searchDto,
     );
   }
   /* 

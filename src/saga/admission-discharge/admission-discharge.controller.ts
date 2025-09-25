@@ -19,8 +19,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
-
-
+import { SearchDto } from '../generalDto/search.dto';
 
 @ApiTags('Saga/Admission-discharge  💻🌸')
 @Controller({ path: 'add-admission-discharge', version: '1' })
@@ -67,16 +66,13 @@ export class AdmissionDischargeController {
       { term: id, ...find },
     );
   }
-  /* 
-  @Patch(':id')
-  async updateAdmissionDischarge(
-    @Param('id') id: number,
-    @Body() updateAdmissionDisschargeDto: UpdateAdmissionsDischargeDto,
-  ) {
-    return await sendAndHandleRpcExceptionPromise(
+  @Post('/ByTerm')
+  findByTerm(@Body() searchDto: SearchDto) {
+    console.log(searchDto);
+    return sendAndHandleRpcExceptionPromise(
       this.clientAdmissionDischarge,
-      'updateAdmissionsDischarge',
-      { id, ...updateAdmissionDisschargeDto },
+      'findByTermAdmissionsDischarge',
+      searchDto,
     );
-  } */
+  }
 }
