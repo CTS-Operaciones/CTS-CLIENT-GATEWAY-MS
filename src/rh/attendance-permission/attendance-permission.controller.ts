@@ -18,6 +18,7 @@ import {
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import {
+  AddJustificationDto,
   CreateAttendancePermissionDto,
   SetStatusOfPermissionDto,
   UpdateAttendancePermissionDto,
@@ -44,6 +45,15 @@ export class AttendancePermissionController {
       this.clientRH,
       'attendancePermission.setStatusOfPermission',
       setStatusOfPermissionDto,
+    );
+  }
+
+  @Post('add-justification')
+  addJustification(@Body() addJustificationDto: AddJustificationDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'attendancePermission.addJustificationPresence',
+      addJustificationDto,
     );
   }
 

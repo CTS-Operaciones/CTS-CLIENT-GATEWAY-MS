@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDate,
   IsEnum,
   IsNotEmpty,
@@ -13,7 +14,9 @@ import {
   ATTENDANCE_PERMISSION_TYPE,
   STATUS_VACATIONS_PERMISSION,
   ICreateAttendancePermission,
+  ToBoolean,
 } from '../../../common';
+import { Type } from 'class-transformer';
 
 export class CreateAttendancePermissionDto
   implements ICreateAttendancePermission
@@ -49,6 +52,20 @@ export class CreateAttendancePermissionDto
   @IsString()
   time_end?: string;
 
+  @ApiProperty({ type: Boolean, required: false, example: false })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('required_justified')
+  required_justified: boolean = false;
+
+  @ApiProperty({ type: Boolean, required: false, example: false })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('required_presences')
+  required_presences: boolean = false;
+
   @ApiProperty({ type: String, required: true })
   @IsNotEmpty()
   @IsString()
@@ -80,4 +97,19 @@ export class SetStatusOfPermissionDto {
   @ApiProperty({ type: String, required: true })
   @IsNotEmpty()
   approved_at: string;
+}
+
+export class AddJustificationDto {
+  @ApiProperty({ type: Number, required: true })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  id: number;
+
+  @ApiProperty({ type: Boolean, required: true })
+  @IsBoolean()
+  @IsNotEmpty()
+  @Type(() => Boolean)
+  @ToBoolean('justification')
+  justification: boolean;
 }
