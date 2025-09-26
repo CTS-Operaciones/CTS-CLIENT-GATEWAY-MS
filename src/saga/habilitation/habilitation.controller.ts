@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -72,16 +73,13 @@ export class AdmissionDischargeController {
       searchDto,
     );
   }
-  /* 
-  @Patch(':id')
-  async updateHabilitation(
-    @Param('id') id: number,
-    @Body() updateHabilitationDto: UpdateHabilitationDto,
-  ) {
+
+  @Get('/findOneHabilitationByAssigment/:id')
+  async findOneHabilitationByAssigment(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
-      'updateHabilitation',
-      { id, ...updateHabilitationDto },
+      'findOneHabilitationByAssigment',
+      { id },
     );
-  } */
+  }
 }

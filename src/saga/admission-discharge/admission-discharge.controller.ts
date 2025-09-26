@@ -15,10 +15,11 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
-import {CreateAdmissionsDischargeDto} from './dto/create-admissions-discharge.dto';
+import { CreateAdmissionsDischargeDto } from './dto/create-admissions-discharge.dto';
 import { SearchDto } from '../generalDto/search.dto';
 
 @ApiTags('Saga/Admission-discharge  💻🌸')
@@ -67,12 +68,19 @@ export class AdmissionDischargeController {
     );
   }
   @Post('/ByTerm')
-  findByTerm(@Body() searchDto: SearchDto) {
-    console.log(searchDto);
+  findByTerm(@Query() pagination: PaginationDto, @Body() searchDto: SearchDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientAdmissionDischarge,
       'findByTermAdmissionsDischarge',
-      searchDto,
+      { searchDto, pagination },
+    );
+  }
+  @Get('/findOneByAssigment/:id')
+  async findOneAdmissionsByAssigment(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientAdmissionDischarge,
+      'findOneAdmissionsByAssigment',
+      { id },
     );
   }
 }
