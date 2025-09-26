@@ -14,6 +14,7 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
@@ -65,12 +66,12 @@ export class AdmissionDischargeController {
   }
 
   @Post('/ByTerm')
-  findByTerm(@Body() searchDto: SearchDto) {
+  findByTerm(@Query() pagination: PaginationDto, @Body() searchDto: SearchDto) {
     console.log(searchDto);
     return sendAndHandleRpcExceptionPromise(
       this.clientHabilitation,
       'findByTerm',
-      searchDto,
+      { searchDto, pagination },
     );
   }
 
