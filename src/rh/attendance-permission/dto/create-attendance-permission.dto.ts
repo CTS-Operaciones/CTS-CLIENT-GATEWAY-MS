@@ -15,6 +15,7 @@ import {
   STATUS_VACATIONS_PERMISSION,
   ICreateAttendancePermission,
   ToBoolean,
+  PaginationRelationsDto,
 } from '../../../common';
 import { Type } from 'class-transformer';
 
@@ -112,4 +113,16 @@ export class AddJustificationDto {
   @Type(() => Boolean)
   @ToBoolean('justification')
   justification: boolean;
+}
+
+export class FilterDateDto extends PaginationRelationsDto {
+  @ApiProperty({ type: Date })
+  @IsDate()
+  @Type(() => Date)
+  startDate?: Date;
+
+  @ApiProperty({ type: Date })
+  @IsDate()
+  @Type(() => Date)
+  endDate?: Date;
 }

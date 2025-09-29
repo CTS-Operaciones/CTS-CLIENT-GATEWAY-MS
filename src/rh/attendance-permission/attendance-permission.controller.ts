@@ -20,6 +20,7 @@ import {
 import {
   AddJustificationDto,
   CreateAttendancePermissionDto,
+  FilterDateDto,
   SetStatusOfPermissionDto,
   UpdateAttendancePermissionDto,
 } from './dto';
@@ -58,7 +59,7 @@ export class AttendancePermissionController {
   }
 
   @Get()
-  findAll(@Query() pagination: PaginationRelationsDto) {
+  findAll(@Query() pagination: FilterDateDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'attendancePermission.findAll',
