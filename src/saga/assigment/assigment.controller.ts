@@ -15,6 +15,7 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
@@ -81,12 +82,12 @@ export class AssigmentController {
     );
   }
   @Post('/ByTerm')
-  findByTerm(@Body() searchDto: SearchDto) {
+  findByTerm(@Query() pagination: PaginationDto, @Body() searchDto: SearchDto) {
     console.log(searchDto);
     return sendAndHandleRpcExceptionPromise(
       this.clientAssigment,
       'findByTermRemoveAssignment',
-      searchDto,
+      { searchDto, pagination },
     );
   }
   @Delete(':id')
