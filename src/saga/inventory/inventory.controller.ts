@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
+  PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from 'src/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -61,7 +62,33 @@ export class InventoryController {
       { term: id, ...find },
     );
   }
+  @Get('/getInventoryBySede/:id')
+  async getInventoryBySedeId(
+    @Param('id') id: string,
+    @Query()
+    pagination: PaginationDto,
+  ) {
+    console.log(id, typeof id);
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientInventory,
+      'findBySedeInventory',
+      { id, pagination },
+    );
+  }
 
+  @Get('/getInventoryByProject/:id')
+  async getInventoryByProjectId(
+    @Param('id') id: string,
+    @Query()
+    pagination: PaginationDto,
+  ) {
+    console.log(id, typeof id);
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientInventory,
+      'findByProjectInventory',
+      { id, pagination },
+    );
+  }
   @Patch(':id')
   async updateInventory(
     @Param('id', ParseIntPipe) id: number,
