@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDate,
   IsEnum,
   IsNotEmpty,
   IsNumber,
@@ -20,9 +21,9 @@ export class CreateAdmissionsDischargeDto {
   @IsString()
   observations: string;
 
-  @ApiProperty({ type: String, description: 'Date of the admission' })
-  @IsString()
-  date: string;
+  @ApiProperty({ type: Date, description: 'Date of the admission' })
+  @IsDate()
+  date: Date;
 
   @ApiProperty({ type: Number, description: 'Id of the project(Sede)' })
   @IsPositive()

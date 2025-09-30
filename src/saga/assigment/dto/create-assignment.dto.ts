@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDate,
   IsEnum,
   IsNotEmpty,
   IsNumber,
@@ -10,10 +11,10 @@ import {
 } from 'class-validator';
 import { ASSIGNMENT_STATUS, ToBoolean } from 'src/common';
 export class CreateAssignmentDto {
-  @ApiProperty({ type: String, description: 'Date of the assignment' })
-  @IsString()
+  @ApiProperty({ type: Date, description: 'Date of the assignment' })
+  @IsDate()
   @IsNotEmpty()
-  date: string;
+  date: Date;
 
   @ApiProperty({ type: String, description: 'comment of the assignment' })
   @IsString()
