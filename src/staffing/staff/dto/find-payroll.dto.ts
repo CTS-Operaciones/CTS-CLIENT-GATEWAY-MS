@@ -20,6 +20,12 @@ export class FindPayrollDto {
   @IsPositive()
   headquarter_id?: number;
 
+  @ApiProperty({ type: Number, required: false })
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  employee_id?: number;
+
   @ApiProperty({ type: Date, required: true })
   @IsDate()
   @IsNotEmpty()
