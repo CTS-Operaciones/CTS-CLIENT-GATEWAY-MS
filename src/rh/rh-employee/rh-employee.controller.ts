@@ -23,6 +23,7 @@ import {
 import {
   CreateEmployeeDto,
   FilterRelationsDto,
+  FindByBossIdDto,
   UpdateEmployeeDto,
 } from './dto';
 
@@ -68,6 +69,16 @@ export class RhEmployeeController {
       this.clientEmployee,
       'find-one-employee',
       { term: id, allRelations, deletes, relations },
+    );
+  }
+
+  @Get('/findByBossId/:boss_id')
+  @ApiParam({ name: 'boss_id', type: Number, description: 'Id of boss' })
+  getItembyBossId(@Param('boss_id') boss_id: number) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'findByBossId-employees',
+      { boss_id },
     );
   }
 
