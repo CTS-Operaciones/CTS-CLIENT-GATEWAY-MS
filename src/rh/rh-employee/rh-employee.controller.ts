@@ -24,6 +24,7 @@ import {
   CreateEmployeeDto,
   FilterRelationsDto,
   FindByBossIdDto,
+  UpdateEmployeeContractDto,
   UpdateEmployeeDto,
 } from './dto';
 
@@ -91,6 +92,19 @@ export class RhEmployeeController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'update-employee',
+      { id, ...payload },
+    );
+  }
+
+  @Patch('contract/:id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async updateContract(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateEmployeeContractDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'update-employee-contract',
       { id, ...payload },
     );
   }
