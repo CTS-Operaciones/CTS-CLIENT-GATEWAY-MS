@@ -6,5 +6,5 @@ export class UpdateEmployeeDto extends PartialType(
 ) {}
 
 export class UpdateEmployeeContractDto extends PartialType(
-  EmploymentRecordDto,
+  OmitType(EmploymentRecordDto, ['employee_has_position', 'account'] as const),
 ) {}
