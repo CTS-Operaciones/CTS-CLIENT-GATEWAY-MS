@@ -22,8 +22,8 @@ import {
 
 import {
   CreateEmployeeDto,
+  EmployeeHasPositionDto,
   FilterRelationsDto,
-  FindByBossIdDto,
   UpdateEmployeeContractDto,
   UpdateEmployeeDto,
 } from './dto';
@@ -137,8 +137,21 @@ export class RhAsignedPositionsController {
     private readonly clientEmployeeHasPosition: ClientProxy,
   ) {}
 
+  @Post(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async createAsignedPosition(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: EmployeeHasPositionDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'create-asignedPositions',
+      { id, ...payload },
+    );
+  }
+
   @Get(':id')
-  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
   async getAsignedPositions(
     @Param('id') id: string,
     @Query()
@@ -146,7 +159,7 @@ export class RhAsignedPositionsController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
-      'asignedPositionsFindByEmployeeId',
+      'findByEmployeeId-asignedPositions',
       {
         term: id,
         allRelations,
@@ -157,10 +170,15 @@ export class RhAsignedPositionsController {
   }
 
   @Get('verify/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of employeeHasPosition',
+  })
   async verifyAsignedPositions(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
-      'verifyEmployeeHasPosition',
+      'verifyEmployeeHasPosition-asignedPositions',
       {
         id,
       },
