@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -146,6 +147,19 @@ export class RhAsignedPositionsController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
       'create-asignedPositions',
+      { id, ...payload },
+    );
+  }
+
+  @Put(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async updateAsignedPosition(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: EmployeeHasPositionDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'update-asignedPositions',
       { id, ...payload },
     );
   }
