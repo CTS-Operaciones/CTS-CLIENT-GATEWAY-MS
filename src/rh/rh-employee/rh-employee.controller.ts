@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -22,7 +23,9 @@ import {
 
 import {
   CreateEmployeeDto,
+  EmployeeHasPositionDto,
   FilterRelationsDto,
+  UpdateEmployeeContractDto,
   UpdateEmployeeDto,
 } from './dto';
 
@@ -71,6 +74,16 @@ export class RhEmployeeController {
     );
   }
 
+  @Get('/findByBossId/:boss_id')
+  @ApiParam({ name: 'boss_id', type: Number, description: 'Id of boss' })
+  getItembyBossId(@Param('boss_id') boss_id: number) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'findByBossId-employees',
+      { boss_id },
+    );
+  }
+
   @Patch(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async updateItem(
@@ -80,6 +93,19 @@ export class RhEmployeeController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'update-employee',
+      { id, ...payload },
+    );
+  }
+
+  @Patch('contract/:id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async updateContract(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateEmployeeContractDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'update-employee-contract',
       { id, ...payload },
     );
   }
@@ -112,8 +138,34 @@ export class RhAsignedPositionsController {
     private readonly clientEmployeeHasPosition: ClientProxy,
   ) {}
 
+  @Post(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async createAsignedPosition(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: EmployeeHasPositionDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'create-asignedPositions',
+      { id, ...payload },
+    );
+  }
+
+  @Put(':id')
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  async updateAsignedPosition(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: EmployeeHasPositionDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'update-asignedPositions',
+      { id, ...payload },
+    );
+  }
+
   @Get(':id')
-  @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
+  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
   async getAsignedPositions(
     @Param('id') id: string,
     @Query()
@@ -121,7 +173,7 @@ export class RhAsignedPositionsController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
-      'asignedPositionsFindByEmployeeId',
+      'findByEmployeeId-asignedPositions',
       {
         term: id,
         allRelations,
@@ -132,10 +184,15 @@ export class RhAsignedPositionsController {
   }
 
   @Get('verify/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of employeeHasPosition',
+  })
   async verifyAsignedPositions(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
-      'verifyEmployeeHasPosition',
+      'verifyEmployeeHasPosition-asignedPositions',
       {
         id,
       },
