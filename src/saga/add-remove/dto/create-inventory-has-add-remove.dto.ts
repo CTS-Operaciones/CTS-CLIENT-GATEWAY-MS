@@ -5,8 +5,11 @@ import {
   IsNotEmpty,
   IsNumber,
   IsPositive,
+  IsString,
   ValidateNested,
 } from 'class-validator';
+
+import { CreateInventoryDto } from 'src/saga/inventory/dto/create-inventory.dto';
 
 export class ResourceDto {
   @ApiProperty({ type: Number, description: 'Id del recurso' })
@@ -24,6 +27,7 @@ export class ResourceDto {
   @IsNotEmpty()
   quantity: number;
 }
+
 export class CreateHasAddRemoveDto {
   @ApiProperty({ type: Number, description: 'Id del acta de inventario' })
   @IsNumber()
@@ -31,9 +35,19 @@ export class CreateHasAddRemoveDto {
   @IsNotEmpty()
   idActa: number;
 
-  @ApiProperty({ type: [ResourceDto], description: 'Recurso' })
-  @IsArray()
+  @ApiProperty({ type: CreateInventoryDto, description: 'Recurso' })
   @ValidateNested()
-  @Type(() => ResourceDto)
-  resource: ResourceDto[];
+  @Type(() => CreateInventoryDto)
+  inventory: CreateInventoryDto;
+}
+
+export class CreateRemoveDto {
+  @IsNumber()
+  idActa: number;
+
+  @IsString()
+  factura: number;
+
+  @IsArray()
+  idInventory: number[];
 }

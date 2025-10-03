@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
@@ -24,6 +24,7 @@ import { UpdateStateDto } from './dto/update-state.dto';
 import { UpdateUbicationDto } from './dto/update-ubication.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { CreateUbicationDto } from './dto/create-ubication.dto';
+import { filter } from 'src/common/interfaces/searchFilter.interface';
 
 @ApiTags('Saga/Inventory 💻🌸')
 @Controller({ path: 'inventories', version: '1' })
@@ -33,19 +34,27 @@ export class InventoryController {
   ) {}
   @Post()
   async createInventory(@Body() createInventoryDto: CreateInventoryDto) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientInventory,
-      'createInventory',
-      createInventoryDto,
-    );
+    try {
+      return await sendAndHandleRpcExceptionPromise(
+        this.clientInventory,
+        'createInventory',
+        createInventoryDto,
+      );
+    } catch (error) {
+      console.log(error);
+      throw new RpcException(error.message || 'Error interno del servidor');
+    }
   }
 
   @Get()
-  async getInventory() {
+  async getInventory(
+    @Query() pagination: PaginationDto,
+    @Query() filter: filter,
+  ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventory,
       'findAllInventory',
-      {},
+      { pagination, filter },
     );
   }
 

@@ -14,6 +14,10 @@ export class CreateInventoryDto {
   @IsNumber()
   user_id?: number;
 
+  @ApiProperty({ type: Number, description: 'Sede id of the inventory' })
+  @IsNumber()
+  sede_id: number;
+
   @ApiProperty({ type: Number, description: 'State id of the inventory' })
   @IsNumber()
   state?: number;

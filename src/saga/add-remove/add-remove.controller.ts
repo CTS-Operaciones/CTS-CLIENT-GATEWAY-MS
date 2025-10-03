@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
@@ -90,14 +90,14 @@ export class AddRemoveController {
 export class inventoryHasAddRemoveController {
   @Inject(NATS_SERVICE) private readonly clientInventoryhasAdd: ClientProxy;
   @Post()
-  async addRemove(@Body() createInventoryhasAdd: CreateHasAddRemoveDto) {
-    console.log(createInventoryhasAdd);
+  async addRemove(@Body() createAddRemoveDto: CreateHasAddRemoveDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientInventoryhasAdd,
       'createInventoryHasAdd',
-      createInventoryhasAdd,
+      createAddRemoveDto,
     );
   }
+
   @Get('resource/:id')
   @ApiParam({
     name: 'id',
