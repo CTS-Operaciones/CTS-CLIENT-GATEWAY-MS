@@ -14,7 +14,10 @@ import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import { CheckInDto, CheckOutDto } from './dto/create-presence.dto';
-import { FilterFindAllPresenceDto } from './dto/filter-findAll.dto';
+import {
+  FilterFindAllPresenceDto,
+  FindStaffPresenceDto,
+} from './dto/filter-findAll.dto';
 
 @ApiTags('Presence ⚠️')
 @Controller({ path: 'presence', version: '1' })
@@ -41,6 +44,15 @@ export class PresenceController {
       this.clientProxy,
       'presence.checkOut',
       { id, ...checkOutDto },
+    );
+  }
+
+  @Get('asistence')
+  findByHeaderquarterAndDate(@Query() payload: FindStaffPresenceDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'presence.findByHeaderquarterAndDate',
+      payload,
     );
   }
 
