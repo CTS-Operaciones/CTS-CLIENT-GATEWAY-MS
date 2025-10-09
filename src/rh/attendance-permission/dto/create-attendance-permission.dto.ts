@@ -126,3 +126,17 @@ export class FilterDateDto extends PaginationRelationsDto {
   @Type(() => Date)
   endDate?: Date;
 }
+
+export class FindHistoryByEmployeeDto extends PaginationRelationsDto {
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    default: false,
+    description: 'Load relations',
+  })
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('relations')
+  relations?: boolean = false;
+}

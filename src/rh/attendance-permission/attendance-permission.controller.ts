@@ -12,19 +12,16 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
-import {
-  NATS_SERVICE,
-  PaginationRelationsDto,
-  sendAndHandleRpcExceptionPromise,
-} from '../../common';
+import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import {
   AddJustificationDto,
   CreateAttendancePermissionDto,
   FilterDateDto,
+  FindHistoryByEmployeeDto,
   SetStatusOfPermissionDto,
   UpdateAttendancePermissionDto,
 } from './dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Attendance Permission 🗓️')
 @Controller({ path: 'attendance-permission', version: '1' })
@@ -67,7 +64,25 @@ export class AttendancePermissionController {
     );
   }
 
+  @Get('history/employee/:employee_id')
+  @ApiParam({ name: 'employee_id', type: Number, description: 'Employee ID' })
+  findHistoryByEmployee(
+    @Param('employee_id', ParseIntPipe) employee_id: number,
+    @Query() query: FindHistoryByEmployeeDto,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'attendancePermission.findHistoryByEmployee',
+      { employee_id, ...query },
+    );
+  }
+
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Attendance Permission ID',
+  })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
@@ -77,6 +92,11 @@ export class AttendancePermissionController {
   }
 
   @Patch(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Attendance Permission ID',
+  })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAttemptancePermissionDto: UpdateAttendancePermissionDto,
@@ -89,6 +109,11 @@ export class AttendancePermissionController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Attendance Permission ID',
+  })
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
