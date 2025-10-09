@@ -9,7 +9,11 @@ import {
   IsString,
 } from 'class-validator';
 
-import { ICreateVacation, STATUS_VACATIONS_PERMISSION } from '../../../common';
+import {
+  ICreateVacation,
+  PaginationDto,
+  STATUS_VACATIONS_PERMISSION,
+} from '../../../common';
 
 export class CreateVacationDto implements ICreateVacation {
   @ApiProperty({ type: Number, required: true })
@@ -60,4 +64,15 @@ export class CreateVacationDto implements ICreateVacation {
   @IsString()
   @IsOptional()
   comment?: string;
+}
+
+export class FindHistoryByEmployeeDto extends PaginationDto {
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  relations?: boolean = false;
 }

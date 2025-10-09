@@ -7,11 +7,17 @@ import {
   Param,
   Delete,
   Inject,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { CreateVacationDto, UpdateVacationDto } from './dto';
+import {
+  CreateVacationDto,
+  FindHistoryByEmployeeDto,
+  UpdateVacationDto,
+} from './dto';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 
@@ -28,6 +34,24 @@ export class RhVacationController {
       this.clientProxy,
       'vacation.create',
       createRhVacationDto,
+    );
+  }
+
+  @Get('history/employee/:employee_id')
+  @ApiParam({
+    name: 'employee_id',
+    type: Number,
+    required: true,
+    description: 'Employee ID',
+  })
+  findHistoryByEmployee(
+    @Param('employee_id', ParseIntPipe) employee_id: string,
+    @Query() pagination: FindHistoryByEmployeeDto,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'vacation.findHistoryByEmployee',
+      { employee_id: Number(employee_id) },
     );
   }
 
