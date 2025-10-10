@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  Min,
 } from 'class-validator';
 
 import {
@@ -35,7 +36,7 @@ export class CreateVacationDto implements ICreateVacation {
   @ApiProperty({ type: Number, required: true })
   @IsNumber()
   @IsNotEmpty()
-  @IsPositive()
+  @Min(0)
   requested_day: number;
 
   @ApiProperty({
