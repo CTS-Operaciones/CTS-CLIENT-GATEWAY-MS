@@ -12,7 +12,11 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  NATS_SERVICE,
+  RelationsDto,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 import {
   AddJustificationDto,
   CreateAttendancePermissionDto,
@@ -83,11 +87,14 @@ export class AttendancePermissionController {
     type: Number,
     description: 'Attendance Permission ID',
   })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() relations: RelationsDto,
+  ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'attendancePermission.findOne',
-      { id },
+      { id, relations },
     );
   }
 
