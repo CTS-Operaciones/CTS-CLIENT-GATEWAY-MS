@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -11,7 +12,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { ICreatePosition, ISalary } from '../../../common';
+import { ICreatePosition, ISalary, ToBoolean } from '../../../common';
 
 export class CreateSalaryDto implements ISalary {
   @ApiProperty({ type: Number, description: 'Amount of the position' })
@@ -62,4 +63,17 @@ export class CreatePositionDto implements ICreatePosition {
   @IsPositive()
   @IsOptional()
   parent?: number = undefined;
+
+  @ApiProperty({
+    type: Boolean,
+    description: 'Indicates if the position requires a boss',
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('required_boss')
+  required_boss?: boolean = false;
 }
