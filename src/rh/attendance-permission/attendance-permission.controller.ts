@@ -61,14 +61,37 @@ export class AttendancePermissionController {
     );
   }
 
+  @Get('download')
+  async downloadExcel(@Res() res: Response) {
+    const rpcResult = await sendAndHandleRpcExceptionPromise<Buffer>(
+      this.clientRH,
+      'generate-protected-excel',
+      {},
+    );
+
+    const buffer = Buffer.from(rpcResult);
+
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="${new Date().toISOString()}.xlsx"`,
+    );
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.send(buffer);
+  }
+
   @Get('generate-docx')
   async generateDocument(@Res() res: Response) {
     try {
-      const buffer = await sendAndHandleRpcExceptionPromise<Buffer>(
+      const rpcResult = await sendAndHandleRpcExceptionPromise<Buffer>(
         this.clientRH,
         'document-generate.rh-permission.docx',
         {},
       );
+
+      const buffer = Buffer.from(rpcResult);
 
       res.setHeader(
         'Content-Disposition',
