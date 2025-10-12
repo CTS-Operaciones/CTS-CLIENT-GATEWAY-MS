@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
@@ -26,6 +27,7 @@ import {
   UpdateAttendancePermissionDto,
 } from './dto';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @ApiTags('Attendance Permission 🗓️')
 @Controller({ path: 'attendance-permission', version: '1' })
@@ -57,6 +59,59 @@ export class AttendancePermissionController {
       'attendancePermission.addJustificationPresence',
       addJustificationDto,
     );
+  }
+
+  @Get('generate-docx')
+  async generateDocument(@Res() res: Response) {
+    try {
+      const buffer = await sendAndHandleRpcExceptionPromise<Buffer>(
+        this.clientRH,
+        'document-generate.rh-permission.docx',
+        {},
+      );
+
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename=permiso_rh.docx',
+      );
+      res.setHeader(
+        'Content-Type',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      );
+      res.setHeader('Content-Length', buffer.length);
+
+      res.send(buffer);
+    } catch (error) {
+      console.error(
+        'Error al comunicarse con el microservicio generador',
+        error,
+      );
+      res.status(500).send('Error al generar el documento.');
+    }
+  }
+
+  @Get('generate-pdf')
+  async generateDocumentPDF(@Res() res: Response) {
+    try {
+      const buffer = await sendAndHandleRpcExceptionPromise<Buffer>(
+        this.clientRH,
+        'document-generate.rh-permission.pdf',
+        {},
+      );
+
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename=permiso_rh.pdf',
+      );
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(buffer);
+    } catch (error) {
+      console.error(
+        'Error al comunicarse con el microservicio generador',
+        error,
+      );
+      res.status(500).send('Error al generar el documento.');
+    }
   }
 
   @Get()
