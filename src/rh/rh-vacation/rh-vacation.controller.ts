@@ -20,7 +20,11 @@ import {
   UpdateVacationDto,
 } from './dto';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  NATS_SERVICE,
+  RelationsDto,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 
 @ApiTags('Vacation 🏖️')
 @Controller({ path: 'vacation', version: '1' })
@@ -44,6 +48,23 @@ export class RhVacationController {
       this.clientProxy,
       'vacation.setStatusOfVacation',
       updateStatus,
+    );
+  }
+
+  @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Vacations ID',
+  })
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() relations: RelationsDto,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'vacation.findOne',
+      { id, relations },
     );
   }
 
