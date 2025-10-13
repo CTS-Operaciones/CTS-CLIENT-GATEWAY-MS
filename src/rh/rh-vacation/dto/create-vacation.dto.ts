@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsDate,
   IsEnum,
   IsNotEmpty,
@@ -8,13 +10,28 @@ import {
   IsPositive,
   IsString,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 import {
   ICreateVacation,
+  IDatesRange,
   PaginationDto,
   STATUS_VACATIONS_PERMISSION,
 } from '../../../common';
+
+export class DatesRangeDto implements IDatesRange {
+  @ApiProperty({ type: Date, required: true })
+  @IsNotEmpty()
+  @IsDate()
+  start: Date;
+
+  @ApiProperty({ type: Date, required: true })
+  @IsNotEmpty()
+  @IsDate()
+  end: Date;
+}
 
 export class CreateVacationDto implements ICreateVacation {
   @ApiProperty({ type: Number, required: true })
@@ -23,15 +40,12 @@ export class CreateVacationDto implements ICreateVacation {
   @IsPositive()
   employee: number;
 
-  @ApiProperty({ type: Date, required: true })
-  @IsNotEmpty()
-  @IsDate()
-  startDate: Date;
-
-  @ApiProperty({ type: Date, required: true })
-  @IsNotEmpty()
-  @IsDate()
-  endDate: Date;
+  @ApiProperty({ type: [DatesRangeDto], required: true })
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => DatesRangeDto)
+  dateRange: DatesRangeDto[];
 
   @ApiProperty({ type: Number, required: true })
   @IsNumber()

@@ -2,10 +2,16 @@ import { STATUS_VACATIONS_PERMISSION } from '../constants';
 
 export interface ICreateVacation {
   employee: number;
-  startDate: Date;
-  endDate: Date;
+  dateRange: IDatesRange[];
   requested_day: number;
   status: STATUS_VACATIONS_PERMISSION;
   reason?: string;
   comment?: string;
 }
+
+export interface IDatesRange {
+  start: Date;
+  end: Date;
+}
+
+
