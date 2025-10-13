@@ -101,6 +101,7 @@ export class EmployeeHasPositionDto implements IEmployeeHasPosition {
   @ApiProperty({
     type: Number,
     description: 'ID of parent employee',
+    required: false,
   })
   @IsOptional()
   @IsNumber()

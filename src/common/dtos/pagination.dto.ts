@@ -103,6 +103,18 @@ export class PaginationFilterProjectStatusDto<T>
   @IsEnum([...Object.values(STATUS_PROJECT)])
   @IsOptional()
   status?: T extends { status: infer U } ? U : never;
+
+  @ApiProperty({
+    required: false,
+    default: true,
+    type: Boolean,
+    description: 'Get only external projects',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('isExternal')
+  isExternal?: boolean = true;
 }
 
 export class PaginationFilterHeadquartersExternalDto
