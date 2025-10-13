@@ -16,6 +16,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import {
   CreateVacationDto,
   FindHistoryByEmployeeDto,
+  SetStatusOfVacationDto,
   UpdateVacationDto,
 } from './dto';
 
@@ -34,6 +35,15 @@ export class RhVacationController {
       this.clientProxy,
       'vacation.create',
       createRhVacationDto,
+    );
+  }
+
+  @Post('change-status')
+  changeStatus(@Body() updateStatus: SetStatusOfVacationDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'vacation.setStatusOfVacation',
+      updateStatus,
     );
   }
 

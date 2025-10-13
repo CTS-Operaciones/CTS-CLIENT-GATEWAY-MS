@@ -81,6 +81,23 @@ export class CreateVacationDto implements ICreateVacation {
   comment?: string;
 }
 
+export class SetStatusOfVacationDto {
+  @ApiProperty({ type: Number, required: true })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  id: number;
+
+  @ApiProperty({
+    enum: STATUS_VACATIONS_PERMISSION,
+    required: true,
+  })
+  @IsEnum(STATUS_VACATIONS_PERMISSION)
+  @IsNotEmpty()
+  status: STATUS_VACATIONS_PERMISSION;
+}
+
+
 export class FindHistoryByEmployeeDto extends PaginationDto {
   @ApiProperty({
     type: Boolean,
