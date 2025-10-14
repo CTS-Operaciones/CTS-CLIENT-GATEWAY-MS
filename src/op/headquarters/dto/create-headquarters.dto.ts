@@ -54,7 +54,7 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
 
   @ApiProperty({ type: String, description: 'Phone of the headquarters' })
   @IsString()
-  @IsPhoneNumber()
+  @IsPhoneNumber('MX')
   @IsNotEmpty()
   phone: string;
 

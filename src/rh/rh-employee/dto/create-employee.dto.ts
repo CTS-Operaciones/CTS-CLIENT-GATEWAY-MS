@@ -72,10 +72,11 @@ class EmergencyContactDto implements IEmergencyContact {
     type: String,
     description: 'Phone number of emergency',
   })
+  @IsString()
+  @IsPhoneNumber('MX')
   @IsNotEmpty()
-  @IsPhoneNumber()
   phone: string;
-}
+} 
 
 export class EmployeeHasPositionDto implements IEmployeeHasPosition {
   @ApiProperty({
