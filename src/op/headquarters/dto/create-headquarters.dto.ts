@@ -4,6 +4,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPhoneNumber,
   IsPositive,
   IsString,
@@ -16,6 +17,7 @@ import {
 } from '../../../common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { ContactOrganizationDto } from 'src/op/projects/dto/create-project.dto';
 
 export class AddQuotaEmployeePosition implements IQuotaEmployeePosition {
   @ApiProperty({ type: Number, description: 'Maximum number of employees' })
@@ -100,6 +102,16 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsNumber()
   @IsPositive()
   project: number;
+
+  @ApiProperty({
+    type: ContactOrganizationDto,
+    required: false,
+    description: 'Contact organization details',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ContactOrganizationDto)
+  constact_organization?: ContactOrganizationDto;
 
   @ApiProperty({
     type: [AddQuotaEmployeePosition],

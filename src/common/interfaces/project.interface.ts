@@ -25,4 +25,13 @@ export interface ICreateProject {
   number_expedients: number;
   productions_days: number;
   sum_productions: number;
+  isExternal?: boolean;
+  constact_organization?: IContactOrganization;
+}
+
+export interface IContactOrganization {
+  name: string;
+  position: string;
+  phone?: string;
+  email?: string;
 }

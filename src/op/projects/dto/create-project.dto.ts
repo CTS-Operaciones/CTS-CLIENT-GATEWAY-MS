@@ -1,14 +1,49 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
+  IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
+  IsPhoneNumber,
   IsPositive,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { ICreateProject } from '../../../common';
+import { IContactOrganization, ICreateProject } from '../../../common';
+
+export class ContactOrganizationDto implements IContactOrganization {
+  @ApiProperty({ type: String, description: 'Name of the contact' })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({ type: String, description: 'Position of the contact' })
+  @IsString()
+  @IsNotEmpty()
+  position: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: 'Email of the contact',
+  })
+  @IsEmail()
+  @IsOptional()
+  email?: string = '';
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: 'Phone number of the contact',
+  })
+  @IsString()
+  @IsPhoneNumber('MX')
+  @IsOptional()
+  phone?: string = '';
+}
 
 export class CreateProjectDto implements ICreateProject {
   @ApiProperty({ type: String, description: 'Contract number of the project' })
@@ -54,4 +89,14 @@ export class CreateProjectDto implements ICreateProject {
   @IsNumber()
   @IsPositive()
   sum_productions: number;
+
+  @ApiProperty({
+    type: ContactOrganizationDto,
+    required: false,
+    description: 'Contact organization details',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ContactOrganizationDto)
+  constact_organization?: ContactOrganizationDto;
 }
