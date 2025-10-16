@@ -53,6 +53,15 @@ export class RhPositionController {
     );
   }
 
+  @Get('headquarter/:id')
+  async getPositionsByHeadquarter(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'position.find-all-by-headquarterQuota',
+      { id },
+    );
+  }
+
   @Get(':term')
   async findOnePosition(
     @Param('term') term: string,
