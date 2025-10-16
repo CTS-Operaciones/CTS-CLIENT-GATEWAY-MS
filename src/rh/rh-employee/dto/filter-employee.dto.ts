@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDate,
   IsEnum,
   IsNumber,
   IsOptional,
@@ -116,4 +117,49 @@ export class FilterRelationsDto<T> extends FilterEnumsDto<T> {
   @Type(() => Boolean)
   @ToBoolean('vacation')
   vacation?: boolean = false;
+
+  @ApiProperty({ type: Boolean, required: false })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('permission')
+  permission: boolean = false;
+
+  @ApiProperty({ type: Number, required: false })
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  department_id?: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  position_id?: number;
+
+  @ApiProperty({ type: Date, required: false })
+  @IsDate()
+  @IsOptional()
+  birthdayStart?: Date;
+
+  @ApiProperty({ type: Date, required: false })
+  @IsDate()
+  @IsOptional()
+  birthdayEnd?: Date;
+
+  @ApiProperty({ type: Date, required: false })
+  @IsDate()
+  @IsOptional()
+  registerStart?: Date;
+
+  @ApiProperty({ type: Date, required: false })
+  @IsDate()
+  @IsOptional()
+  registerEnd?: Date;
+
+  @ApiProperty({ type: Number, required: false })
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  project_id?: number;
 }
