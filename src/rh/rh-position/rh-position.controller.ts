@@ -16,10 +16,9 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
-  PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { CreatePositionDto, UpdatePositionDto } from './dto';
+import { CreatePositionDto, FilterPositionDto, UpdatePositionDto } from './dto';
 
 @ApiTags('Positions 🪪')
 @Controller({ path: 'position', version: '1' })
@@ -36,7 +35,7 @@ export class RhPositionController {
   }
 
   @Get()
-  async getAllPositions(@Query() pagination: PaginationRelationsDto) {
+  async getAllPositions(@Query() pagination: FilterPositionDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-all-positions',
@@ -45,7 +44,7 @@ export class RhPositionController {
   }
 
   @Get('list')
-  async getAllPlainFormat(@Query() pagination: PaginationRelationsDto) {
+  async getAllPlainFormat(@Query() pagination: FilterPositionDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'find-all-positions-plainformat',

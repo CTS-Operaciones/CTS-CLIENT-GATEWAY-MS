@@ -12,7 +12,12 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { ICreatePosition, ISalary, ToBoolean } from '../../../common';
+import {
+  ICreatePosition,
+  ISalary,
+  PaginationRelationsDto,
+  ToBoolean,
+} from '../../../common';
 
 export class CreateSalaryDto implements ISalary {
   @ApiProperty({ type: Number, description: 'Amount of the position' })
@@ -76,4 +81,30 @@ export class CreatePositionDto implements ICreatePosition {
   @Type(() => Boolean)
   @ToBoolean('required_boss')
   required_boss?: boolean = false;
+
+  @ApiProperty({
+    type: Boolean,
+    description: 'Indicates if the position is external',
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('isExternal')
+  isExternal?: boolean = false;
+}
+
+export class FilterPositionDto extends PaginationRelationsDto {
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+    description: 'Filter positions that are external',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('isExternal')
+  isExternal?: boolean;
 }
