@@ -107,5 +107,5 @@ export class CreateProjectDto implements ICreateProject {
   @IsOptional()
   @ValidateNested()
   @Type(() => ContactOrganizationDto)
-  constact_organization?: ContactOrganizationDto;
+  contact_organization?: ContactOrganizationDto;
 }
