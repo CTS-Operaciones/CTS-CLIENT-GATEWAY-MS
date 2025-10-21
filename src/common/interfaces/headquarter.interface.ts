@@ -27,6 +27,14 @@ export interface ICreateHeadquarter {
   end_date: Date;
   status: STATUS_PROJECT;
   project: number;
+  contact_organization: IContactOrganization;
+}
+
+export interface IContactOrganization {
+  name: string;
+  position: string;
+  phone?: string;
+  email?: string;
 }
 
 export interface IQuotaEmployeePosition {

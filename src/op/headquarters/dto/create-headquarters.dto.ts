@@ -1,6 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsDate,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsNumber,
@@ -10,14 +12,33 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+
 import {
+  IContactOrganization,
   ICreateHeadquarter,
   IQuotaEmployeePosition,
   STATUS_PROJECT,
 } from '../../../common';
-import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { ContactOrganizationDto } from 'src/op/projects/dto/create-project.dto';
+
+export class ContactOrganizationDto implements IContactOrganization {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  position: string;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string = '';
+
+  @IsString()
+  @IsPhoneNumber('MX')
+  @IsOptional()
+  phone?: string = '';
+}
 
 export class AddQuotaEmployeePosition implements IQuotaEmployeePosition {
   @ApiProperty({ type: Number, description: 'Maximum number of employees' })
@@ -121,7 +142,7 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsOptional()
   @ValidateNested()
   @Type(() => ContactOrganizationDto)
-  constact_organization?: ContactOrganizationDto;
+  contact_organization: ContactOrganizationDto;
 
   @ApiProperty({
     type: [AddQuotaEmployeePosition],
