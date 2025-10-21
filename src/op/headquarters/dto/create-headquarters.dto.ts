@@ -82,9 +82,19 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsNumber()
   production_days: number;
 
-  @ApiProperty({ type: Number, description: 'Number of expedients' })
-  @IsNotEmpty()
+  @ApiProperty({ type: Number, description: 'Number of images' })
   @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  number_images: number;
+
+  @ApiProperty({
+    type: Number,
+    description: 'Number of expedients',
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
   number_expedients: number;
 
   @ApiProperty({ type: Number, description: 'Sum of productions' })

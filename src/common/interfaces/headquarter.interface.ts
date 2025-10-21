@@ -7,7 +7,8 @@ export interface IHeadquarter {
   postal_code: number;
   phone: string;
   production_days: number;
-  number_expedients: number;
+  number_expedients?: number;
+  number_images: number;
   sum_productions: number;
   status: STATUS_PROJECT;
 }
@@ -19,7 +20,8 @@ export interface ICreateHeadquarter {
   postal_code: string;
   phone: string;
   production_days: number;
-  number_expedients: number;
+  number_expedients?: number;
+  number_images: number;
   sum_productions: number;
   start_date: Date;
   end_date: Date;

@@ -12,6 +12,7 @@ export interface IProject {
   productions_days: number;
   sum_productions: number;
   status: STATUS_PROJECT;
+  isExternal: boolean;
   // TODO: Relaciones
   headquarters: IHeadquarter[];
 }
@@ -22,7 +23,8 @@ export interface ICreateProject {
   description: string;
   start_date: Date;
   end_date: Date;
-  number_expedients: number;
+  number_expedients?: number;
+  number_images: number;
   productions_days: number;
   sum_productions: number;
   isExternal?: boolean;
