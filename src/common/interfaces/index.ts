@@ -19,6 +19,7 @@ export * from './presence.interface';
 export * from './profile.interface';
 export * from './project.interface';
 export * from './salary.interface';
+export * from './searchFilter.interface';
 export * from './signature.interface';
 export * from './staff.interface';
 export * from './typeContract.interface';

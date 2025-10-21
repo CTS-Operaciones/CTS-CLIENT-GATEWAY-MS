@@ -1,5 +1,5 @@
 import { STATUS_PROJECT } from '../constants';
-import { IHeadquarter } from './headquarter.interface';
+import { IContactOrganization, IHeadquarter } from './headquarter.interface';
 
 export interface IProject {
   contract_number: string;
@@ -29,11 +29,4 @@ export interface ICreateProject {
   sum_productions: number;
   isExternal?: boolean;
   constact_organization?: IContactOrganization;
-}
-
-export interface IContactOrganization {
-  name: string;
-  position: string;
-  phone?: string;
-  email?: string;
 }
