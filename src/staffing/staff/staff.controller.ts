@@ -50,6 +50,15 @@ export class StaffController {
     );
   }
 
+  @Get('headquarter/finalized/:id')
+  async findStaffHeadquarterFinalized(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'staff.findStaffHeadquarterFinalized',
+      { id },
+    );
+  }
+
   @Get('headquarter/:id')
   async findAllEmployeeInHeadquarter(
     @Param('id', ParseIntPipe) id: number,
