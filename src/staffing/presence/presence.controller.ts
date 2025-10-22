@@ -1,4 +1,4 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -66,7 +66,7 @@ export class PresenceController {
   }
 
   @Delete(':id')
-  remove(@Param() id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'presence.remove',

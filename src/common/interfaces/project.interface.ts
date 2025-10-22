@@ -28,5 +28,5 @@ export interface ICreateProject {
   productions_days: number;
   sum_productions: number;
   isExternal?: boolean;
-  constact_organization?: IContactOrganization;
+  contact_organization?: IContactOrganization;
 }

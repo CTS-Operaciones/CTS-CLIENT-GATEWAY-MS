@@ -12,12 +12,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
-import {
-  NATS_SERVICE,
-  PaginationDto,
-  PaginationRelationsDto,
-  sendAndHandleRpcExceptionPromise,
-} from '../../common';
+import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 
 import {
   CreateStaffDto,
