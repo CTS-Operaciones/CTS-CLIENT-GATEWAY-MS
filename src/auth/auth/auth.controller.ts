@@ -5,6 +5,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Auth,
   NATS_SERVICE,
+  Permissions,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { ChangePasswordDto, LoginDto } from './dto';
@@ -18,7 +19,7 @@ export class AuthController {
   async login(@Body() loginDto: LoginDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAuth,
-      'loginAuth',
+      'auth.login',
       loginDto,
     );
   }
@@ -30,18 +31,19 @@ export class AuthController {
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAuth,
-      'chagePasswordAuth',
+      'auth.chagePassword',
       { id, ...changePasswordDto },
     );
   }
 
   @ApiBearerAuth()
   @Auth()
+  @Permissions(1, 2)
   @Get('reset-password/:id')
   async resetPassword(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientAuth,
-      'resetPasswordAuth',
+      'auth.resetPassword',
       { id },
     );
   }

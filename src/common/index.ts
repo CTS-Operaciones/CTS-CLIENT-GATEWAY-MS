@@ -5,6 +5,7 @@ export * from './constants/services';
 export * from './constants/status.enum';
 export * from './decorators/auth.decorator';
 export * from './decorators/get-user.decorator';
+export * from './decorators/permissions.decorator';
 export * from './decorators/public.decorator';
 export * from './decorators/rol-protected.decorator';
 export * from './decorators/toBoolean.decorator';
