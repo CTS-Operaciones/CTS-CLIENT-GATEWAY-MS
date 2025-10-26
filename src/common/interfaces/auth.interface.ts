@@ -1,4 +1,7 @@
-import { IAddModuleToProfile } from './profile.interface';
+import {
+  IAddModuleToProfile,
+  IResponseEnumPermissions,
+} from './profile.interface';
 
 export interface ILogin {
   username: string;
@@ -21,6 +24,6 @@ export interface IRespondeTokenValidate {
       id: number;
       name: string;
     };
-    permissions: IAddModuleToProfile[];
+    permissions: IResponseEnumPermissions[];
   };
 }

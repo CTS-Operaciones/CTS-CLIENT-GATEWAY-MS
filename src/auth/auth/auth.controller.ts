@@ -4,8 +4,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import {
   Auth,
+  MODULES_ENUM,
   NATS_SERVICE,
   Permissions,
+  PERMISSIONS_ENUM,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { ChangePasswordDto, LoginDto } from './dto';
@@ -38,7 +40,7 @@ export class AuthController {
 
   @ApiBearerAuth()
   @Auth()
-  @Permissions(1, 2)
+  @Permissions('EMPLEADOS', 'VER')
   @Get('reset-password/:id')
   async resetPassword(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(

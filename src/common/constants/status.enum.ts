@@ -62,12 +62,6 @@ export enum STATUS_CIVIL {
   CONDOM = 'Concubino/a',
 }
 
-export enum ROLE {
-  SUPER_ADMIN = 'SUPER_ADMIN',
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
-
 export enum PRESENCE_REASON {
   AUSENCE = 'AUSENCE',
   PRESENCE = 'PRESENCE',

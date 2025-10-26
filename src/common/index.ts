@@ -1,5 +1,6 @@
 export * from './configs/cors.config';
 export * from './configs/envs.validate';
+export * from './constants/auth.enum';
 export * from './constants/sagaEnums';
 export * from './constants/services';
 export * from './constants/status.enum';

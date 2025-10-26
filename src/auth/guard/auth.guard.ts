@@ -10,6 +10,7 @@ import { Request } from 'express';
 import {
   IRespondeTokenValidate,
   NATS_SERVICE,
+  ROLE,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
@@ -40,6 +41,8 @@ export class AuthGuard implements CanActivate {
       request['user'] = {};
       request['rol'] = user.role;
       request['permission'] = user.permissions;
+
+      if (user.role === ROLE.SUPER_ADMIN) return true;
     } catch {
       throw new UnauthorizedException('Invalid token');
     }

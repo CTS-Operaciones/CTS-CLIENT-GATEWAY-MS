@@ -1,14 +1,19 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 import { AuthGuard, RoleAndPermissionGuard } from '../../auth/guard';
-//import { AuthGuard } from '@nestjs/passport';
 
-//import { RolProtected } from './rol-protected.decorator';
-//import { UserRoleGuard } from 'src/auth/guard/user-rol.guard';
+import { MODULES_ENUM, PERMISSIONS_ENUM, ROLE } from '../constants/auth.enum';
+import { Permissions } from './permissions.decorator';
 
-export const Auth = () => {
-  return applyDecorators(
-    // RolProtected,
-    UseGuards(AuthGuard),
-    UseGuards(RoleAndPermissionGuard),
-  );
-};
+export const Auth = (
+  role?: keyof typeof ROLE,
+  module?: keyof typeof MODULES_ENUM,
+  permission?: keyof typeof PERMISSIONS_ENUM,
+) => {
+  const decorators = [UseGuards(AuthGuard, RoleAndPermissionGuard)];
+
+  if (module && permission) {
+    decorators.push(Permissions(module, permission));
+  }
+
+  return applyDecorators(...decorators);
+};;
