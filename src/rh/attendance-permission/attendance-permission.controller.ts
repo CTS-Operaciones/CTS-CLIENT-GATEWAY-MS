@@ -14,6 +14,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 
 import {
+  Auth,
   NATS_SERVICE,
   RelationsDto,
   sendAndHandleRpcExceptionPromise,
@@ -26,14 +27,16 @@ import {
   SetStatusOfPermissionDto,
   UpdateAttendancePermissionDto,
 } from './dto';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
+@ApiBearerAuth()
 @ApiTags('Attendance Permission 🗓️')
 @Controller({ path: 'attendance-permission', version: '1' })
 export class AttendancePermissionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}
 
+  @Auth('SOLICITUD_PERMISOS', 'CREAR')
   @Post()
   create(@Body() createAttendancePermissionDto: CreateAttendancePermissionDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -43,6 +46,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'CREAR')
   @Post('change-status')
   setStatus(@Body() setStatusOfPermissionDto: SetStatusOfPermissionDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -52,6 +56,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'CREAR')
   @Post('add-justification')
   addJustification(@Body() addJustificationDto: AddJustificationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -61,6 +66,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get('download')
   async downloadExcel(@Res() res: Response) {
     const rpcResult = await sendAndHandleRpcExceptionPromise<Buffer>(
@@ -82,6 +88,7 @@ export class AttendancePermissionController {
     res.send(buffer);
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get('generate-docx')
   async generateDocument(@Res() res: Response) {
     try {
@@ -113,6 +120,7 @@ export class AttendancePermissionController {
     }
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get('generate-pdf')
   async generateDocumentPDF(@Res() res: Response) {
     try {
@@ -137,6 +145,7 @@ export class AttendancePermissionController {
     }
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get()
   findAll(@Query() pagination: FilterDateDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -146,6 +155,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get('history/employee/:employee_id')
   @ApiParam({ name: 'employee_id', type: Number, description: 'Employee ID' })
   findHistoryByEmployee(
@@ -159,6 +169,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'VER')
   @Get(':id')
   @ApiParam({
     name: 'id',
@@ -176,6 +187,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'EDITAR')
   @Patch(':id')
   @ApiParam({
     name: 'id',
@@ -193,6 +205,7 @@ export class AttendancePermissionController {
     );
   }
 
+  @Auth('SOLICITUD_PERMISOS', 'ELIMINAR')
   @Delete(':id')
   @ApiParam({
     name: 'id',

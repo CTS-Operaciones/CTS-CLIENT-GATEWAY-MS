@@ -11,22 +11,25 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
 
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('Bank 🪪')
 @Controller({ path: 'banks', version: '1' })
 export class BankController {
   constructor(@Inject(NATS_SERVICE) private readonly bankClient: ClientProxy) {}
 
+  @Auth('BANCOS', 'CREAR')
   @Post()
   create(@Body() createBankDto: CreateBankDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -36,6 +39,7 @@ export class BankController {
     );
   }
 
+  @Auth('BANCOS', 'VER')
   @Get()
   findAll(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -45,6 +49,7 @@ export class BankController {
     );
   }
 
+  @Auth('BANCOS', 'VER')
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bankClient, 'findOneBank', {
@@ -52,6 +57,7 @@ export class BankController {
     });
   }
 
+  @Auth('BANCOS', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -63,6 +69,7 @@ export class BankController {
     });
   }
 
+  @Auth('BANCOS', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bankClient, 'removeBank', {
@@ -70,6 +77,7 @@ export class BankController {
     });
   }
 
+  @Auth('BANCOS', 'RESTAURAR')
   @Delete('restore/:id')
   restore(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bankClient, 'restoreBank', {

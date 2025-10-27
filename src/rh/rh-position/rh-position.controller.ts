@@ -11,20 +11,23 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   FindOneWhitTermAndRelationDto,
   NATS_SERVICE,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { CreatePositionDto, FilterPositionDto, UpdatePositionDto } from './dto';
 
+@ApiBearerAuth()
 @ApiTags('Positions 🪪')
 @Controller({ path: 'position', version: '1' })
 export class RhPositionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}
 
+  @Auth('PUESTOS', 'CREAR')
   @Post()
   async createPosition(@Body() createPositionDto: CreatePositionDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -34,6 +37,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'VER')
   @Get()
   async getAllPositions(@Query() pagination: FilterPositionDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -43,6 +47,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'VER')
   @Get('list')
   async getAllPlainFormat(@Query() pagination: FilterPositionDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -52,6 +57,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'VER')
   @Get('headquarter/:id')
   async getPositionsByHeadquarter(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -61,6 +67,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'CREAR')
   @Get(':term')
   async findOnePosition(
     @Param('term') term: string,
@@ -74,6 +81,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'EDITAR')
   @Patch(':id')
   async updatePosition(
     @Param('id', ParseIntPipe) id: number,
@@ -86,6 +94,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -95,6 +104,7 @@ export class RhPositionController {
     );
   }
 
+  @Auth('PUESTOS', 'RESTAURAR')
   @Delete('restore/:id')
   async restorePosition(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

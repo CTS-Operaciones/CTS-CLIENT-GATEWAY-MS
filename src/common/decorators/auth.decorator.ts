@@ -5,7 +5,6 @@ import { MODULES_ENUM, PERMISSIONS_ENUM, ROLE } from '../constants/auth.enum';
 import { Permissions } from './permissions.decorator';
 
 export const Auth = (
-  role?: keyof typeof ROLE,
   module?: keyof typeof MODULES_ENUM,
   permission?: keyof typeof PERMISSIONS_ENUM,
 ) => {

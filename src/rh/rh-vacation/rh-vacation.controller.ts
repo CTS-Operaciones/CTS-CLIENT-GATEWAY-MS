@@ -10,7 +10,7 @@ import {
   ParseIntPipe,
   Query,
 } from '@nestjs/common';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 
 import {
@@ -21,11 +21,13 @@ import {
 } from './dto';
 
 import {
+  Auth,
   NATS_SERVICE,
   RelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiBearerAuth()
 @ApiTags('Vacation 🏖️')
 @Controller({ path: 'vacation', version: '1' })
 export class RhVacationController {
@@ -33,6 +35,7 @@ export class RhVacationController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('SOLICITUD_VACACIONES', 'CREAR')
   @Post()
   create(@Body() createRhVacationDto: CreateVacationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -42,6 +45,7 @@ export class RhVacationController {
     );
   }
 
+  @Auth('SOLICITUD_VACACIONES', 'CREAR')
   @Post('change-status')
   changeStatus(@Body() updateStatus: SetStatusOfVacationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -51,6 +55,7 @@ export class RhVacationController {
     );
   }
 
+  @Auth('SOLICITUD_VACACIONES', 'VER')
   @Get(':id')
   @ApiParam({
     name: 'id',
@@ -68,6 +73,7 @@ export class RhVacationController {
     );
   }
 
+  @Auth('SOLICITUD_VACACIONES', 'VER')
   @Get('history/employee/:employee_id')
   @ApiParam({
     name: 'employee_id',
@@ -86,6 +92,7 @@ export class RhVacationController {
     );
   }
 
+  @Auth('SOLICITUD_VACACIONES', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -98,6 +105,7 @@ export class RhVacationController {
     );
   }
 
+  @Auth('SOLICITUD_VACACIONES', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return sendAndHandleRpcExceptionPromise(

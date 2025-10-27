@@ -12,9 +12,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   FindOneWhitTermAndRelationDto,
   IEmployee,
   NATS_SERVICE,
@@ -29,6 +30,7 @@ import {
   UpdateEmployeeDto,
 } from './dto';
 
+@ApiBearerAuth()
 @ApiTags('Employees 🪪')
 @Controller({ path: 'employee', version: '1' })
 export class RhEmployeeController {
@@ -36,6 +38,7 @@ export class RhEmployeeController {
     @Inject(NATS_SERVICE) private readonly clientEmployee: ClientProxy,
   ) {}
 
+  @Auth('EMPLEADOS', 'CREAR')
   @Post()
   async create(@Body() payload: CreateEmployeeDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -45,6 +48,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'VER')
   @Get(':name')
   @ApiParam({ name: 'name', type: String, description: 'Name of employee' })
   async getItems(
@@ -60,6 +64,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'VER')
   @Get('/findOne/:id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   getItem(
@@ -74,6 +79,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'VER')
   @Get('/findByBossId/:boss_id')
   @ApiParam({ name: 'boss_id', type: Number, description: 'Id of boss' })
   getItembyBossId(@Param('boss_id') boss_id: number) {
@@ -84,6 +90,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'EDITAR')
   @Patch(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async updateItem(
@@ -97,6 +104,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'EDITAR')
   @Patch('contract/:id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
   async updateContract(
@@ -110,6 +118,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'ELIMINAR')
   @Delete(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee' })
   async deleteItem(@Param('id', ParseIntPipe) id: number) {
@@ -120,6 +129,7 @@ export class RhEmployeeController {
     );
   }
 
+  @Auth('EMPLEADOS', 'RESTAURAR')
   @Delete('restore/:id')
   async restoreItem(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
