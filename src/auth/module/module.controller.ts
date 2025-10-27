@@ -11,15 +11,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateModuleDto, UpdateModuleDto } from './dto';
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiBearerAuth()
 @ApiTags('Module 🔐')
 @Controller({ path: 'module', version: '1' })
 export class ModuleController {
@@ -27,6 +29,7 @@ export class ModuleController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('MODULOS', 'CREAR')
   @Post()
   create(@Body() createModuleDto: CreateModuleDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -36,6 +39,7 @@ export class ModuleController {
     );
   }
 
+  @Auth('MODULOS', 'VER')
   @Get()
   findAll(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -45,6 +49,7 @@ export class ModuleController {
     );
   }
 
+  @Auth('MODULOS', 'VER')
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.clientProxy, 'findOneModule', {
@@ -52,6 +57,7 @@ export class ModuleController {
     });
   }
 
+  @Auth('MODULOS', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -63,6 +69,7 @@ export class ModuleController {
     });
   }
 
+  @Auth('MODULOS', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.clientProxy, 'removeModule', {
