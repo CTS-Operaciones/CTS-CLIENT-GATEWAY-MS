@@ -363,3 +363,28 @@ export class AddEmploymentRecordDto extends OmitType(EmploymentRecordDto, [
   @IsNotEmpty()
   employee_id: number;
 }
+
+
+export class UpdateEmployeeHasPositionsDto extends EmployeeHasPositionDto {
+  @ApiProperty({
+    type: Number,
+    description: 'ID of employee has position',
+  })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  id: number;
+}
+
+export class BulkUpdateEmployeeHasPositionsDto {
+  @ApiProperty({
+    type: UpdateEmployeeHasPositionsDto,
+    isArray: true,
+    description: 'Array of positions to update',
+  })
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => UpdateEmployeeHasPositionsDto)
+  positions: UpdateEmployeeHasPositionsDto[];
+}

@@ -24,6 +24,7 @@ import {
 
 import {
   AddEmploymentRecordDto,
+  BulkUpdateEmployeeHasPositionsDto,
   CreateEmployeeDto,
   CreateEmployeeOnlyDto,
   EmployeeHasPositionDto,
@@ -184,7 +185,7 @@ export class RhAsignedPositionsController {
   }
 
   @Put(':id')
-  @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
+  @ApiParam({ name: 'id', type: Number, description: 'Id of employee has position' })
   async updateAsignedPosition(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: EmployeeHasPositionDto,
@@ -193,6 +194,17 @@ export class RhAsignedPositionsController {
       this.clientEmployeeHasPosition,
       'update-asignedPositions',
       { id, ...payload },
+    );
+  }
+
+  @Put('bulk')
+  async bulkUpdateAsignedPositions(
+    @Body() payload: BulkUpdateEmployeeHasPositionsDto
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'bulk-update-asignedPositions',
+      payload,
     );
   }
 
