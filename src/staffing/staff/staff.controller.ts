@@ -19,6 +19,7 @@ import {
   FindBossForStaffDto,
   FindStaffInHeadquarterDto,
   FindStaffInProjectDto,
+  ManageStaffFinalizationDto,
   UpdateStaffDto,
 } from './dto';
 
@@ -27,7 +28,7 @@ import {
 export class StaffController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() createStaffDto: CreateStaffDto) {
@@ -36,6 +37,11 @@ export class StaffController {
       'staff.create',
       createStaffDto,
     );
+  }
+
+  @Post('manage/finalization')
+  async manageStaffFinalization(@Body() manageStaffFinalizationDto: ManageStaffFinalizationDto) {
+    return sendAndHandleRpcExceptionPromise(this.clientProxy, 'staff.manageStaffFinalization', manageStaffFinalizationDto)
   }
 
   @Get('project/:id')

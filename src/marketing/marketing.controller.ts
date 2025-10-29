@@ -13,9 +13,10 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   CleanupFilesInterceptor,
   ICreateImage,
   NATS_SERVICE,
@@ -24,13 +25,15 @@ import {
   storage,
 } from '../common';
 
+@ApiBearerAuth()
 @ApiTags('Marketing 📲')
 @Controller({ path: 'marketing', version: '1' })
 export class MarketingController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
-  ) {}
+  ) { }
 
+  @Auth('AUTH', 'CREAR')
   @UseInterceptors(
     FileInterceptor('file', { fileFilter, storage }),
     CleanupFilesInterceptor,
@@ -51,6 +54,7 @@ export class MarketingController {
     );
   }
 
+  @Auth('AUTH', 'CREAR')
   @Get('image/:id')
   async findImageById(@Param('id') id: number, @Res() res: Response) {
     const path: { path: string } = await sendAndHandleRpcExceptionPromise(
@@ -64,6 +68,7 @@ export class MarketingController {
     return res.sendFile(absolutePath);
   }
 
+  @Auth('AUTH', 'CREAR')
   @Patch('image/:id')
-  updateImage() {}
+  updateImage() { }
 }

@@ -3,6 +3,7 @@ export * from './create-staff.dto';
 export * from './create-typeSignature.dto';
 export * from './find-payroll.dto';
 export * from './find-staff.dto';
+export * from './manager-finalization.dto';
 export * from './update-signature.dto';
 export * from './update-staff.dto';
 export * from './update-typeSignature.dto';

@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { CreateDismissalDto } from './dto/create-dismissal.dto';
+import { CreateBulkDismissalDto } from './dto/create-bulk-dismissal.dto';
 import {
   FilterDateDismissalDto,
   NATS_SERVICE,
@@ -31,6 +32,15 @@ export class DismissalController {
       this.clientProxy,
       'dismissal.create',
       createDismissalDto,
+    );
+  }
+
+  @Post('bulk')
+  createBulk(@Body() createBulkDismissalDto: CreateBulkDismissalDto) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'dismissal.createBulk',
+      createBulkDismissalDto,
     );
   }
 
