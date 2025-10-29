@@ -11,15 +11,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import { CreateProfileDto, UpdateProfileDto } from './dto';
 
+@ApiBearerAuth()
 @ApiTags('Profile 🔐')
 @Controller({ path: 'profile', version: '1' })
 export class ProfileController {
@@ -27,6 +29,7 @@ export class ProfileController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('PERFILES', 'CREAR')
   @Post()
   async createProfile(@Body() createProfileDto: CreateProfileDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -36,6 +39,7 @@ export class ProfileController {
     );
   }
 
+  @Auth('PERFILES', 'VER')
   @Get()
   async getProfile(@Query() pagination: PaginationDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -45,6 +49,7 @@ export class ProfileController {
     );
   }
 
+  @Auth('PERFILES', 'VER')
   @Get(':id')
   async getProfileById(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -54,6 +59,7 @@ export class ProfileController {
     );
   }
 
+  @Auth('PERFILES', 'EDITAR')
   @Patch(':id')
   async updateProfile(
     @Param('id', ParseIntPipe) id: number,
@@ -66,6 +72,7 @@ export class ProfileController {
     );
   }
 
+  @Auth('PERFILES', 'ELIMINAR')
   @Delete(':id')
   async deleteProfile(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

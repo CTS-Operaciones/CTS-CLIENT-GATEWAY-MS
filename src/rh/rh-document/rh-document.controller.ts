@@ -17,12 +17,13 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 
 import {
+  Auth,
   ErrorManager,
   FindOneDto,
   ICreateDocument,
@@ -43,6 +44,7 @@ import {
 } from '../../common';
 import { ParseAndValidatePipe } from './pipes';
 
+@ApiBearerAuth()
 @ApiTags('Documents 🪪')
 @Controller({ path: 'document', version: '1' })
 export class RhDocumentController {
@@ -50,6 +52,7 @@ export class RhDocumentController {
     @Inject(NATS_SERVICE) private readonly documentClient: ClientProxy,
   ) {}
 
+  @Auth('DOCUMENTOS', 'CREAR')
   @Post()
   @UseInterceptors(
     AnyFilesInterceptor({ fileFilter, storage }),
@@ -90,6 +93,7 @@ export class RhDocumentController {
     }
   }
 
+  @Auth('DOCUMENTOS', 'VER')
   @Get(':term')
   async findFilesForEmployee(
     @Param() findOneDto: FindOneDto,
@@ -111,6 +115,7 @@ export class RhDocumentController {
     }
   }
 
+  @Auth('DOCUMENTOS', 'VER')
   @Get('employee/:id')
   async findAll(
     @Param('id', ParseIntPipe) id: number,
@@ -123,6 +128,7 @@ export class RhDocumentController {
     );
   }
 
+  @Auth('DOCUMENTOS', 'EDITAR')
   // TODO: #5 Verificar el borrado de documentos si existe un error.
   @Patch(':id')
   @UseInterceptors(
@@ -165,6 +171,7 @@ export class RhDocumentController {
     }
   }
 
+  @Auth('DOCUMENTOS', 'ELIMINAR')
   // TODO: #4 Borrado de documentos en el disco.
   @Delete(':id')
   async remove(@Param('id') id: number) {

@@ -21,13 +21,15 @@ import {
   UpdateTypeBondDto,
 } from './dto';
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('Bonds 💰')
 @Controller({ path: 'bond', version: '1' })
 export class BondsController {
@@ -36,6 +38,7 @@ export class BondsController {
   ) {}
 
   // Types Bond
+  @Auth('TIPOS_BONOS', 'CREAR')
   @Post('type')
   createType(@Body() createTypeBondDto: CreateTypeBondDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -45,6 +48,7 @@ export class BondsController {
     );
   }
 
+  @Auth('TIPOS_BONOS', 'VER')
   @Get('type')
   findAllTypes(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -54,6 +58,7 @@ export class BondsController {
     );
   }
 
+  @Auth('TIPOS_BONOS', 'VER')
   @Get('type/:id')
   findOneType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -63,6 +68,7 @@ export class BondsController {
     );
   }
 
+  @Auth('TIPOS_BONOS', 'EDITAR')
   @Patch('type/:id')
   updateType(
     @Param('id', ParseIntPipe) id: number,
@@ -75,6 +81,7 @@ export class BondsController {
     );
   }
 
+  @Auth('TIPOS_BONOS', 'ELIMINAR')
   @Delete('type/:id')
   removeType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -84,6 +91,7 @@ export class BondsController {
     );
   }
 
+  @Auth('TIPOS_BONOS', 'RESTAURAR')
   @Delete('type/restore/:id')
   restoreType(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -94,7 +102,7 @@ export class BondsController {
   }
 
   // Description Bond
-
+  @Auth('DESCRIPCION_BONOS', 'CREAR')
   @Post('description')
   createDescription(
     @Body() createDescriptionBondDto: CreateDescriptionBondDto,
@@ -106,6 +114,7 @@ export class BondsController {
     );
   }
 
+  @Auth('DESCRIPCION_BONOS', 'VER')
   @Get('description')
   findAllDescriptions(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -115,6 +124,7 @@ export class BondsController {
     );
   }
 
+  @Auth('DESCRIPCION_BONOS', 'VER')
   @Get('description/:id')
   findOneDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -124,6 +134,7 @@ export class BondsController {
     );
   }
 
+  @Auth('DESCRIPCION_BONOS', 'EDITAR')
   @Patch('description/:id')
   updateDescription(
     @Param('id', ParseIntPipe) id: number,
@@ -136,6 +147,7 @@ export class BondsController {
     );
   }
 
+  @Auth('DESCRIPCION_BONOS', 'ELIMINAR')
   @Delete('description/:id')
   removeDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -145,6 +157,7 @@ export class BondsController {
     );
   }
 
+  @Auth('DESCRIPCION_BONOS', 'RESTAURAR')
   @Delete('description/restore/:id')
   restoreDescription(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -155,6 +168,7 @@ export class BondsController {
   }
 
   // Bond
+  @Auth('BONOS', 'CREAR')
   @Post()
   create(@Body() createBondDto: CreateBondDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -164,6 +178,7 @@ export class BondsController {
     );
   }
 
+  @Auth('BONOS', 'VER')
   @Get()
   findAll(@Query() pagination: PaginationRelationsDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -173,6 +188,7 @@ export class BondsController {
     );
   }
 
+  @Auth('BONOS', 'VER')
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.findOne', {
@@ -180,6 +196,7 @@ export class BondsController {
     });
   }
 
+  @Auth('BONOS', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -191,6 +208,7 @@ export class BondsController {
     });
   }
 
+  @Auth('BONOS', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.remove', {
@@ -198,6 +216,7 @@ export class BondsController {
     });
   }
 
+  @Auth('BONOS', 'RESTAURAR')
   @Delete('restore/:id')
   restore(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(this.bondsService, 'bond.restore', {

@@ -17,7 +17,7 @@ import {
 
 @Injectable()
 export class RoleAndPermissionGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
@@ -48,7 +48,19 @@ export class RoleAndPermissionGuard implements CanActivate {
       );
     }
 
-    // Otros roles: validar módulo + permiso
+    if (userRole === ROLE.ADMIN) {
+      // ADMIN: solo validar módulo
+      const hasModule = permissions.some((el) =>
+        el.module.includes(MODULES_ENUM[moduleEnumRequired])
+      );
+      if (!hasModule) {
+        throw new ForbiddenException(
+          `Acceso denegado. Se requiere el módulo ${moduleEnumRequired}.`
+        );
+      }
+      return true;
+    }
+
     const hasPermission = permissions.some(
       (el) =>
         el.module.includes(MODULES_ENUM[moduleEnumRequired]) &&
@@ -57,7 +69,7 @@ export class RoleAndPermissionGuard implements CanActivate {
 
     if (!hasPermission) {
       throw new ForbiddenException(
-        'Acceso denegado. No tienes los permisos necesarios para esta acción.',
+        'Acceso denegado. No tienes los permisos necesarios para esta acción.'
       );
     }
 

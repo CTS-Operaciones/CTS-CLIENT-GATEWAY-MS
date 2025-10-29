@@ -11,15 +11,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreatePermissionDto, UpdatePermissionDto } from './dto';
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiBearerAuth()
 @ApiTags('Permission 🔐')
 @Controller({ path: 'permission', version: '1' })
 export class PermissionController {
@@ -27,6 +29,7 @@ export class PermissionController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('PERMISOS', 'CREAR')
   @Post()
   create(@Body() createPermissionDto: CreatePermissionDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -36,6 +39,7 @@ export class PermissionController {
     );
   }
 
+  @Auth('PERMISOS', 'VER')
   @Get()
   findAll(@Query() pagination: PaginationDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -45,6 +49,7 @@ export class PermissionController {
     );
   }
 
+  @Auth('PERMISOS', 'VER')
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
@@ -56,6 +61,7 @@ export class PermissionController {
     );
   }
 
+  @Auth('PERMISOS', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -71,6 +77,7 @@ export class PermissionController {
     );
   }
 
+  @Auth('PERMISOS', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
