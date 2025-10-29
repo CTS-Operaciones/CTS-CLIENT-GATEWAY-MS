@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -76,7 +76,7 @@ class EmergencyContactDto implements IEmergencyContact {
   @IsPhoneNumber('MX')
   @IsNotEmpty()
   phone: string;
-} 
+}
 
 export class EmployeeHasPositionDto implements IEmployeeHasPosition {
   @ApiProperty({
@@ -345,4 +345,21 @@ export class CreateEmployeeDto implements IEmployeeCreate {
   @ValidateNested({ each: true })
   @Type(() => EmploymentRecordDto)
   contract: EmploymentRecordDto;
+}
+
+export class CreateEmployeeOnlyDto extends OmitType(CreateEmployeeDto, [
+  'contract',
+]) {}
+
+export class AddEmploymentRecordDto extends OmitType(EmploymentRecordDto, [
+  'employee_has_position',
+]) {
+  @ApiProperty({
+    type: Number,
+    description: 'Employee ID',
+  })
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  employee_id: number;
 }

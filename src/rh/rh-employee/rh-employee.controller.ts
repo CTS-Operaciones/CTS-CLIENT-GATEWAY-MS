@@ -22,7 +22,9 @@ import {
 } from '../../common';
 
 import {
+  AddEmploymentRecordDto,
   CreateEmployeeDto,
+  CreateEmployeeOnlyDto,
   EmployeeHasPositionDto,
   FilterRelationsDto,
   UpdateEmployeeContractDto,
@@ -41,6 +43,24 @@ export class RhEmployeeController {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployee,
       'create-employee',
+      payload,
+    );
+  }
+
+  @Post('/add')
+  async add(@Body() payload: CreateEmployeeOnlyDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'employee.create-only-employee',
+      payload,
+    );
+  }
+
+  @Post('/addContract')
+  async addContract(@Body() payload: AddEmploymentRecordDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployee,
+      'employee.create-employee-contract',
       payload,
     );
   }
