@@ -184,6 +184,17 @@ export class RhAsignedPositionsController {
     );
   }
 
+  @Put('bulk')
+  async bulkUpdateAsignedPositions(
+    @Body() payload: BulkUpdateEmployeeHasPositionsDto
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'bulk-update-asignedPositions',
+      payload,
+    );
+  }
+
   @Put(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of employee has position' })
   async updateAsignedPosition(
@@ -194,17 +205,6 @@ export class RhAsignedPositionsController {
       this.clientEmployeeHasPosition,
       'update-asignedPositions',
       { id, ...payload },
-    );
-  }
-
-  @Put('bulk')
-  async bulkUpdateAsignedPositions(
-    @Body() payload: BulkUpdateEmployeeHasPositionsDto
-  ) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientEmployeeHasPosition,
-      'bulk-update-asignedPositions',
-      payload,
     );
   }
 
