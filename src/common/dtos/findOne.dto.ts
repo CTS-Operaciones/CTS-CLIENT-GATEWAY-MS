@@ -56,6 +56,18 @@ export class FindOneDeleteRelationsDto {
   @Type(() => Boolean)
   @ToBoolean('deletes')
   deletes?: boolean = false;
+
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    description:
+      'Filtra para retornar solo sedes finalizadas que tienen staff activo',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('finalized')
+  finalized?: boolean = false;
 }
 
 export class FindOneDto extends OmitType(FindOneWhitTermAndRelationDto, [

@@ -21,6 +21,7 @@ export * from './interfaces/attendancePermission.interface';
 export * from './interfaces/auth.interface';
 export * from './interfaces/bank.interface';
 export * from './interfaces/bond.interface';
+export * from './interfaces/generate-doc.interface';
 export * from './interfaces/department.interface';
 export * from './interfaces/dismissal.interface';
 export * from './interfaces/document.interface';

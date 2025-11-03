@@ -57,12 +57,12 @@ export class ProjectsController {
   @Get(':term')
   async findOne(
     @Param('term') term: string,
-    @Query() { relations, deletes }: FindOneDeleteRelationsDto,
+    @Query() { relations, deletes, finalized }: FindOneDeleteRelationsDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProjects,
       'findOneProject',
-      { term, relations, deletes },
+      { term, relations, deletes, finalized },
     );
   }
 
