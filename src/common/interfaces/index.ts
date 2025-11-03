@@ -1,5 +1,6 @@
 export * from './attendancePermission.interface';
 export * from './auth.interface';
+export * from './generate-doc.interface';
 export * from './bank.interface';
 export * from './bond.interface';
 export * from './department.interface';

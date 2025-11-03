@@ -32,6 +32,7 @@ import { AdmissionDischargeModule } from './saga/admission-discharge/admission-d
 import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
 import { AttendancePermissionModule } from './rh/attendance-permission/attendance-permission.module';
 import { HabilitationModule } from './saga/habilitation/habilitation.module';
+import { GenerateDocModule } from './generate-doc/generate-doc.module';
 @Module({
   imports: [
     RhBanksModule,
@@ -64,6 +65,7 @@ import { HabilitationModule } from './saga/habilitation/habilitation.module';
     RhVacationModule,
     AttendancePermissionModule,
     HabilitationModule,
+    GenerateDocModule,
   ],
   controllers: [],
   providers: [],
