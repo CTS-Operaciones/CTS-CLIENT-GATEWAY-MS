@@ -34,6 +34,7 @@ import { AttendancePermissionModule } from './rh/attendance-permission/attendanc
 import { HabilitationModule } from './saga/habilitation/habilitation.module';
 import { DocumentGeneratorModule } from './documents-generator/document-generator.module';
 import { GenerateDocModule } from './generate-doc/generate-doc.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 @Module({
   imports: [
     RhBanksModule,
@@ -68,6 +69,7 @@ import { GenerateDocModule } from './generate-doc/generate-doc.module';
     HabilitationModule,
     DocumentGeneratorModule,
     GenerateDocModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [],

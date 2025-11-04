@@ -45,4 +45,5 @@ export * from './interfaces/staff.interface';
 export * from './interfaces/typeContract.interface';
 export * from './interfaces/user.interface';
 export * from './interfaces/vacation.interface';
+export * from './transforms/date.transform';
 export * from './utils/errorManager';
