@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
@@ -170,6 +170,26 @@ export class GenerateDocController {
     res.setHeader(
       'Content-Disposition',
       `attachment; filename=permiso_${data.employeeNumber || 'rh'}_${Date.now()}.pdf`,
+    );
+    res.setHeader('Content-Length', buffer.length.toString());
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(buffer);
+  }
+
+  @Get('generate-xlsx')
+  async generateExcel(@Res() res: Response) {
+    const response = await sendAndHandleRpcExceptionPromise<any>(
+      this.clientGenerateDoc,
+      'generate-protected-excel',
+      {},
+    );
+
+    const buffer = Buffer.from(response);
+
+    res.setHeader('Content-Disposition', 'attachment; filename=reporte.xlsx');
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
     res.setHeader('Content-Length', buffer.length.toString());
     res.setHeader('Cache-Control', 'no-cache');
