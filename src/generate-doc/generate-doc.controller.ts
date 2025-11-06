@@ -1,10 +1,11 @@
 import { Response } from 'express';
-import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
 import { PermissionFormDto } from './dto/generate-doc.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FindStaffForProductionReportDto } from 'src/staffing/staff/dto';
 
 @ApiTags('Generate Doc 📄')
 @Controller({ path: 'generate/doc', version: '1' })
@@ -177,11 +178,11 @@ export class GenerateDocController {
   }
 
   @Get('generate-xlsx')
-  async generateExcel(@Res() res: Response) {
+  async generateExcel(@Res() res: Response, @Query() query: FindStaffForProductionReportDto) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
       'generate-protected-excel',
-      {},
+      query,
     );
 
     const buffer = Buffer.from(response);

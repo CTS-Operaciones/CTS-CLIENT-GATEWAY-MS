@@ -17,6 +17,7 @@ import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
 import {
   CreateStaffDto,
   FindBossForStaffDto,
+  FindStaffForProductionReportDto,
   FindStaffInHeadquarterDto,
   FindStaffInProjectDto,
   ManageStaffFinalizationDto,
@@ -95,5 +96,14 @@ export class StaffController {
       id,
       ...updateStaffDto,
     });
+  }
+
+  @Get('production-report/:headquarter_id')
+  async findStaffForProductionReport(@Query() params: FindStaffForProductionReportDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'staff.findStaffForProductionReport',
+      params,
+    );
   }
 }

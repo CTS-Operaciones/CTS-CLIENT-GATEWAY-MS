@@ -1,14 +1,15 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
 } from 'class-validator';
 
-import { ToBoolean } from '../../../common';
+import { parseLocalDate, ToBoolean } from '../../../common';
 import { CreateStaffDto } from './create-staff.dto';
 
 export class FindStaffInHeadquarterDto {
@@ -59,4 +60,18 @@ export class FindBossForStaffDto extends OmitType(CreateStaffDto, [
   @IsNotEmpty()
   @IsPositive()
   position: number;
+}
+
+export class FindStaffForProductionReportDto {
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  headquarter_id: number;
+
+  @ApiProperty({ type: Date, required: false })
+  @IsDate()
+  @IsOptional()
+  @Transform(parseLocalDate)
+  date?: Date = new Date();
 }
