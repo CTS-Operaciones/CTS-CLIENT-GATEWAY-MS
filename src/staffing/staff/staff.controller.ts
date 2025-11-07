@@ -33,7 +33,6 @@ import {
   ManageStaffFinalizationDto,
   UpdateStaffDto,
   UploadedProductionFileDto,
-  UploadProductionReportDto,
 } from './dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 

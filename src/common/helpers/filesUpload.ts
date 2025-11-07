@@ -16,6 +16,7 @@ export const fileFilter = (
       false,
     );
 
+  // Si es xlsx = 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   const fileExptension = file.mimetype.split('/')[1];
   const validExtensions = [
     'pdf',
@@ -32,6 +33,8 @@ export const fileFilter = (
 
   //TODO: Retornar error si no se encuentra la extension PDF o pdf
   if (validExtensions.includes(fileExptension)) {
+    return callback(null, true);
+  } else if (fileExptension.includes('sheet')) {
     return callback(null, true);
   }
 
