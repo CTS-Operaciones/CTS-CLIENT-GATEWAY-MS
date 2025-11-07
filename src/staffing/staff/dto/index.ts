@@ -7,3 +7,4 @@ export * from './manager-finalization.dto';
 export * from './update-signature.dto';
 export * from './update-staff.dto';
 export * from './update-typeSignature.dto';
+export * from './upload-production-report.dto';

@@ -26,6 +26,8 @@ export const fileFilter = (
     'JPEG',
     'png',
     'PNG',
+    'xlsx',
+    'XLSX',
   ];
 
   //TODO: Retornar error si no se encuentra la extension PDF o pdf
@@ -43,7 +45,12 @@ export const storage = diskStorage({
     const extension = file.originalname.split('.').pop();
     let name = `${uuidv4()}.${extension}`;
 
-    if (extension !== 'pdf' && extension !== 'PDF') {
+    if (
+      extension !== 'pdf' &&
+      extension !== 'PDF' &&
+      extension !== 'xlsx' &&
+      extension !== 'XLSX'
+    ) {
       name = `login.${extension}`;
     }
 
