@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-class ProductionOrderItemDto {
+export class ProductionOrderItemDto {
   @ApiProperty({
     type: Number,
     description: 'Position id',

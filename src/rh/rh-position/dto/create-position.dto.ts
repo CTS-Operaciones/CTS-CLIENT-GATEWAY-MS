@@ -94,6 +94,29 @@ export class CreatePositionDto implements ICreatePosition {
   @Type(() => Boolean)
   @ToBoolean('isExternal')
   isExternal?: boolean = false;
+
+  @ApiProperty({
+    type: Boolean,
+    description: 'Indicates if the position is for production report',
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('forProductionReport')
+  forProductionReport?: boolean = false;
+
+  @ApiProperty({
+    type: Number,
+    description: 'Process order of the position',
+    required: false,
+    default: null,
+  })
+  @IsOptional()
+  @IsNumber()
+  processOrder?: number | null = null;
 }
 
 export class FilterPositionDto extends PaginationRelationsDto {
@@ -107,4 +130,15 @@ export class FilterPositionDto extends PaginationRelationsDto {
   @Type(() => Boolean)
   @ToBoolean('isExternal')
   isExternal?: boolean;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+    description: 'Filter positions that are for production report',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  @ToBoolean('forProductionReport')
+  forProductionReport?: boolean;
 }
