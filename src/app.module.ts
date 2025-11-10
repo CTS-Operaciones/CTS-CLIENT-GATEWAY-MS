@@ -32,9 +32,9 @@ import { AdmissionDischargeModule } from './saga/admission-discharge/admission-d
 import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
 import { AttendancePermissionModule } from './rh/attendance-permission/attendance-permission.module';
 import { HabilitationModule } from './saga/habilitation/habilitation.module';
-import { DocumentGeneratorModule } from './documents-generator/document-generator.module';
 import { GenerateDocModule } from './generate-doc/generate-doc.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+
 @Module({
   imports: [
     RhBanksModule,
@@ -67,7 +67,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
     RhVacationModule,
     AttendancePermissionModule,
     HabilitationModule,
-    DocumentGeneratorModule,
     GenerateDocModule,
     DashboardModule,
   ],

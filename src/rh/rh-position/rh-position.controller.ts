@@ -87,6 +87,19 @@ export class RhPositionController {
   }
 
   @Auth('PUESTOS', 'EDITAR')
+  @Patch('production-order')
+  async updateProductionOrder(
+    @Body() updateProductionOrderDto: UpdateProductionOrderDto,
+  ) {
+    console.log('updateProductionOrderDto', updateProductionOrderDto);
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'position.update-production-order',
+      updateProductionOrderDto,
+    );
+  }
+
+  @Auth('PUESTOS', 'EDITAR')
   @Patch(':id')
   async updatePosition(
     @Param('id', ParseIntPipe) id: number,
@@ -96,18 +109,6 @@ export class RhPositionController {
       this.clientRH,
       'update-position',
       { id, ...updatePositionDto },
-    );
-  }
-
-  @Auth('PUESTOS', 'EDITAR')
-  @Patch('production-order')
-  async updateProductionOrder(
-    @Body() updateProductionOrderDto: UpdateProductionOrderDto,
-  ) {
-    return await sendAndHandleRpcExceptionPromise(
-      this.clientRH,
-      'position.update-production-order',
-      updateProductionOrderDto,
     );
   }
 
