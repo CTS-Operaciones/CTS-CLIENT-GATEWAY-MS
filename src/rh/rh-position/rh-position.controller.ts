@@ -19,7 +19,12 @@ import {
   NATS_SERVICE,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { CreatePositionDto, FilterPositionDto, UpdatePositionDto } from './dto';
+import {
+  CreatePositionDto,
+  FilterPositionDto,
+  UpdatePositionDto,
+  UpdateProductionOrderDto,
+} from './dto';
 
 @ApiBearerAuth()
 @ApiTags('Positions 🪪')
@@ -91,6 +96,18 @@ export class RhPositionController {
       this.clientRH,
       'update-position',
       { id, ...updatePositionDto },
+    );
+  }
+
+  @Auth('PUESTOS', 'EDITAR')
+  @Patch('production-order')
+  async updateProductionOrder(
+    @Body() updateProductionOrderDto: UpdateProductionOrderDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientRH,
+      'position.update-production-order',
+      updateProductionOrderDto,
     );
   }
 
