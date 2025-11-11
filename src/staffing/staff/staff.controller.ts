@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs';
 import {
   BadRequestException,
   Body,
@@ -14,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
-import { promises as fs } from 'fs';
 
 import {
   CleanupFilesInterceptor,

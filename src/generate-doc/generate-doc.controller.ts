@@ -1,10 +1,18 @@
 import { Response } from 'express';
-import { Body, Controller, Get, Inject, Post, Query, Res } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
 import { PermissionFormDto } from './dto/generate-doc.dto';
-import { ApiTags } from '@nestjs/swagger';
 import { FindStaffForProductionReportDto } from 'src/staffing/staff/dto';
 
 @ApiTags('Generate Doc 📄')
@@ -178,7 +186,10 @@ export class GenerateDocController {
   }
 
   @Get('generate-xlsx')
-  async generateExcel(@Res() res: Response, @Query() query: FindStaffForProductionReportDto) {
+  async generateExcel(
+    @Res() res: Response,
+    @Query() query: FindStaffForProductionReportDto,
+  ) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
       'generate-protected-excel',
@@ -196,4 +207,37 @@ export class GenerateDocController {
     res.setHeader('Cache-Control', 'no-cache');
     res.send(buffer);
   }
+
+  // @Post('upload-production-report')
+  // @UseInterceptors(
+  //   AnyFilesInterceptor({ fileFilter, storage }),
+  //   CleanupFilesInterceptor,
+  // )
+  // async uploadProductionReport(
+  //   @UploadedFiles() files: Express.Multer.File[],
+  //   @Body() body: any,
+  // ) {
+  //   const [file] = Array.isArray(files) ? files : [];
+
+  //   if (!file) {
+  //     throw new BadRequestException('El archivo XLSX es requerido');
+  //   }
+
+  //   const fileBuffer = await fs.readFile(file.path);
+
+  //   const fileData = {
+  //     originalname: file.originalname,
+  //     mimetype: file.mimetype,
+  //     buffer: fileBuffer.toString('base64'),
+  //     encoding: file.encoding,
+  //   };
+
+  //   await fs.unlink(file.path).catch(() => undefined);
+
+  //   return await sendAndHandleRpcExceptionPromise(
+  //     this.clientGenerateDoc,
+  //     'documents.parseProductionExcel',
+  //     { file: fileData },
+  //   );
+  // }
 }
