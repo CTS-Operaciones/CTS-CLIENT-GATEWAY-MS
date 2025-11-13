@@ -10,7 +10,10 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
-import { FilterDashboardDto } from './dto';
+import {
+  FilterDashboardDto,
+  FilterDashboardStaffProductionChartDto,
+} from './dto';
 
 @ApiTags('Dashboard 📊')
 @Controller({ path: 'dashboard', version: '1' })
@@ -60,11 +63,12 @@ export class DashboardController {
   @Get('op/staff/chart/:staff')
   async getDashboardDataOpStaffChart(
     @Param('staff', ParseIntPipe) staff: number,
+    @Query() filters: FilterDashboardStaffProductionChartDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.dashboardService,
       'dashboard.staff-production-chart',
-      { staff },
+      { staffId: staff, ...filters },
     );
   }
 }
