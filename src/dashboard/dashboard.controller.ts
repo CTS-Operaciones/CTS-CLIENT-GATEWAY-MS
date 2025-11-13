@@ -47,4 +47,24 @@ export class DashboardController {
       { headquarter },
     );
   }
+
+  @Get('op/staff/:staff')
+  async getDashboardDataOpStaff(@Param('staff', ParseIntPipe) staff: number) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.staff-production',
+      { staff },
+    );
+  }
+
+  @Get('op/staff/chart/:staff')
+  async getDashboardDataOpStaffChart(
+    @Param('staff', ParseIntPipe) staff: number,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.staff-production-chart',
+      { staff },
+    );
+  }
 }
