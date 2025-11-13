@@ -1,9 +1,16 @@
-import { Controller, Get, Inject, Query } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
-import { ApiTags } from "@nestjs/swagger";
+import {
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Query,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from "../common";
-import { FilterDashboardDto } from "./dto";
+import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
+import { FilterDashboardDto } from './dto';
 
 @ApiTags('Dashboard 📊')
 @Controller({ path: 'dashboard', version: '1' })
@@ -18,6 +25,26 @@ export class DashboardController {
       this.dashboardService,
       'get-dashboard-data',
       filterDashboardDto,
+    );
+  }
+
+  @Get('op/project/:project')
+  async getDashboardDataOp(@Param('project', ParseIntPipe) project: number) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.proyect-summary',
+      { project },
+    );
+  }
+
+  @Get('op/headquarter/:headquarter')
+  async getDashboardDataOpHeadquarter(
+    @Param('headquarter', ParseIntPipe) headquarter: number,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.headquarter-summary',
+      { headquarter },
     );
   }
 }
