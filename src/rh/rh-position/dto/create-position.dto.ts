@@ -117,6 +117,18 @@ export class CreatePositionDto implements ICreatePosition {
   @IsOptional()
   @IsNumber()
   processOrder?: number | null = null;
+
+  @ApiProperty({
+    type: Boolean,
+    description: 'Indicates if the position is comulative',
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('isComulative')
+  isComulative?: boolean = false;
 }
 
 export class FilterPositionDto extends PaginationRelationsDto {
