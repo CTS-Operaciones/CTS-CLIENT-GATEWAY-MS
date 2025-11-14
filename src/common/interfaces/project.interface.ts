@@ -10,6 +10,7 @@ export interface IProject {
   number_expedients: number;
   number_images: number;
   productions_days: number;
+  sum_expedients: number;
   sum_productions: number;
   status: STATUS_PROJECT;
   isExternal: boolean;
@@ -26,6 +27,7 @@ export interface ICreateProject {
   number_expedients?: number;
   number_images: number;
   productions_days: number;
+  sum_expedients: number;
   sum_productions: number;
   isExternal?: boolean;
   contact_organization?: IContactOrganization;

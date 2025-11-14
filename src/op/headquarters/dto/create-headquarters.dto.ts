@@ -118,6 +118,15 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   @IsOptional()
   number_expedients: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'Sum of expedients planned for the headquarters',
+    required: false,
+  })
+  @IsNumber()
+  @IsPositive()
+  sum_expedients: number;
+
   @ApiProperty({ type: Number, description: 'Sum of productions' })
   @IsNotEmpty()
   @IsNumber()

@@ -93,6 +93,15 @@ export class CreateProjectDto implements ICreateProject {
   @IsPositive()
   productions_days: number;
 
+  @ApiProperty({
+    type: Number,
+    description: 'Sum of expedients planned for the project',
+    required: false,
+  })
+  @IsNumber()
+  @IsPositive()
+  sum_expedients: number;
+
   @ApiProperty({ type: Number, description: 'Sum of productions' })
   @IsNotEmpty()
   @IsNumber()

@@ -9,6 +9,7 @@ export interface IHeadquarter {
   production_days: number;
   number_expedients?: number;
   number_images: number;
+  sum_expedients: number;
   sum_productions: number;
   status: STATUS_PROJECT;
 }
@@ -22,6 +23,7 @@ export interface ICreateHeadquarter {
   production_days: number;
   number_expedients?: number;
   number_images: number;
+  sum_expedients: number;
   sum_productions: number;
   start_date: Date;
   end_date: Date;
