@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
 import {
   FilterDashboardDto,
+  FilterDashboardProductionChartDto,
   FilterDashboardStaffProductionChartDto,
 } from './dto';
 
@@ -68,6 +69,18 @@ export class DashboardController {
       this.dashboardService,
       'dashboard.staff-production',
       { staff },
+    );
+  }
+
+  @Get('op/production/chart')
+  async getDashboardDataOpProductionChart(
+    @Query()
+    filterDashboardProductionChartDto: FilterDashboardProductionChartDto,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.production-chart',
+      filterDashboardProductionChartDto,
     );
   }
 

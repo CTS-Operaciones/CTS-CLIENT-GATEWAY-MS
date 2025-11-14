@@ -170,3 +170,36 @@ export class FilterDashboardStaffProductionChartDto {
   @IsOptional()
   groupBy?: GroupByPeriod = GroupByPeriod.DAY;
 }
+
+export class FilterDashboardProductionChartDto {
+  @ApiProperty({
+    type: Number,
+    required: false,
+    description: 'ID de la sede',
+  })
+  @IsInt()
+  @IsOptional()
+  @IsPositive()
+  @Type(() => Number)
+  headquarterId?: number;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    description: 'ID del proyecto',
+  })
+  @IsInt()
+  @IsOptional()
+  @IsPositive()
+  @Type(() => Number)
+  projectId?: number;
+
+  @ApiProperty({
+    enum: GroupByPeriod,
+    required: false,
+    description: 'Agrupar datos por: DAY, WEEK, MONTH, YEAR',
+  })
+  @IsEnum(GroupByPeriod)
+  @IsOptional()
+  groupBy?: GroupByPeriod = GroupByPeriod.DAY;
+}
