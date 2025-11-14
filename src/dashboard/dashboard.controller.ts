@@ -40,6 +40,17 @@ export class DashboardController {
     );
   }
 
+  @Get('op/project/:project/progress')
+  async getDashboardDataOpProgress(
+    @Param('project', ParseIntPipe) project: number,
+  ) {
+    return sendAndHandleRpcExceptionPromise(
+      this.dashboardService,
+      'dashboard.proyect-progress-summary',
+      { projectId: project },
+    );
+  }
+
   @Get('op/headquarter/:headquarter')
   async getDashboardDataOpHeadquarter(
     @Param('headquarter', ParseIntPipe) headquarter: number,
