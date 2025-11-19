@@ -100,6 +100,7 @@ export class CreateProjectDto implements ICreateProject {
   })
   @IsNumber()
   @IsPositive()
+  @IsOptional()
   sum_expedients: number;
 
   @ApiProperty({ type: Number, description: 'Sum of productions' })

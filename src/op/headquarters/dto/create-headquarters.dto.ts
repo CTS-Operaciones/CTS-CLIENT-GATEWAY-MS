@@ -125,6 +125,7 @@ export class CreateHeadquartersDto implements ICreateHeadquarter {
   })
   @IsNumber()
   @IsPositive()
+  @IsOptional()
   sum_expedients: number;
 
   @ApiProperty({ type: Number, description: 'Sum of productions' })
