@@ -1,3 +1,5 @@
+import { Response } from 'express';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -21,28 +23,26 @@ import {
 } from '../../common';
 import {
   AddJustificationDto,
-  CreateAttendancePermissionDto,
+  CreateAbsencePermissionDto,
   FilterDateDto,
   FindHistoryByEmployeeDto,
   SetStatusOfPermissionDto,
-  UpdateAttendancePermissionDto,
+  UpdateAbsencePermissionDto,
 } from './dto';
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
 
 @ApiBearerAuth()
-@ApiTags('Attendance Permission 🗓️')
-@Controller({ path: 'attendance-permission', version: '1' })
-export class AttendancePermissionController {
+@ApiTags('Absence Permission 🗓️')
+@Controller({ path: 'absence-permission', version: '1' })
+export class AbsencePermissionController {
   constructor(@Inject(NATS_SERVICE) private readonly clientRH: ClientProxy) {}
 
   @Auth('SOLICITUD_PERMISOS', 'CREAR')
   @Post()
-  create(@Body() createAttendancePermissionDto: CreateAttendancePermissionDto) {
+  create(@Body() createAbsencePermissionDto: CreateAbsencePermissionDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.create',
-      createAttendancePermissionDto,
+      'absencePermission.create',
+      createAbsencePermissionDto,
     );
   }
 
@@ -51,7 +51,7 @@ export class AttendancePermissionController {
   setStatus(@Body() setStatusOfPermissionDto: SetStatusOfPermissionDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.setStatusOfPermission',
+      'absencePermission.setStatusOfPermission',
       setStatusOfPermissionDto,
     );
   }
@@ -61,7 +61,7 @@ export class AttendancePermissionController {
   addJustification(@Body() addJustificationDto: AddJustificationDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.addJustificationPresence',
+      'absencePermission.addJustificationPresence',
       addJustificationDto,
     );
   }
@@ -150,7 +150,7 @@ export class AttendancePermissionController {
   findAll(@Query() pagination: FilterDateDto) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.findAll',
+      'absencePermission.findAll',
       pagination,
     );
   }
@@ -164,7 +164,7 @@ export class AttendancePermissionController {
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.findHistoryByEmployee',
+      'absencePermission.findHistoryByEmployee',
       { employee_id, ...query },
     );
   }
@@ -174,7 +174,7 @@ export class AttendancePermissionController {
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'Attendance Permission ID',
+    description: 'Absence Permission ID',
   })
   findOne(
     @Param('id', ParseIntPipe) id: number,
@@ -182,7 +182,7 @@ export class AttendancePermissionController {
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.findOne',
+      'absencePermission.findOne',
       { id, relations },
     );
   }
@@ -192,15 +192,15 @@ export class AttendancePermissionController {
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'Attendance Permission ID',
+    description: 'Absence Permission ID',
   })
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateAttemptancePermissionDto: UpdateAttendancePermissionDto,
+    @Body() updateAttemptancePermissionDto: UpdateAbsencePermissionDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.update',
+      'absencePermission.update',
       { id, ...updateAttemptancePermissionDto },
     );
   }
@@ -210,12 +210,12 @@ export class AttendancePermissionController {
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'Attendance Permission ID',
+    description: 'Absence Permission ID',
   })
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
-      'attendancePermission.remove',
+      'absencePermission.remove',
       { id },
     );
   }

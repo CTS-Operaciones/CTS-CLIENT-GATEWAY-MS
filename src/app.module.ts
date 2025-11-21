@@ -29,8 +29,8 @@ import { AssigmentModule } from './saga/assigment/assigment.module';
 import { DismissalModule } from './rh/dismissal/dismissal.module';
 import { PresenceModule } from './staffing/presence/presence.module';
 import { AdmissionDischargeModule } from './saga/admission-discharge/admission-discharge.module';
-import { RhVacationModule } from './rh/rh-vacation/rh-vacation.module';
-import { AttendancePermissionModule } from './rh/attendance-permission/attendance-permission.module';
+import { RhVacationModule } from './staffing/vacation/vacation.module';
+import { AbsencePermissionModule } from './staffing/absence-permission/absence-permission.module';
 import { HabilitationModule } from './saga/habilitation/habilitation.module';
 import { GenerateDocModule } from './generate-doc/generate-doc.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -65,7 +65,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     PresenceModule,
     AdmissionDischargeModule,
     RhVacationModule,
-    AttendancePermissionModule,
+    AbsencePermissionModule,
     HabilitationModule,
     GenerateDocModule,
     DashboardModule,

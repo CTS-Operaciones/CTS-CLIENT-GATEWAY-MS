@@ -1,6 +1,5 @@
-export * from './attendancePermission.interface';
+export * from './absencePermission.interface';
 export * from './auth.interface';
-export * from './generate-doc.interface';
 export * from './bank.interface';
 export * from './bond.interface';
 export * from './department.interface';
@@ -9,6 +8,7 @@ export * from './document.interface';
 export * from './employee.interface';
 export * from './extension.interface';
 export * from './find.interface';
+export * from './generate-doc.interface';
 export * from './headquarter.interface';
 export * from './holiday.interface';
 export * from './image.interface';

@@ -1,10 +1,12 @@
 import { Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiParam } from '@nestjs/swagger';
 import {
   Body,
   Controller,
   Get,
   Inject,
+  Param,
+  ParseIntPipe,
   Post,
   Query,
   Res,
@@ -206,6 +208,21 @@ export class GenerateDocController {
     res.setHeader('Content-Length', buffer.length.toString());
     res.setHeader('Cache-Control', 'no-cache');
     res.send(buffer);
+  }
+
+  @Get('generate-pdf-from-permission/:id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'ID del permiso de asistencia',
+  })
+  async generatePdfFromPermission(@Param('id', ParseIntPipe) id: number) {
+    // Obtener los datos del permiso desde rh-ms
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientGenerateDoc,
+      'vacation.getVacationDataForPdf',
+      { id },
+    );
   }
 
   // @Post('upload-production-report')

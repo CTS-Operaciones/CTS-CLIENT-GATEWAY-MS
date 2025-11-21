@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { NatsModule } from '../../transports/nats.module';
-import { RhVacationController } from './rh-vacation.controller';
+import { RhVacationController } from './vacation.controller';
 
 @Module({
   imports: [NatsModule],

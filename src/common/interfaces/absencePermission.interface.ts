@@ -1,11 +1,11 @@
 import {
-  ATTENDANCE_PERMISSION_TYPE,
+  ABSENCE_PERMISSION_TYPE,
   STATUS_VACATIONS_PERMISSION,
 } from '../constants';
 
-export interface ICreateAttendancePermission {
-  employee_id: number;
-  permission_type: ATTENDANCE_PERMISSION_TYPE;
+export interface ICreateAbsencePermission {
+  staff: number;
+  permission_type: ABSENCE_PERMISSION_TYPE;
   start_date: Date;
   end_date: Date;
   time_start?: string;

@@ -9,29 +9,29 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 import {
-  ATTENDANCE_PERMISSION_TYPE,
+  ABSENCE_PERMISSION_TYPE,
   STATUS_VACATIONS_PERMISSION,
-  ICreateAttendancePermission,
+  ICreateAbsencePermission,
   ToBoolean,
   PaginationRelationsDto,
 } from '../../../common';
-import { Type } from 'class-transformer';
 
-export class CreateAttendancePermissionDto
-  implements ICreateAttendancePermission
+export class CreateAbsencePermissionDto
+  implements ICreateAbsencePermission
 {
   @ApiProperty({ type: Number, required: true })
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
-  employee_id: number;
+  staff: number;
 
-  @ApiProperty({ enum: ATTENDANCE_PERMISSION_TYPE, required: true })
-  @IsEnum(ATTENDANCE_PERMISSION_TYPE)
+  @ApiProperty({ enum: ABSENCE_PERMISSION_TYPE, required: true })
+  @IsEnum(ABSENCE_PERMISSION_TYPE)
   @IsNotEmpty()
-  permission_type: ATTENDANCE_PERMISSION_TYPE;
+  permission_type: ABSENCE_PERMISSION_TYPE;
 
   @ApiProperty({ type: Date, required: true, example: '2025/01/01' })
   @IsNotEmpty()

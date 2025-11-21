@@ -12,12 +12,13 @@ import {
   Min,
   ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 import {
   ICreateVacation,
   IDatesRange,
   PaginationDto,
+  parseLocalDate,
   STATUS_VACATIONS_PERMISSION,
 } from '../../../common';
 
@@ -25,11 +26,13 @@ export class DatesRangeDto implements IDatesRange {
   @ApiProperty({ type: Date, required: true })
   @IsNotEmpty()
   @IsDate()
+  @Transform(parseLocalDate)
   start: Date;
 
   @ApiProperty({ type: Date, required: true })
   @IsNotEmpty()
   @IsDate()
+  @Transform(parseLocalDate)
   end: Date;
 }
 
@@ -38,7 +41,7 @@ export class CreateVacationDto implements ICreateVacation {
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
-  employee: number;
+  staff: number;
 
   @ApiProperty({ type: [DatesRangeDto], required: true })
   @IsArray()
@@ -78,7 +81,7 @@ export class CreateVacationDto implements ICreateVacation {
   })
   @IsString()
   @IsOptional()
-  comment?: string;
+  comment?: string = 'Ninguna.';
 }
 
 export class SetStatusOfVacationDto {
