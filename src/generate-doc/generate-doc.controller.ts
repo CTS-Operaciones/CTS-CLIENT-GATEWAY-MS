@@ -216,13 +216,82 @@ export class GenerateDocController {
     type: Number,
     description: 'ID del permiso de asistencia',
   })
-  async generatePdfFromPermission(@Param('id', ParseIntPipe) id: number) {
+  async generatePdfFromPermission(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     // Obtener los datos del permiso desde rh-ms
-    return await sendAndHandleRpcExceptionPromise(
+    const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
-      'vacation.getVacationDataForPdf',
+      'document-generate.rh-permission.pdf',
       { id },
     );
+
+    // Convertir la respuesta a Buffer
+    let buffer: Buffer;
+    if (Buffer.isBuffer(response)) {
+      buffer = response;
+    } else if (response?.data && response?.type === 'buffer') {
+      // Respuesta desde el microservicio con formato { data: base64, type: 'buffer' }
+      try {
+        buffer = Buffer.from(response.data, 'base64');
+        // Validar que el tamaño coincida si está disponible
+        if (response.size && buffer.length !== response.size) {
+          return res.status(500).json({
+            statusCode: 500,
+            message: `Error: El tamaño del buffer decodificado (${buffer.length}) no coincide con el esperado (${response.size})`,
+          });
+        }
+      } catch (error) {
+        return res.status(500).json({
+          statusCode: 500,
+          message: 'Error al decodificar el documento PDF desde base64',
+        });
+      }
+    } else if (response instanceof Uint8Array) {
+      buffer = Buffer.from(response);
+    } else if (Array.isArray(response)) {
+      buffer = Buffer.from(response);
+    } else if (typeof response === 'string') {
+      buffer = Buffer.from(response, 'base64');
+    } else if (response?.data && typeof response.data === 'string') {
+      // Fallback: intentar como base64
+      try {
+        buffer = Buffer.from(response.data, 'base64');
+      } catch (error) {
+        return res.status(500).json({
+          statusCode: 500,
+          message: 'Error al decodificar el documento PDF desde base64',
+        });
+      }
+    } else {
+      return res.status(500).json({
+        statusCode: 500,
+        message: `Error al generar el documento PDF: formato de respuesta inválido. Tipo recibido: ${typeof response}, Estructura: ${JSON.stringify(Object.keys(response || {}))}`,
+      });
+    }
+
+    if (!buffer || buffer.length === 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        message: 'Error al generar el documento PDF: Buffer vacío',
+      });
+    }
+
+    // Validar que el PDF tenga la firma correcta (%PDF)
+    const pdfSignature = buffer.toString('ascii', 0, 4);
+    if (pdfSignature !== '%PDF') {
+      return res.status(500).json({
+        statusCode: 500,
+        message: 'Error: El archivo generado no tiene un formato PDF válido',
+      });
+    }
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=permiso_${id}_${Date.now()}.pdf`,
+    );
+    res.setHeader('Content-Length', buffer.length.toString());
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(buffer);
   }
 
   // @Post('upload-production-report')
