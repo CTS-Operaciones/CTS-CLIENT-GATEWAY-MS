@@ -82,13 +82,13 @@ export class RhVacationController {
     description: 'Employee ID',
   })
   findHistoryByEmployee(
-    @Param('employee_id', ParseIntPipe) employee_id: string,
+    @Param('employee_id', ParseIntPipe) employee_id: number,
     @Query() pagination: FindHistoryByEmployeeDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'vacation.findHistoryByEmployee',
-      { employee_id: Number(employee_id) },
+      { employee_id, ...pagination },
     );
   }
 
@@ -105,6 +105,7 @@ export class RhVacationController {
     );
   }
 
+  //TODO: No funcional
   @Auth('SOLICITUD_VACACIONES', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -18,7 +18,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import {
   Auth,
   NATS_SERVICE,
-  RelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 import {
@@ -26,6 +25,7 @@ import {
   CreateAbsencePermissionDto,
   FilterDateDto,
   FindHistoryByEmployeeDto,
+  FindOneAbsencePermissionDto,
   SetStatusOfPermissionDto,
   UpdateAbsencePermissionDto,
 } from './dto';
@@ -159,13 +159,13 @@ export class AbsencePermissionController {
   @Get('history/employee/:employee_id')
   @ApiParam({ name: 'employee_id', type: Number, description: 'Employee ID' })
   findHistoryByEmployee(
-    @Param('employee_id', ParseIntPipe) employee_id: number,
+    @Param('employee_id', ParseIntPipe) id: number,
     @Query() query: FindHistoryByEmployeeDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'absencePermission.findHistoryByEmployee',
-      { employee_id, ...query },
+      { id, ...query },
     );
   }
 
@@ -178,12 +178,12 @@ export class AbsencePermissionController {
   })
   findOne(
     @Param('id', ParseIntPipe) id: number,
-    @Query() relations: RelationsDto,
+    @Query() relations: FindOneAbsencePermissionDto,
   ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientRH,
       'absencePermission.findOne',
-      { id, relations },
+      { id, ...relations },
     );
   }
 

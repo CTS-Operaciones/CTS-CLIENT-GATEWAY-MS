@@ -140,3 +140,12 @@ export class FindHistoryByEmployeeDto extends PaginationRelationsDto {
   @ToBoolean('relations')
   relations?: boolean = false;
 }
+
+export class FindOneAbsencePermissionDto {
+  @ApiProperty({ type: Boolean, required: false, default: false })
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  @ToBoolean('relations')
+  relations?: boolean = false;
+}
