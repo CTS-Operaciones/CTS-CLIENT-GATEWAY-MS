@@ -109,12 +109,12 @@ export class GenerateDocController {
     res.send(buffer);
   } */
 
-  @Post('permission-pdf')
-  async generatePdf(@Body() data: PermissionFormDto, @Res() res: Response) {
+  @Get('permission/pdf')
+  async generatePermissionPdf(@Res() res: Response) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
-      'document-generate.vacations.pdf',
-      data,
+      'document-generate.permission.pdf',
+      {},
     );
 
     // Convertir la respuesta a Buffer
@@ -180,7 +180,7 @@ export class GenerateDocController {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
       'Content-Disposition',
-      `attachment; filename=permiso_${data.employeeNumber || 'rh'}_${Date.now()}.pdf`,
+      `attachment; filename=permiso_rh_${Date.now()}.pdf`,
     );
     res.setHeader('Content-Length', buffer.length.toString());
     res.setHeader('Cache-Control', 'no-cache');
@@ -216,7 +216,7 @@ export class GenerateDocController {
     type: Number,
     description: 'ID del permiso de vacaciones',
   })
-  async generatePdfFromPermission(
+  async generateVacationPdf(
     @Param('id', ParseIntPipe) id: number,
     @Res() res: Response,
   ) {
