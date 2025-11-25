@@ -109,12 +109,15 @@ export class GenerateDocController {
     res.send(buffer);
   } */
 
-  @Get('permission/pdf')
-  async generatePermissionPdf(@Res() res: Response) {
+  @Get('absence/permission/pdf/:id')
+  async generatePermissionPdf(
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
       'document-generate.permission.pdf',
-      {},
+      { id },
     );
 
     // Convertir la respuesta a Buffer

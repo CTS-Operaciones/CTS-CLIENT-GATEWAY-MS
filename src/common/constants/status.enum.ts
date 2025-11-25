@@ -79,8 +79,9 @@ export enum STATUS_VACATIONS_PERMISSION {
 }
 
 export enum ABSENCE_PERMISSION_TYPE {
-  HOURS = 'HOURS',
-  DAYS = 'DAYS',
-  OTHER = 'OTHER',
+  ENTRY_AFTER = 'ENTRY_AFTER', // Entra después del horario establecido
+  LEAVE_BEFORE = 'LEAVE_BEFORE', // Salir antes del horario establecido
+  LEAVE_SAME_DAY = 'LEAVE_SAME_DAY', // Salir con regreso el mismo día
+  NO_ATTENDANCE = 'NO_ATTENDANCE', // No asistir
 }
 
