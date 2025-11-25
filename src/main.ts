@@ -37,6 +37,7 @@ async function bootstrap() {
     .addBearerAuth()
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
+    .addTag('Generate Doc 📄')
     .addTag('Absence Permission 🗓️')
     .addTag('Vacation 🏖️')
     .addTag('Holiday 📅')

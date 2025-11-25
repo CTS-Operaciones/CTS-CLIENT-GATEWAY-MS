@@ -24,7 +24,7 @@ export class GenerateDocController {
     @Inject(NATS_SERVICE) private readonly clientGenerateDoc: ClientProxy,
   ) {}
 
-  @Post('generate-docx')
+  /* @Post('generate-docx')
   async generateDocx(@Body() data: PermissionFormDto, @Res() res: Response) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
@@ -107,13 +107,13 @@ export class GenerateDocController {
     res.setHeader('Content-Length', buffer.length.toString());
     res.setHeader('Cache-Control', 'no-cache');
     res.send(buffer);
-  }
+  } */
 
-  @Post('generate-pdf')
+  @Post('permission-pdf')
   async generatePdf(@Body() data: PermissionFormDto, @Res() res: Response) {
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
-      'document-generate.rh-permission.pdf',
+      'document-generate.vacations.pdf',
       data,
     );
 
@@ -210,17 +210,20 @@ export class GenerateDocController {
     res.send(buffer);
   }
 
-  @Get('generate-pdf-from-permission/:id')
+  @Get('vacation/pdf/:id')
   @ApiParam({
     name: 'id',
     type: Number,
-    description: 'ID del permiso de asistencia',
+    description: 'ID del permiso de vacaciones',
   })
-  async generatePdfFromPermission(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+  async generatePdfFromPermission(
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
     // Obtener los datos del permiso desde rh-ms
     const response = await sendAndHandleRpcExceptionPromise<any>(
       this.clientGenerateDoc,
-      'document-generate.rh-permission.pdf',
+      'document-generate.vacations.pdf',
       { id },
     );
 
