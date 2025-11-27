@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -18,8 +19,16 @@ import {
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
-import { CreateSignatureDto, CreateTypeSignatureDto } from './dto';
+
+import {
+  CreateSignatureDto,
+  CreateSignatureTemplateDto,
+  CreateTypeSignatureDto,
+  UpdateSignatureDto,
+} from './dto';
+
 import { UpdateTypeSignatureDto } from './dto/update-typeSignature.dto';
+import { UpdateSignatureTemplateDto } from './dto/update-signature-template.dto';
 
 @ApiTags('Signature 🖊️')
 @Controller({ path: 'signature', version: '1' })
@@ -29,11 +38,124 @@ export class SignatureController {
   ) {}
 
   @Post()
-  async created(@Body() createdSignatureDto: CreateSignatureDto) {
+  async create(@Body() createSignatureDto: CreateSignatureDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'createdSignature',
-      createdSignatureDto,
+      'signature.created',
+      createSignatureDto,
+    );
+  }
+
+  @Get()
+  async findAll(@Query() paginations: PaginationRelationsDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signature.findAll',
+      paginations,
+    );
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signature.findOne',
+      { id },
+    );
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateSignatureDto: CreateSignatureDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signature.updated',
+      { id, updateSignatureDto },
+    );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signature.remove',
+      { id },
+    );
+  }
+
+  @Post('generate-for-document')
+  async generateSignaturesForDocument(
+    @Body()
+    body: {
+      reference_table: string;
+      reference_id: number;
+    },
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signature.generateForDocument',
+      body,
+    );
+  }
+}
+
+@ApiTags('SignatureTemplate 📋')
+@Controller({ path: 'signature-template', version: '1' })
+export class SignatureTemplateController {
+  constructor(
+    @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
+  ) {}
+
+  @Post()
+  async create(@Body() createSignatureTemplateDto: CreateSignatureTemplateDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signatureTemplate.created',
+      createSignatureTemplateDto,
+    );
+  }
+
+  @Get()
+  async findAll(@Query() paginations: PaginationRelationsDto) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signatureTemplate.findAll',
+      paginations,
+    );
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signatureTemplate.findOne',
+      { id },
+    );
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateSignatureTemplateDto: UpdateSignatureTemplateDto,
+  ) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signatureTemplate.updated',
+      {
+        id,
+        ...updateSignatureTemplateDto,
+      },
+    );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientProxy,
+      'signatureTemplate.remove',
+      { id },
     );
   }
 }
@@ -50,7 +172,7 @@ export class TypeSignatureController {
     console.log({ ...createTypeSignatureDto });
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'createTypeSignature',
+      'typeSignature.created',
       createTypeSignatureDto,
     );
   }
@@ -59,7 +181,7 @@ export class TypeSignatureController {
   async findAll(@Query() paginations: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'findAllTypeSignature',
+      'typeSignature.findAll',
       paginations,
     );
   }
@@ -68,7 +190,7 @@ export class TypeSignatureController {
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'findOneTypeSignature',
+      'typeSignature.findOne',
       { id },
     );
   }
@@ -81,7 +203,7 @@ export class TypeSignatureController {
     console.log(updateTypeSignatureDto, id);
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'updateTypeSignature',
+      'typeSignature.updated',
       {
         id,
         ...updateTypeSignatureDto,
@@ -93,7 +215,7 @@ export class TypeSignatureController {
   async delete(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
-      'removeTypeSignature',
+      'typeSignature.remove',
       { id },
     );
   }

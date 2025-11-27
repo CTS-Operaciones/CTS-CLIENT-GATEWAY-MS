@@ -85,3 +85,9 @@ export enum ABSENCE_PERMISSION_TYPE {
   NO_ATTENDANCE = 'NO_ATTENDANCE', // No asistir
 }
 
+export enum REPORT_TYPE {
+  VACATIONS = 'VACATIONS',
+  PERMISSIONS = 'PERMISSIONS',
+  ACCOUNT_STATEMENTS = 'ACCOUNT_STATEMENTS',
+  // Agregar más tipos según sea necesario
+}

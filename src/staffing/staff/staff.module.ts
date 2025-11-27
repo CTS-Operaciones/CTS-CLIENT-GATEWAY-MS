@@ -4,6 +4,7 @@ import { StaffController } from './staff.controller';
 import { NatsModule } from '../../transports/nats.module';
 import {
   SignatureController,
+  SignatureTemplateController,
   TypeSignatureController,
 } from './signature.controller';
 import { PayrollController } from './payroll.controller';
@@ -13,6 +14,7 @@ import { PayrollController } from './payroll.controller';
   controllers: [
     StaffController,
     TypeSignatureController,
+    SignatureTemplateController,
     SignatureController,
     PayrollController,
   ],

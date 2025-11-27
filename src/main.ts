@@ -31,12 +31,15 @@ async function bootstrap() {
       },
     }),
   );
-
+  
   const config = new DocumentBuilder()
     .setTitle('Client Gateway')
     .addBearerAuth()
     .setDescription('The Client Gateway API')
     .setVersion('1.0')
+    .addTag('TypeSignature 🧾')
+    .addTag('SignatureTemplate 📋')
+    .addTag('Signature 🖊️')
     .addTag('Generate Doc 📄')
     .addTag('Absence Permission 🗓️')
     .addTag('Vacation 🏖️')
@@ -63,8 +66,6 @@ async function bootstrap() {
     .addTag('Extensions 🧾')
     .addTag('Projects 🧾')
     .addTag('Headquarters 🧾')
-    .addTag('TypeSignature 🧾')
-    .addTag('Signature 🖊️')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
