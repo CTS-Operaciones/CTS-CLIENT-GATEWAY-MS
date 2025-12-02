@@ -22,7 +22,7 @@ import { FindStaffForProductionReportDto } from 'src/staffing/staff/dto';
 export class GenerateDocController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientGenerateDoc: ClientProxy,
-  ) {}
+  ) { }
 
   /* @Post('generate-docx')
   async generateDocx(@Body() data: PermissionFormDto, @Res() res: Response) {
@@ -298,6 +298,17 @@ export class GenerateDocController {
     res.setHeader('Content-Length', buffer.length.toString());
     res.setHeader('Cache-Control', 'no-cache');
     res.send(buffer);
+  }
+
+  @Get('signature/:reference_table/:reference_id')
+  async getSignatureForDocument(
+    @Param('reference_table') reference_table: string,
+    @Param('reference_id', ParseIntPipe) reference_id: number) {
+    return sendAndHandleRpcExceptionPromise(
+      this.clientGenerateDoc,
+      'signature.getOfDocument',
+      { reference_id, reference_table },
+    );
   }
 
   // @Post('upload-production-report')
