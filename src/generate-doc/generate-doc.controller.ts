@@ -22,7 +22,7 @@ import { FindStaffForProductionReportDto } from 'src/staffing/staff/dto';
 export class GenerateDocController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientGenerateDoc: ClientProxy,
-  ) { }
+  ) {}
 
   /* @Post('generate-docx')
   async generateDocx(@Body() data: PermissionFormDto, @Res() res: Response) {
@@ -301,9 +301,16 @@ export class GenerateDocController {
   }
 
   @Get('signature/:reference_table/:reference_id')
+  @ApiParam({
+    name: 'reference_table',
+    type: String,
+    description: 'Tabla de referencia',
+    enum: ['vacations', 'absence_permission'],
+  })
   async getSignatureForDocument(
     @Param('reference_table') reference_table: string,
-    @Param('reference_id', ParseIntPipe) reference_id: number) {
+    @Param('reference_id', ParseIntPipe) reference_id: number,
+  ) {
     return sendAndHandleRpcExceptionPromise(
       this.clientGenerateDoc,
       'signature.getOfDocument',
