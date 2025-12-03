@@ -8,7 +8,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -64,15 +63,15 @@ export class SignatureController {
     );
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateSignatureDto: CreateSignatureDto,
+    @Body() updateSignatureDto: UpdateSignatureDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientProxy,
       'signature.updated',
-      { id, updateSignatureDto },
+      { id, ...updateSignatureDto },
     );
   }
 
