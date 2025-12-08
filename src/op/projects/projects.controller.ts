@@ -14,6 +14,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   FindOneDeleteRelationsDto,
   IProject,
   NATS_SERVICE,
@@ -34,6 +35,7 @@ export class ProjectsController {
     @Inject(NATS_SERVICE) private readonly clientProjects: ClientProxy,
   ) {}
 
+  @Auth('PROYECTOS', 'CREAR')
   @Post()
   async create(@Body() createProjectDto: CreateProjectDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -43,6 +45,7 @@ export class ProjectsController {
     );
   }
 
+  @Auth('PROYECTOS', 'VER')
   @Get()
   async findAll(
     @Query() pagination: PaginationFilterProjectStatusDto<IProject>,
@@ -54,6 +57,7 @@ export class ProjectsController {
     );
   }
 
+  @Auth('PROYECTOS', 'VER')
   @Get(':term')
   async findOne(
     @Param('term') term: string,
@@ -66,6 +70,7 @@ export class ProjectsController {
     );
   }
 
+  @Auth('PROYECTOS', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -78,6 +83,7 @@ export class ProjectsController {
     );
   }
 
+  @Auth('PROYECTOS', 'EDITAR')
   @Patch('status-change/:id')
   async changeStatus(
     @Param('id') id: number,
@@ -90,6 +96,7 @@ export class ProjectsController {
     );
   }
 
+  @Auth('PROYECTOS', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

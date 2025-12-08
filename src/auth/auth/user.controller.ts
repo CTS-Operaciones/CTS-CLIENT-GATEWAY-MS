@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AddRoleProfileDto, CreateUserDto } from './dto';
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   PaginationRelationsDto,
@@ -26,6 +27,7 @@ import {
 export class UserController {
   constructor(@Inject(NATS_SERVICE) private readonly clientUser: ClientProxy) {}
 
+  @Auth('USUARIOS', 'CREAR')
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -35,6 +37,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'VER')
   @Get()
   async findAll(@Query() pagination: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -44,6 +47,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'VER')
   @Get('emails')
   async findEmails(@Query() pagination: PaginationDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -53,6 +57,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'VER')
   @Get(':term')
   async findOne(@Param('term') term: string) {
     return await sendAndHandleRpcExceptionPromise(
@@ -62,6 +67,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -74,6 +80,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -83,6 +90,7 @@ export class UserController {
     );
   }
 
+  @Auth('USUARIOS', 'RESTAURAR')
   @Delete('restore/:id')
   async restore(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

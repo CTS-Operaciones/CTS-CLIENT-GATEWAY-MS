@@ -14,7 +14,6 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 
 import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../common';
-import { PermissionFormDto } from './dto/generate-doc.dto';
 import { FindStaffForProductionReportDto } from 'src/staffing/staff/dto';
 
 @ApiTags('Generate Doc 📄')

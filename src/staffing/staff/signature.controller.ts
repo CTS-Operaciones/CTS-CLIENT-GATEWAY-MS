@@ -14,6 +14,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   NATS_SERVICE,
   PaginationRelationsDto,
   sendAndHandleRpcExceptionPromise,
@@ -36,6 +37,7 @@ export class SignatureController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('FIRMAS', 'CREAR')
   @Post()
   async create(@Body() createSignatureDto: CreateSignatureDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -45,6 +47,7 @@ export class SignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get()
   async findAll(@Query() paginations: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -54,6 +57,7 @@ export class SignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -63,6 +67,7 @@ export class SignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -75,6 +80,7 @@ export class SignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -84,6 +90,7 @@ export class SignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Post('generate-for-document')
   async generateSignaturesForDocument(
     @Body()
@@ -107,6 +114,7 @@ export class SignatureTemplateController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('FIRMAS', 'CREAR')
   @Post()
   async create(@Body() createSignatureTemplateDto: CreateSignatureTemplateDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -116,6 +124,7 @@ export class SignatureTemplateController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get()
   async findAll(@Query() paginations: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -125,6 +134,7 @@ export class SignatureTemplateController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -134,6 +144,7 @@ export class SignatureTemplateController {
     );
   }
 
+  @Auth('FIRMAS', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -149,6 +160,7 @@ export class SignatureTemplateController {
     );
   }
 
+  @Auth('FIRMAS', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -166,6 +178,7 @@ export class TypeSignatureController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('FIRMAS', 'CREAR')
   @Post()
   async created(@Body() createTypeSignatureDto: CreateTypeSignatureDto) {
     console.log({ ...createTypeSignatureDto });
@@ -176,6 +189,7 @@ export class TypeSignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get()
   async findAll(@Query() paginations: PaginationRelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -185,6 +199,7 @@ export class TypeSignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'VER')
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -194,6 +209,7 @@ export class TypeSignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -210,6 +226,7 @@ export class TypeSignatureController {
     );
   }
 
+  @Auth('FIRMAS', 'ELIMINAR')
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

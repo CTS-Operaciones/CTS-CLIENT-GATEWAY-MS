@@ -17,6 +17,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  Auth,
   CleanupFilesInterceptor,
   fileFilter,
   NATS_SERVICE,
@@ -43,6 +44,7 @@ export class StaffController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('STAFF', 'CREAR')
   @Post()
   async create(@Body() createStaffDto: CreateStaffDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -52,6 +54,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'VER')
   @Post('production-report')
   @UseInterceptors(
     AnyFilesInterceptor({ fileFilter, storage }),
@@ -85,6 +88,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'CREAR')
   @Post('manage/finalization')
   async manageStaffFinalization(
     @Body() manageStaffFinalizationDto: ManageStaffFinalizationDto,
@@ -96,6 +100,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'VER')
   @Get('project/:id')
   async findAllEmployeeInProject(
     @Param('id', ParseIntPipe) id: number,
@@ -108,6 +113,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'VER')
   @Get('headquarter/finalized/:id')
   async findStaffHeadquarterFinalized(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -117,6 +123,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'VER')
   @Get('headquarter/:id')
   async findAllEmployeeInHeadquarter(
     @Param('id', ParseIntPipe) id: number,
@@ -129,6 +136,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'VER')
   @Get('boss/staff')
   async findAllBossStaff(@Query() params: FindBossForStaffDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -138,6 +146,7 @@ export class StaffController {
     );
   }
 
+  @Auth('STAFF', 'EDITAR')
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -149,6 +158,7 @@ export class StaffController {
     });
   }
 
+  @Auth('STAFF', 'VER')
   @Get('production-report/:headquarter_id')
   async findStaffForProductionReport(
     @Query() params: FindStaffForProductionReportDto,

@@ -2,7 +2,11 @@ import { Controller, Get, Inject, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  Auth,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 import { FindPayrollDto } from './dto';
 
 @ApiTags('Payroll 📊')
@@ -12,6 +16,7 @@ export class PayrollController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('NOMINAS', 'VER')
   @Get()
   async created(@Query() findPayrollDto: FindPayrollDto) {
     return await sendAndHandleRpcExceptionPromise(

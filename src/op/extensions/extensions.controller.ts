@@ -17,6 +17,7 @@ import { CreateExtensionDto } from './dto/create-extension.dto';
 import { UpdateExtensionDto } from './dto/update-extension.dto';
 
 import {
+  Auth,
   NATS_SERVICE,
   PaginationDto,
   sendAndHandleRpcExceptionPromise,
@@ -29,6 +30,7 @@ export class ExtensionsController {
     @Inject(NATS_SERVICE) private readonly clientExtensions: ClientProxy,
   ) {}
 
+  @Auth('EXTENSIONES', 'CREAR')
   @Post()
   async create(@Body() createExtensionDto: CreateExtensionDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -38,6 +40,7 @@ export class ExtensionsController {
     );
   }
 
+  @Auth('EXTENSIONES', 'VER')
   @Get()
   async findAll(@Query() pagination: PaginationDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -47,6 +50,7 @@ export class ExtensionsController {
     );
   }
 
+  @Auth('EXTENSIONES', 'VER')
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -56,6 +60,7 @@ export class ExtensionsController {
     );
   }
 
+  @Auth('EXTENSIONES', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -68,6 +73,7 @@ export class ExtensionsController {
     );
   }
 
+  @Auth('EXTENSIONES', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(
@@ -77,6 +83,7 @@ export class ExtensionsController {
     );
   }
 
+  @Auth('EXTENSIONES', 'RESTAURAR')
   @Delete('restore/:id')
   async restore(@Param('id', ParseIntPipe) id: number) {
     return await sendAndHandleRpcExceptionPromise(

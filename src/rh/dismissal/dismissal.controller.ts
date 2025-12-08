@@ -14,6 +14,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateDismissalDto } from './dto/create-dismissal.dto';
 import { CreateBulkDismissalDto } from './dto/create-bulk-dismissal.dto';
 import {
+  Auth,
   FilterDateDismissalDto,
   NATS_SERVICE,
   sendAndHandleRpcExceptionPromise,
@@ -26,6 +27,7 @@ export class DismissalController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('DISMISSAL', 'CREAR')
   @Post()
   create(@Body() createDismissalDto: CreateDismissalDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -35,6 +37,7 @@ export class DismissalController {
     );
   }
 
+  @Auth('DISMISSAL', 'VER')
   @Post('bulk')
   createBulk(@Body() createBulkDismissalDto: CreateBulkDismissalDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -44,6 +47,7 @@ export class DismissalController {
     );
   }
 
+  @Auth('DISMISSAL', 'VER')
   @Get()
   findAll(@Query() pagination: FilterDateDismissalDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -53,6 +57,7 @@ export class DismissalController {
     );
   }
 
+  @Auth('DISMISSAL', 'VER')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return sendAndHandleRpcExceptionPromise(
@@ -62,6 +67,7 @@ export class DismissalController {
     );
   }
 
+  @Auth('DISMISSAL', 'EDITAR')
   @Patch(':id')
   update(
     @Param('id') id: string,

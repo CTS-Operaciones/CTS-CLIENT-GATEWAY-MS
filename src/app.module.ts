@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { NatsModule } from './transports/nats.module';
+import { GuardModule } from './auth/guard/guard.module';
 import { AuthModule } from './auth/auth/auth.module';
 import { RoleModule } from './auth/role/role.module';
 import { ExtensionsModule } from './op/extensions/extensions.module';
@@ -37,6 +38,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
+    GuardModule,
     RhBanksModule,
     ContractModule,
     RhDeparmentModule,

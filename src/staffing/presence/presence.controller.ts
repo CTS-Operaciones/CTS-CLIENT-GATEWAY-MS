@@ -12,7 +12,11 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { NATS_SERVICE, sendAndHandleRpcExceptionPromise } from '../../common';
+import {
+  Auth,
+  NATS_SERVICE,
+  sendAndHandleRpcExceptionPromise,
+} from '../../common';
 import { CheckInDto, CheckOutDto } from './dto/create-presence.dto';
 import {
   FilterFindAllPresenceDto,
@@ -26,6 +30,7 @@ export class PresenceController {
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
   ) {}
 
+  @Auth('ASISTENCIA', 'CREAR')
   @Post('checkIn')
   checkIn(@Body() checkInDto: CheckInDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -35,6 +40,7 @@ export class PresenceController {
     );
   }
 
+  @Auth('ASISTENCIA', 'CREAR')
   @Post('checkOut/:id')
   checkOut(
     @Param('id', ParseIntPipe) id: number,
@@ -47,6 +53,7 @@ export class PresenceController {
     );
   }
 
+  @Auth('ASISTENCIA', 'VER')
   @Get('asistence')
   findByHeaderquarterAndDate(@Query() payload: FindStaffPresenceDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -56,6 +63,7 @@ export class PresenceController {
     );
   }
 
+  @Auth('ASISTENCIA', 'VER')
   @Get()
   findAll(@Query() pagination: FilterFindAllPresenceDto) {
     return sendAndHandleRpcExceptionPromise(
@@ -65,6 +73,7 @@ export class PresenceController {
     );
   }
 
+  @Auth('ASISTENCIA', 'ELIMINAR')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return sendAndHandleRpcExceptionPromise(

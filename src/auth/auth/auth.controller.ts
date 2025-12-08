@@ -38,7 +38,6 @@ export class AuthController {
 
   @ApiBearerAuth()
   @Auth('AUTH', 'VER')
-  //@Permissions('EMPLEADOS', 'VER')
   @Get('reset-password/:id')
   async resetPassword(@Param('id') id: number) {
     return await sendAndHandleRpcExceptionPromise(

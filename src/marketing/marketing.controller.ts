@@ -31,9 +31,9 @@ import {
 export class MarketingController {
   constructor(
     @Inject(NATS_SERVICE) private readonly clientProxy: ClientProxy,
-  ) { }
+  ) {}
 
-  @Auth('AUTH', 'CREAR')
+  @Auth('MARKETING', 'CREAR')
   @UseInterceptors(
     FileInterceptor('file', { fileFilter, storage }),
     CleanupFilesInterceptor,
@@ -54,7 +54,7 @@ export class MarketingController {
     );
   }
 
-  @Auth('AUTH', 'CREAR')
+  @Auth('MARKETING', 'VER')
   @Get('image/:id')
   async findImageById(@Param('id') id: number, @Res() res: Response) {
     const path: { path: string } = await sendAndHandleRpcExceptionPromise(
@@ -68,7 +68,7 @@ export class MarketingController {
     return res.sendFile(absolutePath);
   }
 
-  @Auth('AUTH', 'CREAR')
+  @Auth('MARKETING', 'EDITAR')
   @Patch('image/:id')
-  updateImage() { }
+  updateImage() {}
 }

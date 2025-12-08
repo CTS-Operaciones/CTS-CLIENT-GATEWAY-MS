@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateHeadquartersDto } from './dto/create-headquarters.dto';
 import {
@@ -20,12 +20,14 @@ import {
 } from './dto/update-headquarters.dto';
 
 import {
+  Auth,
   NATS_SERVICE,
   PaginationFilterHeadquartersExternalDto,
   RelationsDto,
   sendAndHandleRpcExceptionPromise,
 } from '../../common';
 
+@ApiBearerAuth()
 @ApiTags('Headquarters 🧾')
 @Controller({ path: 'headquarters', version: '1' })
 export class HeadquartersController {
@@ -33,6 +35,7 @@ export class HeadquartersController {
     @Inject(NATS_SERVICE) private readonly clientHeadquarters: ClientProxy,
   ) {}
 
+  @Auth('SEDES', 'CREAR')
   @Post()
   async create(@Body() createHeadquartersDto: CreateHeadquartersDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -42,6 +45,7 @@ export class HeadquartersController {
     );
   }
 
+  @Auth('SEDES', 'VER')
   @Get()
   async findAll(@Query() pagination: PaginationFilterHeadquartersExternalDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -51,6 +55,7 @@ export class HeadquartersController {
     );
   }
 
+  @Auth('SEDES', 'VER')
   @Get(':id')
   async findOne(@Param('id') id: number, @Query() relations: RelationsDto) {
     return await sendAndHandleRpcExceptionPromise(
@@ -60,6 +65,7 @@ export class HeadquartersController {
     );
   }
 
+  @Auth('SEDES', 'EDITAR')
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -72,6 +78,7 @@ export class HeadquartersController {
     );
   }
 
+  @Auth('SEDES', 'EDITAR')
   @Put(':id')
   async updateQuotaEmployeeForPosition(
     @Param('id') id: string,
@@ -84,6 +91,7 @@ export class HeadquartersController {
     );
   }
 
+  @Auth('SEDES', 'ELIMINAR')
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await sendAndHandleRpcExceptionPromise(

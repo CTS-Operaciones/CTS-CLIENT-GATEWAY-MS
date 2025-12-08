@@ -171,6 +171,7 @@ export class RhAsignedPositionsController {
     private readonly clientEmployeeHasPosition: ClientProxy,
   ) {}
 
+  @Auth('ASIGNACION_A_PROYECTOS', 'CREAR')
   @Post(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
   async createAsignedPosition(
@@ -184,9 +185,10 @@ export class RhAsignedPositionsController {
     );
   }
 
+  @Auth('ASIGNACION_A_PROYECTOS', 'EDITAR')
   @Put('bulk')
   async bulkUpdateAsignedPositions(
-    @Body() payload: BulkUpdateEmployeeHasPositionsDto
+    @Body() payload: BulkUpdateEmployeeHasPositionsDto,
   ) {
     return await sendAndHandleRpcExceptionPromise(
       this.clientEmployeeHasPosition,
@@ -195,8 +197,13 @@ export class RhAsignedPositionsController {
     );
   }
 
+  @Auth('ASIGNACION_A_PROYECTOS', 'EDITAR')
   @Put(':id')
-  @ApiParam({ name: 'id', type: Number, description: 'Id of employee has position' })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Id of employee has position',
+  })
   async updateAsignedPosition(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: EmployeeHasPositionDto,
@@ -208,6 +215,7 @@ export class RhAsignedPositionsController {
     );
   }
 
+  @Auth('ASIGNACION_A_PROYECTOS', 'VER')
   @Get(':id')
   @ApiParam({ name: 'id', type: Number, description: 'Id of contract' })
   async getAsignedPositions(
@@ -227,6 +235,7 @@ export class RhAsignedPositionsController {
     );
   }
 
+  @Auth('ASIGNACION_A_PROYECTOS', 'VER')
   @Get('verify/:id')
   @ApiParam({
     name: 'id',
