@@ -251,4 +251,15 @@ export class RhAsignedPositionsController {
       },
     );
   }
+
+  // TODO: Implementar la actualización de los días de vacaciones
+  @Auth('AUTH', 'CREAR')
+  @Patch('updateVacationDays')
+  async updateVacationDays() {
+    return await sendAndHandleRpcExceptionPromise(
+      this.clientEmployeeHasPosition,
+      'updateVacationDays-employee',
+      {},
+    );
+  }
 }
