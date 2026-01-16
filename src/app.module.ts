@@ -35,6 +35,7 @@ import { AbsencePermissionModule } from './staffing/absence-permission/absence-p
 import { HabilitationModule } from './saga/habilitation/habilitation.module';
 import { GenerateDocModule } from './generate-doc/generate-doc.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { MaintenanceModule } from './saga/maintenance/maintenance.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     InventoryModule,
     AddRemoveModule,
     AssigmentModule,
+    MaintenanceModule,
     DismissalModule,
     PresenceModule,
     AdmissionDischargeModule,
